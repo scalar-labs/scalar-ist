@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "description": "Put asset record contract arguments schema",
+  "type": "object",
+  "required": [
+    "asset_id",
+    "data",
+    "mode",
+    "is_hashed",
+    "created_at"
+  ],
+  "properties": {
+    "asset_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9-/_]+$"
+    },
+    "data": {
+      "type": "object",
+      "pattern": "^.+$"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "insert",
+        "update",
+        "upsert"
+      ]
+    },
+    "is_hashed": {
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

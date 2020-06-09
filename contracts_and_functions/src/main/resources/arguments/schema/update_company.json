@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "description": "Update company contract arguments schema",
+  "type": "object",
+  "required": [
+    "executor_holder_id",
+    "company_id",
+    "company_name",
+    "company_metadata",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "executor_holder_id": {
+      "type": "string",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+    },
+    "company_id": {
+      "type": "string",
+      "format": "hostname"
+    },
+    "company_name": {
+      "type": "string",
+      "pattern": "^.+$"
+    },
+    "corporate_number": {
+      "type": "string",
+      "pattern": "^[0-9]{0,13}$"
+    },
+    "company_metadata": {
+      "type": "string",
+      "pattern": "^.+$"
+    },
+    "created_at": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "updated_at": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

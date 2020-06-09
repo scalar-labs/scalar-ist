@@ -1,0 +1,68 @@
+buildscript {
+    ext {
+        springBootVersion = '2.2.4.RELEASE'
+        lombokVersion = '1.18.12'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java-library'
+apply plugin: 'org.springframework.boot'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+bootJar {
+    archivesBaseName = 'scalar-ist-api'
+    archiveVersion = '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+configurations {
+    //Exclude logback for logging so as to use log4j2
+    all {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    }
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
+dependencies {
+    developmentOnly("org.springframework.boot:spring-boot-devtools:${springBootVersion}")
+    implementation("com.scalar-labs:scalardb:2.0.0") {
+        exclude group: 'org.slf4j'
+    }
+    implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
+    implementation "io.jsonwebtoken:jjwt:0.9.1"
+    //Generate swagger documentation
+    implementation "io.springfox:springfox-swagger2:2.9.2"
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    //Use log4j2 logging for spring
+    implementation "org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testImplementation("org.springframework.security:spring-security-test:5.2.2.RELEASE")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    testImplementation("junit:junit:4.10")
+
+}
+
+
+bootRun {
+    //Always output colors in the console
+    jvmArgs = ["-Dspring.output.ansi.enabled=ALWAYS"]
+    systemProperties System.properties
+}
+
+

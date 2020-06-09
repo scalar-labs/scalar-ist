@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "company_id",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "company_id": {
+      "type": "string",
+      "format": "hostname"
+    },
+    "created_at": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "updated_at": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

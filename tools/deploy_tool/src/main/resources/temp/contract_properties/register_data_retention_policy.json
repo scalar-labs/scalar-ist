@@ -1,0 +1,136 @@
+{
+  "contract_argument_schema":{
+    "$schema":"http://json-schema.org/draft-07/schema#",
+    "type":"object",
+    "required":[
+      "company_id",
+      "organization_id",
+      "policy_name",
+      "policy_type",
+      "length_of_use",
+      "length_of_retention",
+      "description",
+      "created_at"
+    ],
+    "properties":{
+      "company_id":{
+        "type":"string",
+        "format":"hostname"
+      },
+      "organization_id":{
+        "type":"string",
+        "pattern":"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      },
+      "policy_name":{
+        "type":"string",
+        "minLength":1
+      },
+      "policy_type":{
+        "type":"string",
+        "enum":[
+          "finite",
+          "indefinite"
+        ]
+      },
+      "length_of_use":{
+        "type":"string",
+        "minLength":1
+      },
+      "length_of_retention":{
+        "type":"string",
+        "minLength":1
+      },
+      "description":{
+        "type":"string",
+        "minLength":1
+      },
+      "created_at":{
+        "type":"integer",
+        "minimum":0
+      }
+    }
+  },
+  "asset_name": "rp",
+  "asset_version": "01",
+  "asset_schema": {
+    "$schema":"http://json-schema.org/draft-07/schema#",
+    "type":"object",
+    "properties":{
+      "data_set_schema_id":{
+        "type":"string",
+        "pattern": "asset_id"
+      },
+      "company_id":{
+        "type":"string"
+      },
+      "organization_id":{
+        "type":"string"
+      },
+      "policy_name":{
+        "type":"string"
+      },
+      "policy_type":{
+        "type":"string"
+      },
+      "length_of_use":{
+        "type":"string"
+      },
+      "length_of_retention":{
+        "type":"string"
+      },
+      "description":{
+        "type":"string"
+      }
+    }
+  },
+  "table_schema": {
+    "$schema": "scalar_db_table_schema.json",
+    "table_name": "data_retention_policy",
+    "partition_keys": [
+      {
+        "name": "company_id",
+        "type": "text"
+      }
+    ],
+    "clustering_keys": [
+      {
+        "name": "created_at",
+        "type": "bigint"
+      },
+      {
+        "name": "policy_type",
+        "type": "text"
+      },
+      {
+        "name": "organization_id",
+        "type": "text"
+      }
+    ],
+    "columns": [
+      {
+        "name": "policy_name",
+        "type": "text"
+      },
+      {
+        "name": "length_of_use",
+        "type": "text"
+      },
+      {
+        "name": "length_of_retention",
+        "type": "text"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "is_active",
+        "type": "boolean"
+      },
+      {
+        "name": "updated_at",
+        "type": "bigint"
+      }
+    ]
+  }
+}

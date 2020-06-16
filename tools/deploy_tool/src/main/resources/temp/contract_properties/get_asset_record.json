@@ -1,0 +1,20 @@
+{
+  "contract_argument_schema":{
+    "$schema":"http://json-schema.org/draft-07/schema#",
+    "type":"object",
+    "required":[
+      "asset_id",
+      "is_hashed"
+    ],
+    "properties":{
+      "asset_id":{
+        "type":"string",
+        "pattern":"^[a-zA-Z0-9-/_.]+$"
+      },
+      "is_hashed":{
+        "type":"boolean"
+      }
+    }
+  },
+  "salt":"salt"
+}

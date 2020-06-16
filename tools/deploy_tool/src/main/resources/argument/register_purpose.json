@@ -1,0 +1,16 @@
+{
+  "action": "insert",
+  "company_id":"scalar-labs.com",
+  "organization_id":"9ca84f95-2e84-4707-8206-b93c9e78d7b7",
+  "category_of_purpose":"category sed anim",
+  "purpose_name":"purpose_name dolore magnaxxx",
+  "description":"description",
+  "legal_text":"legal_text",
+  "user_friendly_text":"user_friendly_text",
+  "guidance":"guidance",
+  "note":"note",
+  "created_at":1572514828169,
+  "_functions_":[
+    "UpsertMaster"
+  ]
+}

@@ -223,9 +223,9 @@ public class RegisterThirdPartyTest {
     // Act
     // Assert
     assertThatThrownBy(
-        () -> {
-          registerThirdParty.invoke(ledger, argument, Optional.of(properties));
-        })
+            () -> {
+              registerThirdParty.invoke(ledger, argument, Optional.of(properties));
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(ASSET_NAME_IS_MISSING);
     verify(registerThirdParty, never()).invokeSubContract(any(), any(), any());
@@ -266,10 +266,7 @@ public class RegisterThirdPartyTest {
     String assetName = properties.getString(ASSET_NAME) + properties.getString(ASSET_VERSION, "");
     String assetId =
         String.join(
-            "-",
-            assetName,
-            argument.getString(COMPANY_ID),
-            argument.getString(THIRD_PARTY_DOMAIN));
+            "-", assetName, argument.getString(COMPANY_ID), argument.getString(THIRD_PARTY_DOMAIN));
 
     JsonObject data =
         Json.createObjectBuilder()

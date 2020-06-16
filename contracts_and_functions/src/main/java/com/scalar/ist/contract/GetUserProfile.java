@@ -32,7 +32,8 @@ public class GetUserProfile extends Contract {
   public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validate(ledger, argument, properties);
 
-    String assetName = properties.get().getString(ASSET_NAME) + properties.get().getString(ASSET_VERSION, "");
+    String assetName =
+        properties.get().getString(ASSET_NAME) + properties.get().getString(ASSET_VERSION, "");
     String assetId =
         String.format(
             "%s-%s-%s",

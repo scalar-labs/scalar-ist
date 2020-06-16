@@ -1,8 +1,6 @@
 package com.scalar.ist.contract;
 
 import static com.scalar.ist.common.Constants.ASSET_ID;
-import static com.scalar.ist.common.Constants.ASSET_NAME;
-import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.COMPANY_ASSET_NAME;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
@@ -30,7 +28,6 @@ import static com.scalar.ist.common.Constants.ROLE_CONTROLLER;
 import static com.scalar.ist.common.Constants.ROLE_PROCESSOR;
 import static com.scalar.ist.common.Constants.ROLE_SYSADMIN;
 import static com.scalar.ist.common.Constants.ROLE_SYSOPERATOR;
-import static com.scalar.ist.common.Constants.UPDATED_AT;
 import static com.scalar.ist.common.Constants.USER_PROFILE_ASSET_NAME;
 import static com.scalar.ist.common.Constants.USER_PROFILE_ASSET_VERSION;
 import static com.scalar.ist.common.Constants.USER_PROFILE_EXECUTOR_COMPANY_ID;
@@ -352,7 +349,9 @@ public class UpsertUserProfileTest {
   }
 
   private JsonObject preparePutRecordArgument(JsonObject argument, JsonObject properties) {
-    String assetName = properties.getString(USER_PROFILE_ASSET_NAME) + properties.getString(USER_PROFILE_ASSET_VERSION, "");
+    String assetName =
+        properties.getString(USER_PROFILE_ASSET_NAME)
+            + properties.getString(USER_PROFILE_ASSET_VERSION, "");
     String assetId =
         String.format(
             "%s-%s-%s", assetName, argument.getString(COMPANY_ID), argument.getString(HOLDER_ID));

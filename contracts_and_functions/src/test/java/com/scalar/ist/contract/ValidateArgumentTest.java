@@ -25,8 +25,7 @@ import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.ist.util.Hasher;
 import com.scalar.ist.util.Util;
-import java.io.StringReader;
-import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import javax.json.Json;
@@ -200,11 +199,10 @@ public class ValidateArgumentTest {
   }
 
   private JsonObject prepareSchema() {
-    JsonObject schema =
-        Json.createReader(
-                new StringReader(Util.readJsonSchemaFromResources(Paths.get(SCHEMA_FILENAME))))
-            .readObject();
-    return Json.createObjectBuilder(schema).build();
+    return Json.createReader(
+            Objects.requireNonNull(
+                Util.class.getClassLoader().getResourceAsStream(SCHEMA_FILENAME)))
+        .readObject();
   }
 
   private JsonArray createHashedIdsArray() {

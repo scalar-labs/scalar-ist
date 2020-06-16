@@ -1,5 +1,18 @@
 package com.scalar.ist.function;
 
+import com.scalar.db.api.Get;
+import com.scalar.db.api.Put;
+import com.scalar.db.io.BigIntValue;
+import com.scalar.db.io.BooleanValue;
+import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
+import com.scalar.dl.ledger.database.Database;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.dl.ledger.function.Function;
+
+import javax.json.JsonObject;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.COMPANY_METADATA;
 import static com.scalar.ist.common.Constants.COMPANY_NAME;
@@ -10,20 +23,8 @@ import static com.scalar.ist.common.Constants.CREATED_BY;
 import static com.scalar.ist.common.Constants.HOLDER_ID;
 import static com.scalar.ist.common.Constants.IS_ACTIVE;
 import static com.scalar.ist.common.Constants.NAMESPACE;
+import static com.scalar.ist.common.Constants.RECORD_NOT_FOUND;
 import static com.scalar.ist.common.Constants.UPDATED_AT;
-import static com.scalar.ist.common.Constants.RECORD_IS_ALREADY_REGISTERED;
-
-import com.scalar.db.api.Get;
-import com.scalar.db.api.Put;
-import com.scalar.db.io.BigIntValue;
-import com.scalar.db.io.BooleanValue;
-import com.scalar.db.io.Key;
-import com.scalar.db.io.TextValue;
-import com.scalar.dl.ledger.database.Database;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.dl.ledger.function.Function;
-import java.util.Optional;
-import javax.json.JsonObject;
 
 public class UpdateCompany extends Function {
 
@@ -43,8 +44,8 @@ public class UpdateCompany extends Function {
     Key clusteringKey = new Key(new BigIntValue(CREATED_AT, createdAt));
     Get get = new Get(partitionKey, clusteringKey).forNamespace(NAMESPACE).forTable(COMPANY_TABLE);
 
-    if (database.get(get).isPresent()) {
-      throw new ContractContextException(RECORD_IS_ALREADY_REGISTERED);
+    if (!database.get(get).isPresent()) {
+      throw new ContractContextException(RECORD_NOT_FOUND);
     }
 
     Put put =

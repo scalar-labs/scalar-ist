@@ -200,9 +200,9 @@ public class RegisterCompanyTest {
     // Act
     // Assert
     assertThatThrownBy(
-        () -> {
-          registerCompany.invoke(ledger, argument, Optional.of(properties));
-        })
+            () -> {
+              registerCompany.invoke(ledger, argument, Optional.of(properties));
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(ASSET_NAME_IS_MISSING);
     verify(registerCompany, never()).invokeSubContract(any(), any(), any());

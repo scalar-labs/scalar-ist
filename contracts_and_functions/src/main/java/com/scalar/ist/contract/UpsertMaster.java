@@ -1,17 +1,20 @@
 package com.scalar.ist.contract;
 
 import static com.scalar.ist.common.Constants.ACTION;
+import static com.scalar.ist.common.Constants.ASSET_ARRAY_TYPE;
 import static com.scalar.ist.common.Constants.ASSET_BOOLEAN_TYPE;
 import static com.scalar.ist.common.Constants.ASSET_DEFAULT_VALUE;
 import static com.scalar.ist.common.Constants.ASSET_ID;
+import static com.scalar.ist.common.Constants.ASSET_INTEGER_TYPE;
 import static com.scalar.ist.common.Constants.ASSET_NAME;
 import static com.scalar.ist.common.Constants.ASSET_NAME_IS_MISSING;
+import static com.scalar.ist.common.Constants.ASSET_NUMBER_TYPE;
+import static com.scalar.ist.common.Constants.ASSET_OBJECT_TYPE;
 import static com.scalar.ist.common.Constants.ASSET_SCHEMA;
 import static com.scalar.ist.common.Constants.ASSET_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.ASSET_STRING_TYPE;
-import static com.scalar.ist.common.Constants.ASSET_ARRAY_TYPE;
-import static com.scalar.ist.common.Constants.ASSET_OBJECT_TYPE;
 import static com.scalar.ist.common.Constants.ASSET_TYPE;
+import static com.scalar.ist.common.Constants.ASSET_TYPE_PATTERN;
 import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.BENEFIT_ID;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
@@ -84,7 +87,7 @@ public class UpsertMaster extends Contract {
       JsonObject benefit = getBenefit(ledger, assetId);
       dataBuilder = Json.createObjectBuilder(benefit);
     }
-    addData(properties.getJsonObject(ASSET_SCHEMA), argument, dataBuilder);
+    addData(assetId, properties.getJsonObject(ASSET_SCHEMA), argument, dataBuilder);
     dataBuilder.add(BENEFIT_ID, assetId);
 
     return Json.createObjectBuilder()
@@ -159,12 +162,16 @@ public class UpsertMaster extends Contract {
     invokeSubContract(VALIDATE_PERMISSION, ledger, validateUserPermissionsArgument);
   }
 
-  private void addData(JsonObject assetSchema, JsonObject argument, JsonObjectBuilder data) {
+  private void addData(String assetId, JsonObject assetSchema, JsonObject argument, JsonObjectBuilder data) {
     for (Map.Entry<String, JsonValue> argumentMetadata :
         assetSchema.getJsonObject(PROPERTIES).entrySet()) {
       JsonObject metadata = argumentMetadata.getValue().asJsonObject();
       switch (metadata.getString(ASSET_TYPE)) {
         case ASSET_STRING_TYPE:
+          if (ASSET_ID.equals(metadata.getString(ASSET_TYPE_PATTERN, ""))){
+            data.add(argumentMetadata.getKey(), assetId);
+            break;
+          }
           if (argument.containsKey(argumentMetadata.getKey())) {
             data.add(argumentMetadata.getKey(), argument.getString(argumentMetadata.getKey()));
           } else if (metadata.containsKey(ASSET_DEFAULT_VALUE)) {
@@ -190,6 +197,20 @@ public class UpsertMaster extends Contract {
             data.add(argumentMetadata.getKey(), argument.getJsonObject(argumentMetadata.getKey()));
           } else if (metadata.containsKey(ASSET_DEFAULT_VALUE)) {
             data.add(argumentMetadata.getKey(), metadata.getJsonObject(ASSET_DEFAULT_VALUE));
+          }
+          break;
+        case ASSET_NUMBER_TYPE:
+          if (argument.containsKey(argumentMetadata.getKey())) {
+            data.add(argumentMetadata.getKey(), argument.getJsonNumber(argumentMetadata.getKey()));
+          } else if (metadata.containsKey(ASSET_DEFAULT_VALUE)) {
+            data.add(argumentMetadata.getKey(), metadata.getJsonNumber(ASSET_DEFAULT_VALUE));
+          }
+          break;
+        case ASSET_INTEGER_TYPE:
+          if (argument.containsKey(argumentMetadata.getKey())) {
+            data.add(argumentMetadata.getKey(), argument.getInt(argumentMetadata.getKey()));
+          } else if (metadata.containsKey(ASSET_DEFAULT_VALUE)) {
+            data.add(argumentMetadata.getKey(), metadata.getInt(ASSET_DEFAULT_VALUE));
           }
           break;
         default:

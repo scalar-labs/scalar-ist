@@ -182,9 +182,9 @@ public class UpdateThirdPartyTest {
     // Act
     // Assert
     assertThatThrownBy(
-        () -> {
-          updateThirdParty.invoke(ledger, argument, Optional.of(properties));
-        })
+            () -> {
+              updateThirdParty.invoke(ledger, argument, Optional.of(properties));
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(ASSET_NAME_IS_MISSING);
     verify(updateThirdParty, never()).invokeSubContract(any(), any(), any());
@@ -214,14 +214,12 @@ public class UpdateThirdPartyTest {
     verify(updateThirdParty).invokeSubContract(any(), any(), any());
   }
 
-  private JsonObject preparePutRecordArgument(JsonObject argument, JsonObject properties, JsonObject thirdParty) {
+  private JsonObject preparePutRecordArgument(
+      JsonObject argument, JsonObject properties, JsonObject thirdParty) {
     String assetName = properties.getString(ASSET_NAME) + properties.getString(ASSET_VERSION, "");
     String assetId =
         String.join(
-            "-",
-            assetName,
-            argument.getString(COMPANY_ID),
-            argument.getString(THIRD_PARTY_DOMAIN));
+            "-", assetName, argument.getString(COMPANY_ID), argument.getString(THIRD_PARTY_DOMAIN));
 
     JsonObjectBuilder data =
         Json.createObjectBuilder()
@@ -291,11 +289,9 @@ public class UpdateThirdPartyTest {
   }
 
   private JsonObject prepareGetAssetRecordArgument() {
-    String assetId = String.join("-", MOCKED_ASSET_NAME, MOCKED_COMPANY_ID, MOCKED_THIRD_PARTY_DOMAIN);
-    return Json.createObjectBuilder()
-        .add(ASSET_ID, assetId)
-        .add(RECORD_IS_HASHED, false)
-        .build();
+    String assetId =
+        String.join("-", MOCKED_ASSET_NAME, MOCKED_COMPANY_ID, MOCKED_THIRD_PARTY_DOMAIN);
+    return Json.createObjectBuilder().add(ASSET_ID, assetId).add(RECORD_IS_HASHED, false).build();
   }
 
   private JsonObject prepareUserProfileArgument() {

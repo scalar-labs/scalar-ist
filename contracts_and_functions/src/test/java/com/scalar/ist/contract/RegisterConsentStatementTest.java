@@ -1,6 +1,7 @@
 package com.scalar.ist.contract;
 
 import static com.scalar.ist.common.Constants.ASSET_ID;
+import static com.scalar.ist.common.Constants.ASSET_NAME;
 import static com.scalar.ist.common.Constants.ASSET_NAME_IS_MISSING;
 import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
@@ -245,7 +246,7 @@ public class RegisterConsentStatementTest {
                         VALIDATE_ARGUMENT_SCHEMA, Util.readJsonSchemaFromResources(SCHEMA_FILENAME))
                     .build())
             .add(HOLDER_ID, UUID.randomUUID().toString())
-            .add(CONSENT_STATEMENT, MOCKED_ASSET_NAME)
+            .add(ASSET_NAME, MOCKED_ASSET_NAME)
             .build();
 
     JsonObject argument = prepareArgument();
@@ -304,7 +305,7 @@ public class RegisterConsentStatementTest {
                 .add(VALIDATE_ARGUMENT_SCHEMA, Util.readJsonSchemaFromResources(SCHEMA_FILENAME))
                 .build())
         .add(HOLDER_ID, MOCKED_HOLDER_ID)
-        .add(CONSENT_STATEMENT, MOCKED_ASSET_NAME)
+        .add(ASSET_NAME, MOCKED_ASSET_NAME)
         .add(ASSET_VERSION, MOCKED_ASSET_VERSION)
         .build();
   }
@@ -313,7 +314,7 @@ public class RegisterConsentStatementTest {
     String assetId =
         String.format(
             "%s%s-%s-%s",
-            properties.getString(CONSENT_STATEMENT),
+            properties.getString(ASSET_NAME),
             properties.getString(ASSET_VERSION),
             argument.getString(ORGANIZATION_ID),
             argument.getJsonNumber(CREATED_AT).toString());

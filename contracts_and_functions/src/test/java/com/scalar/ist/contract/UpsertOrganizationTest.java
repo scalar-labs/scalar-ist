@@ -196,9 +196,9 @@ public class UpsertOrganizationTest {
     // Act
     // Assert
     assertThatThrownBy(
-        () -> {
-          upsertOrganization.invoke(ledger, argument, Optional.of(properties));
-        })
+            () -> {
+              upsertOrganization.invoke(ledger, argument, Optional.of(properties));
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(ASSET_NAME_IS_MISSING);
     verify(upsertOrganization, never()).invokeSubContract(any(), any(), any());
@@ -348,10 +348,7 @@ public class UpsertOrganizationTest {
     String assetName = properties.getString(ASSET_NAME) + properties.getString(ASSET_VERSION, "");
     String assetId = String.join("-", assetName, argument.getString(COMPANY_ID));
 
-    return Json.createObjectBuilder()
-        .add(ASSET_ID, assetId)
-        .add(RECORD_IS_HASHED, false)
-        .build();
+    return Json.createObjectBuilder().add(ASSET_ID, assetId).add(RECORD_IS_HASHED, false).build();
   }
 
   private JsonObject prepareCompany(String organizationId) {
@@ -388,7 +385,8 @@ public class UpsertOrganizationTest {
     return Json.createArrayBuilder().add(org1).add(org2).add(org3).build();
   }
 
-  private JsonObject preparePutRecordArgument(JsonObject argument, JsonObject properties, JsonObject company) {
+  private JsonObject preparePutRecordArgument(
+      JsonObject argument, JsonObject properties, JsonObject company) {
     String assetName = properties.getString(ASSET_NAME) + properties.getString(ASSET_VERSION, "");
     String assetId = String.join("-", assetName, argument.getString(COMPANY_ID));
 

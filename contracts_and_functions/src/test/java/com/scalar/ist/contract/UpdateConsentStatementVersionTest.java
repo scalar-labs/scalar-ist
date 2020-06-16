@@ -119,7 +119,6 @@ public class UpdateConsentStatementVersionTest {
     JsonObject getAssetRecordArgument = prepareGetAssetRecordArgument();
     JsonObject consentStatement = prepareConsentStatement();
     JsonObject putRecordArgument = preparePutAssetRecordArgument(properties, argument);
-    System.out.println(new JSONObject(putRecordArgument.toString()).toString(4));
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(updateConsentStatementVersion.getCertificateKey()).thenReturn(certificateKey);
     when(updateConsentStatementVersion.getCertificateKey().getHolderId())

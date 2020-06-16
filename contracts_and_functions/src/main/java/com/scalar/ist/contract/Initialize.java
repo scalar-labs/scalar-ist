@@ -3,10 +3,7 @@ package com.scalar.ist.contract;
 import static com.scalar.ist.common.Constants.ADMIN;
 import static com.scalar.ist.common.Constants.ADMINISTRATOR_ORGANIZATION;
 import static com.scalar.ist.common.Constants.ASSET_ID;
-import static com.scalar.ist.common.Constants.ASSET_NAME;
 import static com.scalar.ist.common.Constants.ASSET_NAME_IS_MISSING;
-import static com.scalar.ist.common.Constants.ASSET_VERSION;
-import static com.scalar.ist.common.Constants.ASSET_VERSION_IS_MISSING;
 import static com.scalar.ist.common.Constants.COMPANY_ASSET_NAME;
 import static com.scalar.ist.common.Constants.COMPANY_ASSET_VERSION;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
@@ -63,7 +60,10 @@ public class Initialize extends Contract {
             arguments, properties.get(), ROLE_SYSADMIN, arguments.getString(HOLDER_ID_SYSADMIN));
     JsonObject putRecordArgumentOpAdmin =
         createPutRecordUserProfileArgument(
-            arguments, properties.get(), ROLE_SYSOPERATOR, arguments.getString(HOLDER_ID_SYSOPERATOR));
+            arguments,
+            properties.get(),
+            ROLE_SYSOPERATOR,
+            arguments.getString(HOLDER_ID_SYSOPERATOR));
 
     invokeSubContract(PUT_ASSET_RECORD, ledger, putRecordArgument);
     invokeSubContract(PUT_ASSET_RECORD, ledger, putRecordArgumentSysAdmin);
@@ -74,10 +74,11 @@ public class Initialize extends Contract {
 
   private JsonObject createPutRecordUserProfileArgument(
       JsonObject arguments, JsonObject properties, String role, String holderId) {
-    String assetName = properties.getString(USER_PROFILE_ASSET_NAME) + properties.getString(USER_PROFILE_ASSET_VERSION, "");
+    String assetName =
+        properties.getString(USER_PROFILE_ASSET_NAME)
+            + properties.getString(USER_PROFILE_ASSET_VERSION, "");
     String assetId =
-        String.format(
-            "%s-%s-%s", assetName, arguments.getString(COMPANY_ID), holderId);
+        String.format("%s-%s-%s", assetName, arguments.getString(COMPANY_ID), holderId);
 
     JsonObject data =
         Json.createObjectBuilder()
@@ -99,7 +100,8 @@ public class Initialize extends Contract {
   }
 
   private JsonObject createPutRecordArgument(JsonObject arguments, JsonObject properties) {
-    String assetName = properties.getString(COMPANY_ASSET_NAME) + properties.getString(COMPANY_ASSET_VERSION, "");
+    String assetName =
+        properties.getString(COMPANY_ASSET_NAME) + properties.getString(COMPANY_ASSET_VERSION, "");
     String assetId = String.format("%s-%s", assetName, arguments.getString(COMPANY_ID));
 
     JsonObject organizations =

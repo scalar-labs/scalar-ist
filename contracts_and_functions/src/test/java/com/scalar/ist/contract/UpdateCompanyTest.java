@@ -210,9 +210,9 @@ public class UpdateCompanyTest {
     // Act
     // Assert
     assertThatThrownBy(
-        () -> {
-          updateCompany.invoke(ledger, argument, Optional.of(properties));
-        })
+            () -> {
+              updateCompany.invoke(ledger, argument, Optional.of(properties));
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(ASSET_NAME_IS_MISSING);
     verify(updateCompany, never()).invokeSubContract(any(), any(), any());
@@ -251,7 +251,8 @@ public class UpdateCompanyTest {
     verify(updateCompany).invokeSubContract(any(), any(), any());
   }
 
-  private JsonObject preparePutRecordArgument(JsonObject argument, JsonObject companyRecord, JsonObject properties) {
+  private JsonObject preparePutRecordArgument(
+      JsonObject argument, JsonObject companyRecord, JsonObject properties) {
     JsonNumber updatedAt = argument.getJsonNumber(UPDATED_AT);
     String assetName = properties.getString(ASSET_NAME) + properties.getString(ASSET_VERSION, "");
     String assetId = String.format("%s-%s", assetName, argument.getString(COMPANY_ID));

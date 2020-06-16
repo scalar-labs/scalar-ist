@@ -3,8 +3,6 @@ package com.scalar.ist.contract;
 import static com.scalar.ist.common.Constants.ADMIN;
 import static com.scalar.ist.common.Constants.ADMINISTRATOR_ORGANIZATION;
 import static com.scalar.ist.common.Constants.ASSET_ID;
-import static com.scalar.ist.common.Constants.ASSET_NAME;
-import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.COMPANY_ADDRESS;
 import static com.scalar.ist.common.Constants.COMPANY_ASSET_NAME;
 import static com.scalar.ist.common.Constants.COMPANY_ASSET_VERSION;
@@ -196,7 +194,8 @@ public class InitializeTest {
 
   private JsonObject preparePutRecordArgument(JsonObject argument, JsonObject properties) {
     JsonNumber createdAt = argument.getJsonNumber(CREATED_AT);
-    String assetName = properties.getString(COMPANY_ASSET_NAME) + properties.getString(COMPANY_ASSET_VERSION, "");
+    String assetName =
+        properties.getString(COMPANY_ASSET_NAME) + properties.getString(COMPANY_ASSET_VERSION, "");
     String assetId = String.format("%s-%s", assetName, argument.getString(COMPANY_ID));
 
     JsonObject administratorInformation =
@@ -258,10 +257,11 @@ public class InitializeTest {
 
   private JsonObject preparePutUserProfileArgument(
       JsonObject arguments, JsonObject properties, String role, String holderIdConstant) {
-    String assetName = properties.getString(USER_PROFILE_ASSET_NAME) + properties.getString(USER_PROFILE_ASSET_VERSION, "");
+    String assetName =
+        properties.getString(USER_PROFILE_ASSET_NAME)
+            + properties.getString(USER_PROFILE_ASSET_VERSION, "");
     String assetId =
-        String.format(
-            "%s-%s-%s", assetName, arguments.getString(COMPANY_ID), holderIdConstant);
+        String.format("%s-%s-%s", assetName, arguments.getString(COMPANY_ID), holderIdConstant);
 
     JsonObject data =
         Json.createObjectBuilder()

@@ -11,7 +11,6 @@ import static com.scalar.ist.common.Constants.CONSENT_STATUS_APPROVED;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.CREATED_AT;
-import static com.scalar.ist.common.Constants.CREATED_BY;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.PUT_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.RECORD_DATA;
@@ -103,10 +102,7 @@ public class UpsertConsentStatusTest {
   public void invoke_PropertiesMissingSchema_ShouldThrowContractContextException() {
     // Arrange
     JsonObject argument = prepareArgument();
-    JsonObject properties =
-        Json.createObjectBuilder()
-            .add(ASSET_NAME, MOCKED_ASSET_NAME)
-            .build();
+    JsonObject properties = Json.createObjectBuilder().add(ASSET_NAME, MOCKED_ASSET_NAME).build();
 
     // Act
     // Assert
@@ -184,18 +180,12 @@ public class UpsertConsentStatusTest {
     String dataSubjectId = MOCKED_HOLDER_ID;
     JsonNumber createdAt = argument.getJsonNumber(UPDATED_AT);
     String assetName = properties.getString(ASSET_NAME) + properties.getString(ASSET_VERSION, "");
-    String assetId =
-        String.join(
-            "-",
-            assetName,
-            consentStatementId,
-            dataSubjectId);
+    String assetId = String.join("-", assetName, consentStatementId, dataSubjectId);
 
     List<String> params =
         new ArrayList<>(
             Arrays.asList(CONSENT_STATEMENT_ID, CONSENT_STATUS, CONSENTED_DETAIL, REJECTED_DETAIL));
     JsonObjectBuilder data = createRecordData(params, argument);
-    data.add(CREATED_BY, dataSubjectId);
 
     return Json.createObjectBuilder()
         .add(ASSET_ID, assetId)

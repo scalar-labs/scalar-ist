@@ -55,7 +55,8 @@ public class UpdateCompany extends Contract {
     return invokeSubContract(PUT_ASSET_RECORD, ledger, putRecordArgument);
   }
 
-  private JsonObject createPutRecordArgument(Ledger ledger, JsonObject arguments, JsonObject properties) {
+  private JsonObject createPutRecordArgument(
+      Ledger ledger, JsonObject arguments, JsonObject properties) {
     JsonNumber updatedAt = arguments.getJsonNumber(UPDATED_AT);
     String assetName = properties.getString(ASSET_NAME) + properties.getString(ASSET_VERSION, "");
     String assetId = String.format("%s-%s", assetName, arguments.getString(COMPANY_ID));

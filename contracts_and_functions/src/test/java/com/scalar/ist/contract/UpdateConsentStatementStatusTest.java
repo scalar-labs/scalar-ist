@@ -126,12 +126,12 @@ public class UpdateConsentStatementStatusTest {
       Json.createArrayBuilder().add(mockedPurposes).build();
   @Mock private Ledger ledger;
   @Mock private CertificateEntry.Key certificateKey;
-  private UpdateConsentStatementStatus updateConsentDocumentStatus;
+  private UpdateConsentStatementStatus updateConsentStatementStatus;
 
   @BeforeEach
   private void setUp() {
     MockitoAnnotations.initMocks(this);
-    updateConsentDocumentStatus = spy(new UpdateConsentStatementStatus());
+    updateConsentStatementStatus = spy(new UpdateConsentStatementStatus());
   }
 
   @Test
@@ -147,40 +147,40 @@ public class UpdateConsentStatementStatusTest {
     JsonObject consentStatement = prepareConsentStatement();
     JsonObject putRecordArgument = preparePutAssetRecordArgument(argument);
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
-    when(updateConsentDocumentStatus.getCertificateKey()).thenReturn(certificateKey);
-    when(updateConsentDocumentStatus.getCertificateKey().getHolderId())
+    when(updateConsentStatementStatus.getCertificateKey()).thenReturn(certificateKey);
+    when(updateConsentStatementStatus.getCertificateKey().getHolderId())
         .thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
-        .when(updateConsentDocumentStatus)
+        .when(updateConsentStatementStatus)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
     doReturn(userProfile)
-        .when(updateConsentDocumentStatus)
+        .when(updateConsentStatementStatus)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
     doReturn(null)
-        .when(updateConsentDocumentStatus)
+        .when(updateConsentStatementStatus)
         .invokeSubContract(VALIDATE_PERMISSION, ledger, permissionValidationArgument);
     doReturn(consentStatement)
-        .when(updateConsentDocumentStatus)
+        .when(updateConsentStatementStatus)
         .invokeSubContract(GET_ASSET_RECORD, ledger, getAssetRecordArgument);
     doReturn(JsonObject.EMPTY_JSON_OBJECT)
-        .when(updateConsentDocumentStatus)
+        .when(updateConsentStatementStatus)
         .invokeSubContract(PUT_ASSET_RECORD, ledger, putRecordArgument);
 
     // act
-    updateConsentDocumentStatus.invoke(ledger, argument, Optional.of(properties));
+    updateConsentStatementStatus.invoke(ledger, argument, Optional.of(properties));
 
     // assert
-    verify(updateConsentDocumentStatus)
+    verify(updateConsentStatementStatus)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
-    verify(updateConsentDocumentStatus)
+    verify(updateConsentStatementStatus)
         .invokeSubContract(GET_ASSET_RECORD, ledger, getAssetRecordArgument);
-    verify(updateConsentDocumentStatus)
+    verify(updateConsentStatementStatus)
         .invokeSubContract(PUT_ASSET_RECORD, ledger, putRecordArgument);
-    verify(updateConsentDocumentStatus)
+    verify(updateConsentStatementStatus)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
-    verify(updateConsentDocumentStatus)
+    verify(updateConsentStatementStatus)
         .invokeSubContract(VALIDATE_PERMISSION, ledger, permissionValidationArgument);
-    verify(updateConsentDocumentStatus, times(5)).invokeSubContract(any(), any(), any());
+    verify(updateConsentStatementStatus, times(5)).invokeSubContract(any(), any(), any());
   }
 
   @Test
@@ -201,25 +201,25 @@ public class UpdateConsentStatementStatusTest {
     JsonObject argument = prepareArgument();
     JsonObject validateArgumentArgument =
         prepareValidationArgument(argument, propertiesWithWrongHolderId);
-    when(updateConsentDocumentStatus.getCertificateKey()).thenReturn(certificateKey);
-    when(updateConsentDocumentStatus.getCertificateKey().getHolderId())
+    when(updateConsentStatementStatus.getCertificateKey()).thenReturn(certificateKey);
+    when(updateConsentStatementStatus.getCertificateKey().getHolderId())
         .thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
-        .when(updateConsentDocumentStatus)
+        .when(updateConsentStatementStatus)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
 
     // act
     // assert
     assertThatThrownBy(
             () -> {
-              updateConsentDocumentStatus.invoke(
+              updateConsentStatementStatus.invoke(
                   ledger, argument, Optional.of(propertiesWithWrongHolderId));
             })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(HOLDER_ID_IS_NOT_MATCHED);
-    verify(updateConsentDocumentStatus)
+    verify(updateConsentStatementStatus)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
-    verify(updateConsentDocumentStatus).invokeSubContract(any(), any(), any());
+    verify(updateConsentStatementStatus).invokeSubContract(any(), any(), any());
   }
 
   @Test
@@ -232,11 +232,11 @@ public class UpdateConsentStatementStatusTest {
     // Assert
     assertThatThrownBy(
             () -> {
-              updateConsentDocumentStatus.invoke(ledger, argument, Optional.of(properties));
+              updateConsentStatementStatus.invoke(ledger, argument, Optional.of(properties));
             })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
-    verify(updateConsentDocumentStatus, never()).invokeSubContract(any(), any(), any());
+    verify(updateConsentStatementStatus, never()).invokeSubContract(any(), any(), any());
   }
 
   @Test
@@ -257,11 +257,11 @@ public class UpdateConsentStatementStatusTest {
     // Assert
     assertThatThrownBy(
             () -> {
-              updateConsentDocumentStatus.invoke(ledger, argument, Optional.of(properties));
+              updateConsentStatementStatus.invoke(ledger, argument, Optional.of(properties));
             })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(HOLDER_ID_IS_MISSING);
-    verify(updateConsentDocumentStatus, never()).invokeSubContract(any(), any(), any());
+    verify(updateConsentStatementStatus, never()).invokeSubContract(any(), any(), any());
   }
 
   private JsonObject prepareGetAssetRecordArgument() {

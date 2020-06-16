@@ -33,13 +33,12 @@ public class Util {
   }
 
   public static String randomLowerAlphabet(int length) {
-    int leftLimit = 97; // numeral 'a'
+    int leftLimit = 97; // letter 'a'
     int rightLimit = 122; // letter 'z'
     Random random = new Random();
     String generatedString =
         random
             .ints(leftLimit, rightLimit + 1)
-            .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
             .limit(length)
             .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
             .toString();

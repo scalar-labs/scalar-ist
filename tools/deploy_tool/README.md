@@ -17,15 +17,16 @@ After a successful run the `deploy_tool` executable may be found in `/build/inst
 To run the tool
 
 ```bash
-build/install/deploy_tool/bin/deploy_tool -f /path/to/command.json 
+build/install/deploy_tool/bin/deploy_tool -f /path/to/command.json
 ```
 
 ## Required files to run the tool
-    
+
 - Command file (JSON Format)
 - Binary file of the contract or function to be registered
 - Contract Properties definition file
 - Contract Argument definition file
+- Private key and certificate files in pem format
 
 
 ## Compile contracts and functions
@@ -188,7 +189,7 @@ Examples of definitions are shown below.
 - contract_argument : Contract argument definition
 
 #### contract_argument types
-     
+
 - file : Load the contents of the file specified by path
 - scalar.dl.client.cert_holder_id : Overwrite it with the value of `scalar.dl.client.cert_holder_id` specified in the set-holder
 - now : Overwrite the millisecond value at runtime

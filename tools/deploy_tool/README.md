@@ -153,7 +153,7 @@ Register the contract to be used in Scalar DL.
 - path : path to the contract binary file
 - properties : Contract properties definition
 
-#### properties types
+#### `properties types`
 
 - file : Load the contents of the file specified by path
 - scalar.dl.client.cert_holder_id : Overwrite it with the value of `scalar.dl.client.cert_holder_id` specified in the set-holder
@@ -183,12 +183,12 @@ Examples of definitions are shown below.
 ```
 
 
-#### `execute-contract`
+### `execute-contract`
 
 - id : Contract ID for the contract you are executiong
 - contract_argument : Contract argument definition
 
-#### contract_argument types
+#### `contract_argument types`
 
 - file : Load the contents of the file specified by path
 - scalar.dl.client.cert_holder_id : Overwrite it with the value of `scalar.dl.client.cert_holder_id` specified in the set-holder

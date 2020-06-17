@@ -108,9 +108,6 @@
       "optional": {
         "holder_id": {
           "type": "scalar.dl.client.cert_holder_id"
-        },
-        "created_at": {
-          "type": "now"
         }
       }
     }

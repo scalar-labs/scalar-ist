@@ -19,9 +19,17 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/argument/get_user_profile.json"
+        "path": "build/resources/main/schema/argument/register_data_set_schema.json"
       },
-      "asset_name": "up",
+      "asset_schema": {
+        "type": "file",
+        "path": "build/resources/main/schema/asset/register_data_set_schema.json"
+      },
+      "table_schema": {
+        "type": "file",
+        "path": "build/resources/main/schema/table/data_set_schema.json"
+      },
+      "asset_name": "ds",
       "asset_version": "01",
       "holder_id": {
         "type": "scalar.dl.client.cert_holder_id"
@@ -74,23 +82,23 @@
   },
   {
     "action": "register-contract",
-    "id": "RegisterDataRetentionPolicy",
+    "id": "UpdateDataSetSchema",
     "binary_name": "com.scalar.ist.contract.UpsertMaster",
     "path": "build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class",
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/argument/register_data_retention_policy.json"
+        "path": "build/resources/main/schema/argument/update_data_set_schema.json"
       },
       "asset_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/asset/register_data_retention_policy.json"
+        "path": "build/resources/main/schema/asset/update_data_set_schema.json"
       },
       "table_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/table/data_retention_policy.json"
+        "path": "build/resources/main/schema/table/data_set_schema.json"
       },
-      "asset_name": "rp",
+      "asset_name": "ds",
       "asset_version": "01",
       "holder_id": {
         "type": "scalar.dl.client.cert_holder_id"
@@ -99,11 +107,11 @@
   },
   {
     "action": "execute-contract",
-    "id": "RegisterDataRetentionPolicy",
+    "id": "UpdateDataSetSchema",
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/main/argument/register_data_retention_policy.json"
+        "path": "build/resources/main/argument/update_data_set_schema.json"
       },
       "optional": {
         "holder_id": {

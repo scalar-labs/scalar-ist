@@ -74,23 +74,23 @@
   },
   {
     "action": "register-contract",
-    "id": "RegisterDataRetentionPolicy",
+    "id": "UpdateBenefit",
     "binary_name": "com.scalar.ist.contract.UpsertMaster",
     "path": "build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class",
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/argument/register_data_retention_policy.json"
+        "path": "build/resources/main/schema/argument/update_benefit.json"
       },
       "asset_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/asset/register_data_retention_policy.json"
+        "path": "build/resources/main/schema/asset/update_benefit.json"
       },
       "table_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/table/data_retention_policy.json"
+        "path": "build/resources/main/schema/table/benefit.json"
       },
-      "asset_name": "rp",
+      "asset_name": "bn",
       "asset_version": "01",
       "holder_id": {
         "type": "scalar.dl.client.cert_holder_id"
@@ -99,11 +99,11 @@
   },
   {
     "action": "execute-contract",
-    "id": "RegisterDataRetentionPolicy",
+    "id": "UpdateBenefit",
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/main/argument/register_data_retention_policy.json"
+        "path": "build/resources/main/argument/update_benefit.json"
       },
       "optional": {
         "holder_id": {

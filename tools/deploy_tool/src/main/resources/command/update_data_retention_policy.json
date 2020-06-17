@@ -74,17 +74,17 @@
   },
   {
     "action": "register-contract",
-    "id": "RegisterDataRetentionPolicy",
+    "id": "UpdateDataRetentionPolicy",
     "binary_name": "com.scalar.ist.contract.UpsertMaster",
     "path": "build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class",
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/argument/register_data_retention_policy.json"
+        "path": "build/resources/main/schema/argument/update_data_retention_policy.json"
       },
       "asset_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/asset/register_data_retention_policy.json"
+        "path": "build/resources/main/schema/asset/update_data_retention_policy.json"
       },
       "table_schema": {
         "type": "file",
@@ -99,11 +99,11 @@
   },
   {
     "action": "execute-contract",
-    "id": "RegisterDataRetentionPolicy",
+    "id": "UpdateDataRetentionPolicy",
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/main/argument/register_data_retention_policy.json"
+        "path": "build/resources/main/argument/update_data_retention_policy.json"
       },
       "optional": {
         "holder_id": {

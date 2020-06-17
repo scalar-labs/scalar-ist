@@ -9,6 +9,7 @@
   "status":"published",
   "title":"Title",
   "abstract":"Abstract",
+  "changes":"changes",
   "purpose_ids":[
     "JvzK9gpl2MSBUfTERsXIvFzzscDXwJdlEkgo1d"
   ],
@@ -54,7 +55,6 @@
       }
     }
   ],
-  "created_at":1,
   "updated_at":2,
   "_functions_": [
     "UpdateConsentStatementRevision"

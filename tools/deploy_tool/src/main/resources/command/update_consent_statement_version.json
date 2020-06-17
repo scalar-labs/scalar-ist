@@ -98,9 +98,6 @@
         "path": "build/resources/main/argument/update_consent_statement_version.json"
       },
       "optional": {
-        "holder_id": {
-          "type": "scalar.dl.client.cert_holder_id"
-        }
       }
     }
   }

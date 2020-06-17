@@ -81,9 +81,6 @@
         "path": "build/resources/main/argument/upsert_consent_status_update.json"
       },
       "optional": {
-        "holder_id": {
-          "type": "scalar.dl.client.cert_holder_id"
-        }
       }
     }
   }

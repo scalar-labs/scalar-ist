@@ -106,9 +106,6 @@
         "path": "build/resources/main/argument/update_data_retention_policy.json"
       },
       "optional": {
-        "holder_id": {
-          "type": "scalar.dl.client.cert_holder_id"
-        }
       }
     }
   }

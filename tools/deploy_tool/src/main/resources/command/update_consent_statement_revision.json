@@ -82,8 +82,6 @@
         "type": "file",
         "path": "build/resources/main/schema/argument/update_consent_statement_revision.json"
       },
-      "asset_name": "cs",
-      "asset_version": "01",
       "holder_id": {
         "type": "scalar.dl.client.cert_holder_id"
       }
@@ -98,9 +96,6 @@
         "path": "build/resources/main/argument/update_consent_statement_revision.json"
       },
       "optional": {
-        "holder_id": {
-          "type": "scalar.dl.client.cert_holder_id"
-        }
       }
     }
   }

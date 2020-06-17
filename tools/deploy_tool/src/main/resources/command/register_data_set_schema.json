@@ -114,9 +114,6 @@
         "path": "build/resources/main/argument/register_data_set_schema.json"
       },
       "optional": {
-        "holder_id": {
-          "type": "scalar.dl.client.cert_holder_id"
-        }
       }
     }
   }

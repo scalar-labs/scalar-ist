@@ -2,10 +2,10 @@
   {
     "action": "set-holder",
     "client-properties": {
-      "scalar.dl.client.cert_holder_id": "ba857670-4fc0-410c-8c83-5dc911c6dc12",
+      "scalar.dl.client.cert_holder_id": "a5e9971d-32be-490d-bff4-c6d65816c1e5",
       "scalar.dl.client.cert_version": "1",
-      "scalar.dl.client.cert_path": "build/resources/main/holder/keys/controller.pem",
-      "scalar.dl.client.private_key_path": "build/resources/main/holder/keys/controller-key.pem"
+      "scalar.dl.client.cert_path": "build/resources/main/holder/keys/admin.pem",
+      "scalar.dl.client.private_key_path": "build/resources/main/holder/keys/admin-key.pem"
     }
   },
   {
@@ -74,23 +74,15 @@
   },
   {
     "action": "register-contract",
-    "id": "RegisterDataSetSchema",
-    "binary_name": "com.scalar.ist.contract.UpsertMaster",
-    "path": "build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class",
+    "id": "UpdateCompany",
+    "binary_name": "com.scalar.ist.contract.UpdateCompany",
+    "path": "build/classes/java/main/com/scalar/ist/contract/UpdateCompany.class",
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/argument/register_data_set_schema.json"
+        "path": "build/resources/main/schema/argument/update_company.json"
       },
-      "asset_schema": {
-        "type": "file",
-        "path": "build/resources/main/schema/asset/data_set_schema.json"
-      },
-      "table_schema": {
-        "type": "file",
-        "path": "build/resources/main/schema/table/data_set_schema.json"
-      },
-      "asset_name": "ds",
+      "asset_name": "cp",
       "asset_version": "01",
       "holder_id": {
         "type": "scalar.dl.client.cert_holder_id"
@@ -99,11 +91,11 @@
   },
   {
     "action": "execute-contract",
-    "id": "RegisterDataSetSchema",
+    "id": "UpdateCompany",
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/main/argument/register_data_set_schema.json"
+        "path": "build/resources/main/argument/update_company.json"
       },
       "optional": {
       }

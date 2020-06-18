@@ -2,10 +2,10 @@
   {
     "action": "set-holder",
     "client-properties": {
-      "scalar.dl.client.cert_holder_id": "data_subject",
+      "scalar.dl.client.cert_holder_id": "61b1af48-75f7-4626-af37-2d9973c7a5c2",
       "scalar.dl.client.cert_version": "1",
-      "scalar.dl.client.cert_path": "build/resources/main/holder/keys/data_subject.pem",
-      "scalar.dl.client.private_key_path": "build/resources/main/holder/keys/data_subject-key.pem"
+      "scalar.dl.client.cert_path": "build/resources/main/holder/keys/sys_admin.pem",
+      "scalar.dl.client.private_key_path": "build/resources/main/holder/keys/sys_admin-key.pem"
     }
   },
   {
@@ -13,15 +13,16 @@
   },
   {
     "action": "register-contract",
-    "id": "PutAssetRecord",
-    "binary_name": "com.scalar.ist.contract.PutAssetRecord",
-    "path": "build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class",
+    "id": "GetUserProfile",
+    "binary_name": "com.scalar.ist.contract.GetUserProfile",
+    "path": "build/classes/java/main/com/scalar/ist/contract/GetUserProfile.class",
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/argument/put_asset_record.json"
+        "path": "build/resources/main/schema/argument/get_user_profile.json"
       },
-      "salt": "salt",
+      "asset_name": "up",
+      "asset_version": "01",
       "holder_id": {
         "type": "scalar.dl.client.cert_holder_id"
       }
@@ -45,6 +46,22 @@
   },
   {
     "action": "register-contract",
+    "id": "PutAssetRecord",
+    "binary_name": "com.scalar.ist.contract.PutAssetRecord",
+    "path": "build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/main/schema/argument/put_asset_record.json"
+      },
+      "salt": "salt",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "register-contract",
     "id": "ValidateArgument",
     "binary_name": "com.scalar.ist.contract.ValidateArgument",
     "path": "build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
@@ -57,16 +74,18 @@
   },
   {
     "action": "register-contract",
-    "id": "UpsertConsentStatus",
-    "binary_name": "com.scalar.ist.contract.UpsertConsentStatus",
-    "path": "build/classes/java/main/com/scalar/ist/contract/UpsertConsentStatus.class",
+    "id": "UpsertUserProfile",
+    "binary_name": "com.scalar.ist.contract.UpsertUserProfile",
+    "path": "build/classes/java/main/com/scalar/ist/contract/UpsertUserProfile.class",
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/argument/upsert_consent_status.json"
+        "path": "build/resources/main/schema/argument/upsert_user_profile.json"
       },
-      "asset_name": "ct",
-      "asset_version": "01",
+      "company_asset_name": "cp",
+      "company_asset_version": "01",
+      "user_profile_asset_name": "up",
+      "user_profile_asset_version": "01",
       "holder_id": {
         "type": "scalar.dl.client.cert_holder_id"
       }
@@ -74,16 +93,13 @@
   },
   {
     "action": "execute-contract",
-    "id": "UpsertConsentStatus",
+    "id": "UpsertUserProfile",
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/main/argument/upsert_consent_status_register.json"
+        "path": "build/resources/main/argument/upsert_user_profile_controller_add_processor.json"
       },
       "optional": {
-        "holder_id": {
-          "type": "scalar.dl.client.cert_holder_id"
-        }
       }
     }
   }

@@ -84,7 +84,7 @@
       },
       "asset_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/asset/update_benefit.json"
+        "path": "build/resources/main/schema/asset/benefit.json"
       },
       "table_schema": {
         "type": "file",

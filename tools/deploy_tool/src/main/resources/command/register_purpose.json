@@ -84,7 +84,7 @@
       },
       "asset_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/asset/register_purpose.json"
+        "path": "build/resources/main/schema/asset/purpose.json"
       },
       "table_schema": {
         "type": "file",

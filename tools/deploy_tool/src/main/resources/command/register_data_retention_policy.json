@@ -84,7 +84,7 @@
       },
       "asset_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/asset/register_data_retention_policy.json"
+        "path": "build/resources/main/schema/asset/data_retention_policy.json"
       },
       "table_schema": {
         "type": "file",

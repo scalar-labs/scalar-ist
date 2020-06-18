@@ -19,17 +19,9 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/argument/register_data_set_schema.json"
+        "path": "build/resources/main/schema/argument/get_user_profile.json"
       },
-      "asset_schema": {
-        "type": "file",
-        "path": "build/resources/main/schema/asset/register_data_set_schema.json"
-      },
-      "table_schema": {
-        "type": "file",
-        "path": "build/resources/main/schema/table/data_set_schema.json"
-      },
-      "asset_name": "ds",
+      "asset_name": "up",
       "asset_version": "01",
       "holder_id": {
         "type": "scalar.dl.client.cert_holder_id"
@@ -92,7 +84,7 @@
       },
       "asset_schema": {
         "type": "file",
-        "path": "build/resources/main/schema/asset/update_data_set_schema.json"
+        "path": "build/resources/main/schema/asset/data_set_schema.json"
       },
       "table_schema": {
         "type": "file",

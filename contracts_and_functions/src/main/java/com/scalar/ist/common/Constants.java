@@ -179,6 +179,9 @@ public class Constants {
   public static final String DB_VALUE_BIGINT = "bigint";
   public static final String DB_VALUE_TEXT = "text";
   public static final String DB_VALUE_BOOLEAN = "boolean";
+  public static final String DB_VALUE_FLOAT = "float";
+  public static final String DB_VALUE_INT = "int";
+  public static final String DB_VALUE_BLOB = "blob";
   public static final String DB_TABLE_PARTITION_KEYS = "partition_keys";
   public static final String DB_TABLE_CLUSTERING_KEYS = "clustering_keys";
   public static final String DB_TABLE_COLUMNS = "columns";
@@ -189,9 +192,11 @@ public class Constants {
   public static final String ASSET_BOOLEAN_TYPE = "boolean";
   public static final String ASSET_ARRAY_TYPE = "array";
   public static final String ASSET_OBJECT_TYPE = "object";
+  public static final String ASSET_NUMBER_TYPE = "number";
   public static final String ASSET_INTEGER_TYPE = "integer";
   public static final String ASSET_DEFAULT_VALUE = "default";
   public static final String ASSET_TYPE = "type";
+  public static final String ASSET_TYPE_PATTERN = "pattern";
   // Error messages
   public static final String DISALLOWED_CONTRACT_EXECUTION_ORDER =
       "The contract is not allowed to execute in the specified order.";

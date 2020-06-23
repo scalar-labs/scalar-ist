@@ -1,20 +1,5 @@
 package com.scalar.ist.function;
 
-import com.scalar.db.api.Get;
-import com.scalar.db.api.Put;
-import com.scalar.db.api.Result;
-import com.scalar.db.io.BigIntValue;
-import com.scalar.db.io.BooleanValue;
-import com.scalar.db.io.Key;
-import com.scalar.db.io.TextValue;
-import com.scalar.dl.ledger.database.Database;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.dl.ledger.function.Function;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import java.util.Optional;
-
 import static com.scalar.ist.common.Constants.ADMIN;
 import static com.scalar.ist.common.Constants.ADMINISTRATOR_ORGANIZATION;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
@@ -29,6 +14,20 @@ import static com.scalar.ist.common.Constants.ORGANIZATION_METADATA;
 import static com.scalar.ist.common.Constants.ORGANIZATION_NAME;
 import static com.scalar.ist.common.Constants.ORGANIZATION_TABLE;
 import static com.scalar.ist.common.Constants.RECORD_IS_ALREADY_REGISTERED;
+
+import com.scalar.db.api.Get;
+import com.scalar.db.api.Put;
+import com.scalar.db.api.Result;
+import com.scalar.db.io.BigIntValue;
+import com.scalar.db.io.BooleanValue;
+import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
+import com.scalar.dl.ledger.database.Database;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.dl.ledger.function.Function;
+import java.util.Optional;
+import javax.json.Json;
+import javax.json.JsonObject;
 
 public class RegisterOrganization extends Function {
 

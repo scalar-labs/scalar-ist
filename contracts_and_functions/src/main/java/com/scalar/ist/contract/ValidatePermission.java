@@ -1,8 +1,8 @@
 package com.scalar.ist.contract;
 
+import static com.scalar.ist.common.Constants.DISALLOWED_CONTRACT_EXECUTION_ORDER;
 import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_ARGUMENT;
 import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_REQUIRED;
-import static com.scalar.ist.common.Constants.DISALLOWED_CONTRACT_EXECUTION_ORDER;
 import static com.scalar.ist.common.Constants.PERMISSION_DENIED;
 import static com.scalar.ist.common.Constants.ROLES_REQUIRED;
 import static com.scalar.ist.common.Constants.USER_PROFILE_ROLES;

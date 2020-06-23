@@ -1,9 +1,7 @@
 package com.scalar.ist.contract;
 
 import static com.scalar.ist.common.Constants.ASSET_ID;
-import static com.scalar.ist.common.Constants.ASSET_NAME;
 import static com.scalar.ist.common.Constants.ASSET_NAME_IS_MISSING;
-import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.COMPANY_ASSET_NAME;
 import static com.scalar.ist.common.Constants.COMPANY_ASSET_VERSION;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
@@ -69,11 +67,12 @@ public class UpsertUserProfile extends Contract {
 
   private JsonObject createPutRecordArgument(JsonObject arguments, JsonObject properties) {
     JsonNumber createdAt = arguments.getJsonNumber(CREATED_AT);
-    String assetName = properties.getString(USER_PROFILE_ASSET_NAME) + properties.getString(USER_PROFILE_ASSET_VERSION, "");
+    String assetName =
+        properties.getString(USER_PROFILE_ASSET_NAME)
+            + properties.getString(USER_PROFILE_ASSET_VERSION, "");
     String assetId =
         String.format(
-            "%s-%s-%s",
-            assetName, arguments.getString(COMPANY_ID), arguments.getString(HOLDER_ID));
+            "%s-%s-%s", assetName, arguments.getString(COMPANY_ID), arguments.getString(HOLDER_ID));
 
     JsonObject recordData =
         Json.createObjectBuilder()
@@ -100,7 +99,9 @@ public class UpsertUserProfile extends Contract {
             .add(COMPANY_ID, arguments.getString(USER_PROFILE_EXECUTOR_COMPANY_ID))
             .build();
     JsonObject userProfile = invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
-    String companyAssetName = properties.get().getString(COMPANY_ASSET_NAME) + properties.get().getString(COMPANY_ASSET_VERSION, "");
+    String companyAssetName =
+        properties.get().getString(COMPANY_ASSET_NAME)
+            + properties.get().getString(COMPANY_ASSET_VERSION, "");
     String companyAssetId =
         String.format("%s-%s", companyAssetName, arguments.getString(COMPANY_ID));
     JsonObject companyAssetArgument =

@@ -51,17 +51,16 @@ public class UpdateThirdParty extends Contract {
   public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validate(ledger, argument, properties);
 
-    return invokeSubContract(PUT_ASSET_RECORD, ledger, createPutRecordArgument(ledger, argument, properties.get()));
+    return invokeSubContract(
+        PUT_ASSET_RECORD, ledger, createPutRecordArgument(ledger, argument, properties.get()));
   }
 
-  private JsonObject createPutRecordArgument(Ledger ledger, JsonObject argument, JsonObject properties) {
+  private JsonObject createPutRecordArgument(
+      Ledger ledger, JsonObject argument, JsonObject properties) {
     String assetName = properties.getString(ASSET_NAME) + properties.getString(ASSET_VERSION, "");
     String assetId =
         String.join(
-            "-",
-            assetName,
-            argument.getString(COMPANY_ID),
-            argument.getString(THIRD_PARTY_DOMAIN));
+            "-", assetName, argument.getString(COMPANY_ID), argument.getString(THIRD_PARTY_DOMAIN));
     JsonObject thirdParty =
         invokeSubContract(
             GET_ASSET_RECORD,

@@ -118,7 +118,6 @@ public class RegisterConsentStatement extends Contract {
   }
 
   private void validateProperties(Optional<JsonObject> properties) {
-    properties.ifPresent(p -> System.out.println(p));
     if (!properties.isPresent() || !properties.get().containsKey(CONTRACT_ARGUMENT_SCHEMA)) {
       throw new ContractContextException(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
     }

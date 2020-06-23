@@ -36,6 +36,9 @@ public class UpsertConsentStatus extends Function {
     Key partitionKey = new Key(new TextValue(DATA_SUBJECT_ID, dataSubjectId));
     Key clusteringKey = new Key(new TextValue(CONSENT_STATEMENT_ID, consentStatementId));
 
+    Get get = new Get(partitionKey, clusteringKey).forNamespace(NAMESPACE).forTable(CONSENT_TABLE);
+    database.get(get);
+
     Put put =
         new Put(partitionKey, clusteringKey)
             .withValues(

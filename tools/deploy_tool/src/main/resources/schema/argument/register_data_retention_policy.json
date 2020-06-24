@@ -2,6 +2,7 @@
   "$schema":"http://json-schema.org/draft-07/schema#",
   "type":"object",
   "required":[
+    "action",
     "company_id",
     "organization_id",
     "policy_name",
@@ -12,6 +13,12 @@
     "created_at"
   ],
   "properties":{
+    "action":{
+      "type":"string",
+      "enum":[
+        "insert"
+      ]
+    },
     "company_id":{
       "type":"string",
       "format":"hostname"

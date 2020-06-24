@@ -43,6 +43,10 @@
       "type": "boolean"
     },
     {
+      "name": "created_by",
+      "type": "text"
+    },
+    {
       "name": "updated_at",
       "type": "bigint"
     }

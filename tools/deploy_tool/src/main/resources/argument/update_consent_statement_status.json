@@ -5,6 +5,6 @@
   "status":"inactive",
   "updated_at":0,
   "_functions_": [
-    "UpdateConsentStatementStatus"
+    "UpsertConsentStatementStatus"
   ]
 }

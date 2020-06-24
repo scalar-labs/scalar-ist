@@ -67,7 +67,7 @@
         "path": "build/classes/java/main/com/scalar/ist/function/UpdateConsentStatementRevision.class"
       },
       {
-        "id": "UpdateConsentStatementStatus",
+        "id": "UpsertConsentStatementStatus",
         "binary_name": "com.scalar.ist.function.UpdateConsentStatementStatus",
         "path": "build/classes/java/main/com/scalar/ist/function/UpdateConsentStatementStatus.class"
       },

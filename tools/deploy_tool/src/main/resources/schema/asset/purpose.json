@@ -32,9 +32,6 @@
     },
     "note": {
       "type": "string"
-    },
-    "created_at": {
-      "type": "integer"
     }
   }
 }

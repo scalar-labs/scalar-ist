@@ -26,10 +26,6 @@
     },
     "time_of_provision":{
       "type":"string"
-    },
-    "is_active":{
-      "type":"boolean",
-      "default":true
     }
   }
 }

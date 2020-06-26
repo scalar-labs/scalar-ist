@@ -342,6 +342,8 @@ CREATE TABLE ist.benefit
     description                TEXT,
     provider                   TEXT,
     time_of_provision          TEXT,
+    is_active                  BOOLEAN,
+    created_by                 TEXT,
     updated_at                 BIGINT,
 
     before_category_of_benefit TEXT,
@@ -349,6 +351,8 @@ CREATE TABLE ist.benefit
     before_description         TEXT,
     before_provider            TEXT,
     before_time_of_provision   TEXT,
+    before_is_active           BOOLEAN,
+    before_created_by          TEXT,
     before_updated_at          BIGINT,
 
     tx_id                      TEXT,

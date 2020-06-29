@@ -16,7 +16,6 @@ import static com.scalar.ist.common.Constants.ASSET_STRING_TYPE;
 import static com.scalar.ist.common.Constants.ASSET_TYPE;
 import static com.scalar.ist.common.Constants.ASSET_TYPE_PATTERN;
 import static com.scalar.ist.common.Constants.ASSET_VERSION;
-import static com.scalar.ist.common.Constants.BENEFIT_ID;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
@@ -88,7 +87,6 @@ public class UpsertMaster extends Contract {
       dataBuilder = Json.createObjectBuilder(benefit);
     }
     addData(assetId, properties.getJsonObject(ASSET_SCHEMA), argument, dataBuilder);
-    dataBuilder.add(BENEFIT_ID, assetId);
 
     return Json.createObjectBuilder()
         .add(ASSET_ID, assetId)

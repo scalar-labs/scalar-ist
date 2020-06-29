@@ -101,11 +101,11 @@ public class Constants {
   public static final String CONSENT_STATEMENT_INACTIVE = "inactive";
   public static final String CONSENT_STATEMENT_VERSION = "version";
   public static final String CONSENT_STATEMENT_TITLE = "title";
-  public static final String CONSENT_STATEMENT_BENEFIT_IDS = "benefits_ids";
+  public static final String CONSENT_STATEMENT_BENEFIT_IDS = "benefit_ids";
   public static final String CONSENT_STATEMENT_STATUS = "status";
   public static final String CONSENT_STATEMENT_DRAFT_STATUS = "draft";
   public static final String CONSENT_STATEMENT_OPTIONAL_THIRD_PARTIES = "optional_third_parties";
-  public static final String CONSENT_STATEMENT_OPTIONAL_PURPOSES = "optional_purpose";
+  public static final String CONSENT_STATEMENT_OPTIONAL_PURPOSES = "optional_purposes";
   public static final String CONSENT_STATEMENT_DATA_SET_SCHEMA_IDS = "data_set_schema_ids";
   public static final String CONSENT_STATEMENT_ABSTRACT = "abstract";
   public static final String CONSENT_STATEMENT_THIRD_PARTY_IDS = "third_party_ids";

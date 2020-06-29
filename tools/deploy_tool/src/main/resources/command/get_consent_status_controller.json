@@ -49,12 +49,7 @@
         "type": "file",
         "path": "build/resources/main/schema/argument/get_consent_status.json"
       },
-      "asset_name": "ct",
-      "asset_version": "01",
-      "salt": "salt",
-      "holder_id": {
-        "type": "scalar.dl.client.cert_holder_id"
-      }
+      "salt": "salt"
     }
   },
   {

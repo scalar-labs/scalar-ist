@@ -1,0 +1,31 @@
+{
+  "$schema":"http://json-schema.org/draft-07/schema#",
+  "type":"object",
+  "properties":{
+    "benefit_id":{
+      "type":"string",
+      "pattern": "asset_id"
+    },
+    "company_id":{
+      "type":"string"
+    },
+    "organization_id":{
+      "type":"string"
+    },
+    "category_of_benefit":{
+      "type":"string"
+    },
+    "benefit_name":{
+      "type":"string"
+    },
+    "description":{
+      "type":"string"
+    },
+    "provider":{
+      "type":"string"
+    },
+    "time_of_provision":{
+      "type":"string"
+    }
+  }
+}

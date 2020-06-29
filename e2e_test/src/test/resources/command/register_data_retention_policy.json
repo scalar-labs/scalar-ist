@@ -1,0 +1,127 @@
+[
+  {
+    "action": "set-holder",
+    "client-properties": {
+      "scalar.dl.client.cert_holder_id": "ba857670-4fc0-410c-8c83-5dc911c6dc12",
+      "scalar.dl.client.cert_version": "1",
+      "scalar.dl.client.cert_path": "build/resources/test/holder/keys/controller.pem",
+      "scalar.dl.client.private_key_path": "build/resources/test/holder/keys/controller-key.pem"
+    }
+  },
+  {
+    "action": "register-cert"
+  },
+  {
+    "action": "register-contract",
+    "id": "GetUserProfile",
+    "binary_name": "com.scalar.ist.contract.GetUserProfile",
+    "path": "build/classes/java/main/com/scalar/ist/contract/GetUserProfile.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/test/schema/argument/get_user_profile.json"
+      },
+      "asset_name": "up",
+      "asset_version": "01",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "register-contract",
+    "id": "GetAssetRecord",
+    "binary_name": "com.scalar.ist.contract.GetAssetRecord",
+    "path": "build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/test/schema/argument/get_asset_record.json"
+      },
+      "salt": "salt",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "register-contract",
+    "id": "PutAssetRecord",
+    "binary_name": "com.scalar.ist.contract.PutAssetRecord",
+    "path": "build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/test/schema/argument/put_asset_record.json"
+      },
+      "salt": "salt",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "register-contract",
+    "id": "ValidateArgument",
+    "binary_name": "com.scalar.ist.contract.ValidateArgument",
+    "path": "build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
+  },
+  {
+    "action": "register-contract",
+    "id": "ValidatePermission",
+    "binary_name": "com.scalar.ist.contract.ValidatePermission",
+    "path": "build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
+  },
+  {
+    "action": "register-contract",
+    "id": "RegisterDataRetentionPolicy",
+    "binary_name": "com.scalar.ist.contract.UpsertMaster",
+    "path": "build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/test/schema/argument/register_data_retention_policy.json"
+      },
+      "asset_schema": {
+        "type": "file",
+        "path": "build/resources/test/schema/asset/data_retention_policy.json"
+      },
+      "table_schema": {
+        "type": "file",
+        "path": "build/resources/test/schema/table/data_retention_policy.json"
+      },
+      "asset_name": "rp",
+      "asset_version": "01",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "execute-contract",
+    "id": "RegisterDataRetentionPolicy",
+    "contract_argument": {
+      "value": {
+        "type": "file",
+        "path": "build/resources/test/argument/register_data_retention_policy.json"
+      },
+      "optional": {
+      }
+    }
+  },
+  {
+    "action": "set-database-config",
+    "scalar.db.contact_points": "localhost",
+    "scalar.db.contact_port": "9042",
+    "scalar.db.username": "cassandra",
+    "scalar.db.password": "cassandra"
+  },
+  {
+    "action": "check-asset",
+    "asset_id": "Q2low1RZq0UPvrAJeVBlTKrw2WZ72oUJbPGJwKEBixqaq7MgK0ILoBdaBapjUo7vNOxGV2hL67NAA9DWuKeWpG5zvdSrn",
+    "expect": {
+      "type": "file",
+      "path": "build/resources/test/check/register_data_retention_policy_asset.json"
+    }
+  }
+]

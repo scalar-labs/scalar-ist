@@ -1,6 +1,7 @@
 package com.scalar.ist.tools;
 
 import com.scalar.dl.client.config.ClientConfig;
+import com.scalar.dl.ledger.model.ContractExecutionResult;
 
 import javax.json.*;
 import java.util.Date;
@@ -116,10 +117,13 @@ public class Deploy {
     } else {
       contractArgument = Json.createObjectBuilder().build();
     }
-    System.out.println(contractArgument);
+    ContractExecutionResult result =
+        util.executeContract(
+            json.getString(ID), contractArgument, Optional.of(Json.createObjectBuilder().build()));
 
-    util.executeContract(
-        json.getString(ID), contractArgument, Optional.of(Json.createObjectBuilder().build()));
+    if (result.getResult().isPresent()) {
+      System.out.println(result.getResult().get().toString());
+    }
   }
 
   private JsonObject createContractProperties(JsonObject json) {

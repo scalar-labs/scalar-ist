@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "consent_id",
+    "is_hashed_consent_id"
+  ],
+  "properties": {
+    "consent_id": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9-/_.]+$"
+    },
+    "is_hashed_consent_id": {
+      "type": "boolean"
+    },
+    "is_hashed_consent_statement_id": {
+      "type": "boolean"
+    },
+    "company_id": {
+      "type": "string",
+      "format": "hostname"
+    }
+  }
+}

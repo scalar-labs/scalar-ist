@@ -1,0 +1,104 @@
+[
+  {
+    "action": "set-holder",
+    "client-properties": {
+      "scalar.dl.client.cert_holder_id": "a5e9971d-32be-490d-bff4-c6d65816c1e5",
+      "scalar.dl.client.cert_version": "1",
+      "scalar.dl.client.cert_path": "build/resources/main/holder/keys/admin.pem",
+      "scalar.dl.client.private_key_path": "build/resources/main/holder/keys/admin-key.pem"
+    }
+  },
+  {
+    "action": "register-cert"
+  },
+  {
+    "action": "register-contract",
+    "id": "GetUserProfile",
+    "binary_name": "com.scalar.ist.contract.GetUserProfile",
+    "path": "build/classes/java/main/com/scalar/ist/contract/GetUserProfile.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/main/schema/argument/get_user_profile.json"
+      },
+      "asset_name": "up",
+      "asset_version": "01",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "register-contract",
+    "id": "GetAssetRecord",
+    "binary_name": "com.scalar.ist.contract.GetAssetRecord",
+    "path": "build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/main/schema/argument/get_asset_record.json"
+      },
+      "salt": "salt",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "register-contract",
+    "id": "PutAssetRecord",
+    "binary_name": "com.scalar.ist.contract.PutAssetRecord",
+    "path": "build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/main/schema/argument/put_asset_record.json"
+      },
+      "salt": "salt",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "register-contract",
+    "id": "ValidateArgument",
+    "binary_name": "com.scalar.ist.contract.ValidateArgument",
+    "path": "build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
+  },
+  {
+    "action": "register-contract",
+    "id": "ValidatePermission",
+    "binary_name": "com.scalar.ist.contract.ValidatePermission",
+    "path": "build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
+  },
+  {
+    "action": "register-contract",
+    "id": "UpsertOrganization",
+    "binary_name": "com.scalar.ist.contract.UpsertOrganization",
+    "path": "build/classes/java/main/com/scalar/ist/contract/UpsertOrganization.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/main/schema/argument/upsert_organization.json"
+      },
+      "asset_name": "cp",
+      "asset_version": "01",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "execute-contract",
+    "id": "UpsertOrganization",
+    "contract_argument": {
+      "value": {
+        "type": "file",
+        "path": "build/resources/main/argument/upsert_organization.json"
+      },
+      "optional": {
+      }
+    }
+  }
+]

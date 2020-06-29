@@ -30,8 +30,14 @@ public class Constants {
   public static final String _FUNCTIONS_ = "_functions_";
   public static final String OUTPUT = "output";
   public static final String EXPECT = "expect";
+  public static final String RESULT = "result";
   public static final String NAMESPACE = "namespace";
   public static final String TABLE = "table";
+
+  public static final String ASSERT_THROWS = "assert_throws";
+  public static final String ASSERT_THAT = "assert_that";
+  public static final String CLASS = "class";
+  public static final String MESSAGE = "message";
 
   public static final String CONTRACT_PROPERTIES = "contract_properties.";
   public static final String CONTRACT_ARGUMENT_SCHEMA = "contract_argument_schema";

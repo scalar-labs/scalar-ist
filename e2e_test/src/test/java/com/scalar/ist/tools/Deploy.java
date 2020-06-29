@@ -24,7 +24,7 @@ import static com.scalar.ist.tools.Constants.*;
 
 public class Deploy {
   private ContractUtil util;
-  private Properties clientProperties;
+  private Properties clientProps;
   private StorageService storageService;
 
   public void process(JsonArray array) {
@@ -33,33 +33,35 @@ public class Deploy {
     array.forEach(
         jsonValue -> {
           JsonObject json = (JsonObject) jsonValue;
-          System.out.println(
-              Json.createObjectBuilder().add(ACTION, json.getString(ACTION)).build());
+          JsonObjectBuilder builder =
+              Json.createObjectBuilder().add(ACTION, json.getString(ACTION));
+
           switch (json.getString(ACTION)) {
             case SET_HOLDER:
               setContractProperties(json);
-              return;
+              break;
             case REGISTER_CERT:
               util.registerCertificate();
-              return;
+              break;
             case REGISTER_FUNCTIONS:
               registerFunctions(json);
-              return;
+              break;
             case REGISTER_CONTRACT:
               registerContract(json);
-              return;
+              break;
             case EXECUTE_CONTRACT:
-              executeContract(json);
-              return;
+              executeContract(json, builder);
+              break;
             case SET_DATABASE_CONFIG:
               setDatabaseConfig(json);
-              return;
+              break;
             case CHECK_ASSET:
-              checkAsset(json);
-              return;
+              checkAsset(json, builder);
+              break;
             default:
-              System.out.println("INVALID ACTION");
+              builder.add("command error", "specified invalid action");
           }
+          System.out.println(builder.build());
         });
   }
 
@@ -91,19 +93,35 @@ public class Deploy {
         Optional.of(contractProperties));
   }
 
-  private void executeContract(JsonObject json) {
+  private void executeContract(JsonObject json, JsonObjectBuilder builder) {
     JsonObject contractArgument;
     if (json.containsKey(CONTRACT_ARGUMENT)) {
       contractArgument = createContractArgument(json.getJsonObject(CONTRACT_ARGUMENT));
     } else {
       contractArgument = Json.createObjectBuilder().build();
     }
-    ContractExecutionResult result =
-        util.executeContract(
-            json.getString(ID), contractArgument, Optional.of(Json.createObjectBuilder().build()));
 
-    if (result.getResult().isPresent()) {
-      System.out.println(result.getResult().get().toString());
+    try {
+      ContractExecutionResult result =
+          util.executeContract(
+              json.getString(ID),
+              contractArgument,
+              Optional.of(Json.createObjectBuilder().build()));
+
+      if (json.containsKey(ASSERT_THAT)) {
+        compare(result.getResult().get(), json.getJsonObject(ASSERT_THAT));
+        if (result.getResult().isPresent()) {
+          builder.add(ContractExecutionResult.class.getName(), result.getResult().get().toString());
+        }
+      }
+    } catch (Exception e) {
+      if (compare(e, json)) {
+        builder.add("assertThrows", "success");
+      } else {
+        builder.add("assertThrows", "fail");
+      }
+      builder.add("caught exception", e.getClass().getName());
+      builder.add("caught message", e.getMessage());
     }
   }
 
@@ -120,7 +138,7 @@ public class Deploy {
     storageService.with(json.getString(NAMESPACE, "scalar"), json.getString(TABLE, "asset"));
   }
 
-  private void checkAsset(JsonObject json) {
+  private void checkAsset(JsonObject json, JsonObjectBuilder builder) {
     if (!json.containsKey(ASSET_ID)) {
       throw new RuntimeException("asset_id is required.");
     }
@@ -135,26 +153,29 @@ public class Deploy {
               String key = jsonValueEntry.getKey();
 
               if (!asset.containsKey(key)) {
-                System.out.println("Key not found in asset. key:" + key);
+                builder.add("compare error", "Key not found in asset :" + key);
                 return;
               }
               JsonValue assetValue = asset.get(key);
               JsonValue value = jsonValueEntry.getValue();
-              compare(value, assetValue);
+              try {
+                compare(value, assetValue);
+              } catch (RuntimeException e) {
+                builder.add("compare error", e.getMessage());
+              }
             });
   }
 
   private void compare(JsonValue val1, JsonValue val2) {
     if (!(val1.getValueType() == val2.getValueType())) {
-      System.out.println(
+      throw new RuntimeException(
           "Json value type is not matched. " + val1.getValueType() + ":" + val2.getValueType());
-      return;
     }
 
     switch (val1.getValueType()) {
       case STRING:
         if (!val1.toString().equals(val2.toString())) {
-          System.out.println(
+          throw new RuntimeException(
               "Json value is not matched. " + val1.toString() + ":" + val2.toString());
         }
         break;
@@ -168,13 +189,27 @@ public class Deploy {
                   String key = jsonValueEntry.getKey();
                   JsonObject obj2 = val2.asJsonObject();
                   if (!obj2.containsKey(key)) {
-                    System.out.println("Key not found in asset. key:" + key);
-                    return;
+                    throw new RuntimeException("Key not found in asset. key:" + key);
                   }
                   compare(jsonValueEntry.getValue(), obj2.get(key));
                 });
         break;
     }
+  }
+
+  private boolean compare(Exception e, JsonObject json) {
+
+    if (json.containsKey(ASSERT_THROWS) && json.getJsonObject(ASSERT_THROWS).containsKey(CLASS)) {
+
+      String className = json.getJsonObject(ASSERT_THROWS).getString(CLASS);
+      String message = json.getJsonObject(ASSERT_THROWS).getString(MESSAGE, "");
+
+      if (e.getClass().getName().equals(className)
+              && (message.length() > 0 && e.getMessage().equals(message))) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private JsonObject createContractProperties(JsonObject json) {
@@ -194,7 +229,7 @@ public class Deploy {
                   builder.add(key, Util.readJsonFromFile(object.getString(PATH)));
                   break;
                 case ClientConfig.CERT_HOLDER_ID:
-                  builder.add(key, clientProperties.getProperty(ClientConfig.CERT_HOLDER_ID));
+                  builder.add(key, clientProps.getProperty(ClientConfig.CERT_HOLDER_ID));
                   break;
                 default:
                   throw new IllegalStateException("Unexpected type: " + object.getString(TYPE));
@@ -233,7 +268,7 @@ public class Deploy {
                   JsonObject object = value.asJsonObject();
                   switch (object.getString(TYPE)) {
                     case ClientConfig.CERT_HOLDER_ID:
-                      builder.add(key, clientProperties.getProperty(ClientConfig.CERT_HOLDER_ID));
+                      builder.add(key, clientProps.getProperty(ClientConfig.CERT_HOLDER_ID));
                       break;
                     case NOW:
                       builder.add(key, new Date().getTime());
@@ -251,34 +286,33 @@ public class Deploy {
   }
 
   private void setContractProperties(JsonObject json) {
-    clientProperties = new Properties();
+    clientProps = new Properties();
     JsonObject jsonObject = json.getJsonObject(CLIENT_PROPERTIES);
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.SERVER_HOST, jsonObject.getString(ClientConfig.SERVER_HOST, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.SERVER_PORT, jsonObject.getString(ClientConfig.SERVER_PORT, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.SERVER_PORT, jsonObject.getString(ClientConfig.SERVER_PORT, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.SERVER_PRIVILEGED_PORT,
         jsonObject.getString(ClientConfig.SERVER_PRIVILEGED_PORT, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.CLIENT_MODE, jsonObject.getString(ClientConfig.CLIENT_MODE, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.CERT_HOLDER_ID, jsonObject.getString(ClientConfig.CERT_HOLDER_ID, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.PRIVATE_KEY_PATH, jsonObject.getString(ClientConfig.PRIVATE_KEY_PATH, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.PRIVATE_KEY_PEM, jsonObject.getString(ClientConfig.PRIVATE_KEY_PEM, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.CERT_PATH, jsonObject.getString(ClientConfig.CERT_PATH, ""));
-    clientProperties.setProperty(
-        ClientConfig.CERT_PEM, jsonObject.getString(ClientConfig.CERT_PEM, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(ClientConfig.CERT_PEM, jsonObject.getString(ClientConfig.CERT_PEM, ""));
+    clientProps.setProperty(
         ClientConfig.CERT_VERSION, jsonObject.getString(ClientConfig.CERT_VERSION, ""));
-    clientProperties.setProperty(
+    clientProps.setProperty(
         ClientConfig.TLS_ENABLED, jsonObject.getString(ClientConfig.TLS_ENABLED, ""));
-    util.setup(clientProperties);
+    util.setup(clientProps);
   }
 
   private JsonObject readAsset(String assetId) {

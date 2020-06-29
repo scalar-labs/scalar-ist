@@ -21,7 +21,6 @@ public class UpdateConsentStatementVersion extends Contract {
   public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validate(ledger, argument, properties);
     JsonObject putAssetRecordArgument = createPutAssetRecordArgument(properties.get(), argument);
-    System.out.println(new JSONObject(putAssetRecordArgument.toString()).toString(4));
     return invokeSubContract(PUT_ASSET_RECORD, ledger, putAssetRecordArgument);
   }
 

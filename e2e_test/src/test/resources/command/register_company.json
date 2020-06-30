@@ -116,6 +116,29 @@
     "scalar.db.password": "cassandra"
   },
   {
+    "action": "check-record",
+    "namespace": "ist",
+    "table": "company",
+    "partition_keys": [
+      {
+        "name": "company_id",
+        "type": "text",
+        "value": "scalar-labs.com"
+      }
+    ],
+    "clustering_keys": [
+      {
+        "name": "created_at",
+        "type": "bigint",
+        "value": 1572514828167
+      }
+    ],
+    "expect": {
+      "type": "file",
+      "path": "build/resources/test/check/register_company_record.json"
+    }
+  },
+  {
     "action": "check-asset",
     "asset_id": "dq1xlMz1AacbWDYAreL9i2NPayO46BTy9KJ",
     "expect": {

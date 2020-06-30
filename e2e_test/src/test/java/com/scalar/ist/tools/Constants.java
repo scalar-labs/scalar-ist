@@ -10,6 +10,7 @@ public class Constants {
   public static final String EXECUTE_CONTRACT = "execute-contract";
   public static final String SET_DATABASE_CONFIG = "set-database-config";
   public static final String CHECK_ASSET = "check-asset";
+  public static final String CHECK_RECORD = "check-record";
 
   public static final String CLIENT_PROPERTIES = "client-properties";
   public static final String PROPERTIES = "properties";
@@ -33,6 +34,14 @@ public class Constants {
   public static final String RESULT = "result";
   public static final String NAMESPACE = "namespace";
   public static final String TABLE = "table";
+  public static final String PARTITION_KEYS = "partition_keys";
+  public static final String CLUSTERING_KEYS = "clustering_keys";
+  public static final String NAME = "name";
+  public static final String TEXT = "text";
+  public static final String BIGINT = "bigint";
+  public static final String BOOLEAN = "boolean";
+  public static final String FLOAT = "float";
+  public static final String INT = "int";
 
   public static final String ASSERT_THROWS = "assert_throws";
   public static final String ASSERT_THAT = "assert_that";

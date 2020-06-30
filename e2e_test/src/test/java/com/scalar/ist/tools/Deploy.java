@@ -2,23 +2,23 @@ package com.scalar.ist.tools;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.scalar.db.api.Get;
 import com.scalar.db.api.Result;
 import com.scalar.db.api.Scan;
 import com.scalar.db.api.Scanner;
 import com.scalar.db.config.DatabaseConfig;
 import com.scalar.db.exception.storage.ExecutionException;
-import com.scalar.db.io.Key;
-import com.scalar.db.io.TextValue;
+import com.scalar.db.io.*;
 import com.scalar.db.service.StorageModule;
 import com.scalar.db.service.StorageService;
 import com.scalar.dl.client.config.ClientConfig;
+import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.dl.ledger.model.ContractExecutionResult;
 
 import javax.json.*;
 import java.io.*;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.scalar.ist.tools.Constants.*;
 
@@ -57,6 +57,9 @@ public class Deploy {
               break;
             case CHECK_ASSET:
               checkAsset(json, builder);
+              break;
+            case CHECK_RECORD:
+              checkRecord(json, builder);
               break;
             default:
               builder.add("command error", "specified invalid action");
@@ -166,6 +169,66 @@ public class Deploy {
             });
   }
 
+  private void checkRecord(JsonObject json, JsonObjectBuilder builder) {
+    if (!json.containsKey(PARTITION_KEYS)) {
+      throw new RuntimeException("partition key is required.");
+    }
+
+    try {
+      Result record = readRecord(json);
+      JsonObject expect = createJsonObjectFromSetting(json.getJsonObject(EXPECT));
+      expect.entrySet().stream()
+          .forEach(
+              entry -> {
+                compare(record, entry);
+              });
+    } catch (ExecutionException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void compare(Result record, Map.Entry<String, JsonValue> entry) {
+    String key = entry.getKey();
+
+    switch (entry.getValue().getValueType()) {
+      case STRING:
+        if (!((TextValue) record.getValue(key).get())
+            .getString()
+            .get()
+            .equals(((JsonString) entry.getValue()).getString())) {
+          throwRuntimeException(
+              ((TextValue) record.getValue(key).get()).getString().get(),
+              ((JsonString) entry.getValue()).getString());
+        }
+        break;
+      case NUMBER:
+        if (((BigIntValue) record.getValue(key).get()).get()
+            != ((JsonNumber) entry.getValue()).longValue()) {
+          throwRuntimeException(
+              Long.toString(((BigIntValue) record.getValue(key).get()).get()),
+              (entry.getValue()).toString());
+        }
+        break;
+      case TRUE:
+        if (!((BooleanValue) record.getValue(key).get()).get()) {
+          throwRuntimeException(
+              Boolean.toString(((BooleanValue) record.getValue(key).get()).get()), "true");
+        }
+        break;
+      case FALSE:
+        if (((BooleanValue) record.getValue(key).get()).get()) {
+          throwRuntimeException(
+              Boolean.toString(((BooleanValue) record.getValue(key).get()).get()), "false");
+        }
+        break;
+    }
+  }
+
+  private void throwRuntimeException(String record, String json) {
+    throw new RuntimeException(
+        "Value is not matched. Record:[" + record + "] expect:[" + json + "]");
+  }
+
   private void compare(JsonValue val1, JsonValue val2) {
     if (!(val1.getValueType() == val2.getValueType())) {
       throw new RuntimeException(
@@ -205,7 +268,7 @@ public class Deploy {
       String message = json.getJsonObject(ASSERT_THROWS).getString(MESSAGE, "");
 
       if (e.getClass().getName().equals(className)
-              && (message.length() > 0 && e.getMessage().equals(message))) {
+          && (message.length() > 0 && e.getMessage().equals(message))) {
         return true;
       }
     }
@@ -330,5 +393,58 @@ public class Deploy {
       executionException.printStackTrace();
       return null;
     }
+  }
+
+  private Result readRecord(JsonObject json) throws ExecutionException {
+
+    List<Value> partitionKeysValues = toValues(json.getJsonArray(PARTITION_KEYS));
+    List<Value> clusteringKeysValues = toValues(json.getJsonArray(CLUSTERING_KEYS));
+
+    Get get;
+    if (clusteringKeysValues.isEmpty()) {
+      get = new Get(new Key(partitionKeysValues));
+    } else {
+      get = new Get(new Key(partitionKeysValues), new Key(clusteringKeysValues));
+    }
+    get.forNamespace(json.getString(NAMESPACE)).forTable(json.getString(TABLE));
+
+    Optional<Result> result = null;
+    try {
+      result = storageService.get(get);
+      if (result.isPresent()) {
+        return result.get();
+      }
+    } catch (ExecutionException e) {
+      throw new RuntimeException();
+    }
+    return null;
+  }
+
+  List<Value> toValues(JsonArray values) {
+
+    return values.stream()
+        .map(JsonValue::asJsonObject)
+        .map(
+            object -> {
+              switch (object.getString(TYPE)) {
+                case BIGINT:
+                  return new BigIntValue(
+                      object.getString(NAME), object.getJsonNumber(VALUE).longValue());
+                case TEXT:
+                  return new TextValue(object.getString(NAME), object.getString(VALUE));
+                case BOOLEAN:
+                  return new BooleanValue(object.getString(NAME), object.getBoolean(VALUE));
+                case FLOAT:
+                  return new FloatValue(
+                      object.getString(NAME),
+                      object.getJsonNumber(VALUE).bigDecimalValue().floatValue());
+                case INT:
+                  return new IntValue(object.getString(NAME), object.getInt(VALUE));
+                default:
+                  throw new ContractContextException(
+                      String.format("The type %s is not supported", object.getString(NAME)));
+              }
+            })
+        .collect(Collectors.toList());
   }
 }

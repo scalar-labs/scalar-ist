@@ -1,5 +1,32 @@
 package com.scalar.ist.function;
 
+import static com.scalar.ist.common.Constants.COMPANY_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ABSTRACT;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_BENEFIT_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_CHANGES;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DATA_RETENTION_POLICY_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DATA_SET_SCHEMA_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DRAFT_STATUS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_OPTIONAL_PURPOSES;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_OPTIONAL_THIRD_PARTIES;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_PURPOSE_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ROOT_CONSENT_STATEMENT_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_STATUS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_TABLE;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_THIRD_PARTY_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_TITLE;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_VERSION;
+import static com.scalar.ist.common.Constants.CREATED_AT;
+import static com.scalar.ist.common.Constants.CREATED_BY;
+import static com.scalar.ist.common.Constants.GROUP_COMPANY_IDS;
+import static com.scalar.ist.common.Constants.HOLDER_ID;
+import static com.scalar.ist.common.Constants.NAMESPACE;
+import static com.scalar.ist.common.Constants.ORGANIZATION_ID;
+import static com.scalar.ist.common.Constants.RECORD_NOT_FOUND;
+import static com.scalar.ist.common.Constants.UPDATED_AT;
+
 import com.scalar.db.api.Get;
 import com.scalar.db.api.Put;
 import com.scalar.db.api.Result;
@@ -10,14 +37,12 @@ import com.scalar.db.io.Value;
 import com.scalar.dl.ledger.database.Database;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.dl.ledger.function.Function;
-
-import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import static com.scalar.ist.common.Constants.*;
+import javax.json.JsonObject;
+import javax.json.JsonValue;
 
 public class UpdateConsentStatementRevision extends Function {
 
@@ -28,7 +53,7 @@ public class UpdateConsentStatementRevision extends Function {
       JsonObject contractArgument,
       Optional<JsonObject> contractProperties) {
     String consentStatementId = contractArgument.getString(CONSENT_STATEMENT_ID);
-    Optional<Result> optResult = get(database, consentStatementId);
+    Optional<Result> optResult = getConsentStatement(database, consentStatementId);
     String rootConsentStatementId = getRootConsentStatementId(optResult);
     String companyId = contractArgument.getString(COMPANY_ID);
     String organizationId = contractArgument.getString(ORGANIZATION_ID);
@@ -64,52 +89,36 @@ public class UpdateConsentStatementRevision extends Function {
             new TextValue(CONSENT_STATEMENT_ID, consentStatementId),
             new TextValue(CONSENT_STATEMENT_VERSION, version));
 
-    Get get =
-        new Get(partitionKey, clusteringKey)
-            .forNamespace(NAMESPACE)
-            .forTable(CONSENT_STATEMENT_TABLE);
-    if (!database.get(get).isPresent()) {
-      throw new ContractContextException(RECORD_NOT_FOUND);
-    }
+    get(database, partitionKey, clusteringKey)
+        .orElseThrow(() -> new ContractContextException(RECORD_NOT_FOUND));
 
     Put put =
         new Put(partitionKey, clusteringKey)
             .withValue(new TextValue(CREATED_BY, holderId))
             .withValue(new TextValue(CONSENT_STATEMENT_STATUS, status))
             .withValue(new BigIntValue(CREATED_AT, createdAt))
-            .withValues(
-                createValues(
-                    contractProperties.get().getJsonObject(CONTRACT_ARGUMENT_SCHEMA),
-                    params,
-                    contractArgument))
+            .withValues(createValues(params, contractArgument))
             .forNamespace(NAMESPACE)
             .forTable(CONSENT_STATEMENT_TABLE);
 
     database.put(put);
   }
 
-  private List<Value> createValues(
-      JsonObject assetSchema, List<String> keys, JsonObject contractArgument) {
+  private List<Value> createValues(List<String> keys, JsonObject contractArgument) {
     List<Value> values = new ArrayList<>();
-    JsonObject metadata = assetSchema.getJsonObject(PROPERTIES).asJsonObject();
     for (String key : keys)
-      if (contractArgument.containsKey(key) && metadata.containsKey(key)) {
-        switch (metadata.getJsonObject(key).asJsonObject().getString(ASSET_TYPE)) {
-          case ASSET_ARRAY_TYPE:
-            values.add(new TextValue(key, contractArgument.getJsonArray(key).toString()));
-            break;
-          case ASSET_OBJECT_TYPE:
-            values.add(new TextValue(key, contractArgument.getJsonObject(key).toString()));
-            break;
-          case ASSET_STRING_TYPE:
-            values.add(new TextValue(key, contractArgument.getString(key)));
-            break;
-          case ASSET_INTEGER_TYPE:
-            values.add(new BigIntValue(key, contractArgument.getJsonNumber(key).longValue()));
-            break;
-          default:
-            throw new ContractContextException(
-                "The type " + contractArgument.get(key).getValueType() + " is not supported");
+      if (contractArgument.containsKey(key)) {
+        JsonValue.ValueType argumentValueType = contractArgument.get(key).getValueType();
+        if (argumentValueType == JsonValue.ValueType.ARRAY) {
+          values.add(new TextValue(key, contractArgument.getJsonArray(key).toString()));
+        } else if (argumentValueType == JsonValue.ValueType.OBJECT) {
+          values.add(new TextValue(key, contractArgument.getJsonObject(key).toString()));
+        } else if (argumentValueType == JsonValue.ValueType.STRING) {
+          values.add(new TextValue(key, contractArgument.getString(key)));
+        } else if (argumentValueType == JsonValue.ValueType.NUMBER) {
+          values.add(new BigIntValue(key, contractArgument.getJsonNumber(key).longValue()));
+        } else {
+          throw new ContractContextException("The type " + argumentValueType + " is not supported");
         }
       }
     return values;
@@ -139,7 +148,15 @@ public class UpdateConsentStatementRevision extends Function {
     }
   }
 
-  private Optional<Result> get(Database database, String consentStatementId) {
+  private Optional<Result> get(Database database, Key partitionKey, Key clusteringKey) {
+    Get get =
+        new Get(partitionKey, clusteringKey)
+            .forNamespace(NAMESPACE)
+            .forTable(CONSENT_STATEMENT_TABLE);
+    return database.get(get);
+  }
+
+  private Optional<Result> getConsentStatement(Database database, String consentStatementId) {
     Get get =
         new Get(new Key(new TextValue(CONSENT_STATEMENT_ID, consentStatementId)))
             .forNamespace(NAMESPACE)

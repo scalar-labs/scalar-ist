@@ -1,5 +1,16 @@
 package com.scalar.ist.function;
 
+import static com.scalar.ist.common.Constants.COMPANY_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ROOT_CONSENT_STATEMENT_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_STATUS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_TABLE;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_VERSION;
+import static com.scalar.ist.common.Constants.NAMESPACE;
+import static com.scalar.ist.common.Constants.ORGANIZATION_ID;
+import static com.scalar.ist.common.Constants.RECORD_NOT_FOUND;
+import static com.scalar.ist.common.Constants.UPDATED_AT;
+
 import com.scalar.db.api.Get;
 import com.scalar.db.api.Put;
 import com.scalar.db.api.Result;
@@ -12,8 +23,6 @@ import com.scalar.dl.ledger.function.Function;
 import java.util.Optional;
 import javax.json.JsonObject;
 
-import static com.scalar.ist.common.Constants.*;
-
 public class UpdateConsentStatementStatus extends Function {
 
   @Override
@@ -22,7 +31,7 @@ public class UpdateConsentStatementStatus extends Function {
       Optional<JsonObject> functionArgument,
       JsonObject contractArgument,
       Optional<JsonObject> contractProperties) {
-    Result consentStatementResult = get(database, contractArgument);
+    Result consentStatementResult = getConsentStatement(database, contractArgument);
     String consentStatementIdRoot =
         ((TextValue)
                 consentStatementResult.getValue(CONSENT_STATEMENT_ROOT_CONSENT_STATEMENT_ID).get())
@@ -45,28 +54,28 @@ public class UpdateConsentStatementStatus extends Function {
             new TextValue(ORGANIZATION_ID, organizationId),
             new TextValue(CONSENT_STATEMENT_ID, consentStatementId),
             new TextValue(CONSENT_STATEMENT_VERSION, version));
-
-    Get get =
-        new Get(partitionKey, clusteringKey)
-            .forNamespace(NAMESPACE)
-            .forTable(CONSENT_STATEMENT_TABLE);
-    if (!database.get(get).isPresent()) {
-      throw new ContractContextException(RECORD_NOT_FOUND);
-    }
-
+    getConsentStatement(database, partitionKey, clusteringKey)
+        .orElseThrow(() -> new ContractContextException(RECORD_NOT_FOUND));
     Put put =
-        new Put(partitionKey, clusteringKey)
-            .withValue(
-                new TextValue(
-                    CONSENT_STATEMENT_STATUS, contractArgument.getString(CONSENT_STATEMENT_STATUS)))
-            .withValue(new BigIntValue(UPDATED_AT, updatedAt))
-            .forNamespace(NAMESPACE)
-            .forTable(CONSENT_STATEMENT_TABLE);
-
+            new Put(partitionKey, clusteringKey)
+                    .withValue(
+                            new TextValue(
+                                    CONSENT_STATEMENT_STATUS, contractArgument.getString(CONSENT_STATEMENT_STATUS)))
+                    .withValue(new BigIntValue(UPDATED_AT, updatedAt))
+                    .forNamespace(NAMESPACE)
+                    .forTable(CONSENT_STATEMENT_TABLE);
     database.put(put);
   }
 
-  private Result get(Database database, JsonObject contractArgument) {
+  private Optional<Result> getConsentStatement(
+      Database database, Key partitionKey, Key clusteringKey) {
+    return database.get(
+        new Get(partitionKey, clusteringKey)
+            .forNamespace(NAMESPACE)
+            .forTable(CONSENT_STATEMENT_TABLE));
+  }
+
+  private Result getConsentStatement(Database database, JsonObject contractArgument) {
     Get get =
         new Get(
                 new Key(

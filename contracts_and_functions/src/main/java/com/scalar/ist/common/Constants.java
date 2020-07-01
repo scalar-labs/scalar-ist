@@ -25,7 +25,6 @@ public class Constants {
   public static final String CONTRACT_ARGUMENT_SCHEMA = "contract_argument_schema";
   public static final String CREATED_BY = "created_by";
   public static final String ACTION = "action";
-  public static final String DEACTIVATE_ACTION = "deactivate";
   public static final String UPSERT_USER_PROFILE = "UpsertUserProfile";
   public static final String UPDATE_ACTION = "update";
   public static final String INSERT_ACTION = "insert";
@@ -33,17 +32,6 @@ public class Constants {
   public static final String TABLE_SCHEMA = "table_schema";
   public static final String PROPERTIES = "properties";
   public static final String DATA_SUBJECT_ID = "data_subject_id";
-
-  // Purpose related constant
-  public static final String PURPOSE_ID = "purpose_id";
-  public static final String PURPOSE_CATEGORY_OF_PURPOSE = "category_of_purpose";
-  public static final String PURPOSE_NAME = "purpose_name";
-  public static final String PURPOSE_LEGAL_TEXT = "legal_text";
-  public static final String PURPOSE_USER_FRIENDLY_TEXT = "user_friendly_text";
-  public static final String PURPOSE_GUIDANCE = "guidance";
-  public static final String PURPOSE_NOTE = "note";
-  public static final String PURPOSE_DESCRIPTION = "description";
-  public static final String PURPOSE_TABLE = "purpose";
 
   // User roles
   public static final String ROLE_CONTROLLER = "Controller";
@@ -120,38 +108,14 @@ public class Constants {
   public static final String CONSENT_STATEMENT_ID = "consent_statement_id";
   public static final String CONSENT_STATEMENT_PARENT_ID = "parent_consent_statement_id";
   public static final String CONSENT_STATEMENT_DESCRIPTION = "description";
-  public static final String CONSENT_STATEMENT_CONTENTS = "consent_statement_contents";
 
   // Consent related json names
-  public static final String CONSENT = "consent";
   public static final String CONSENT_TABLE = "consent";
   public static final String CONSENT_STATUS = "consent_status";
   public static final String CONSENTED_DETAIL = "consented_detail";
   public static final String REJECTED_DETAIL = "rejected_detail";
   public static final String CONSENT_ID = "consent_id";
   public static final String CONSENT_STATUS_APPROVED = "approved";
-  public static final String CONSENT_STATUS_REJECTED = "rejected";
-  public static final String CONSENT_STATUS_CONFIGURED = "configured";
-
-  // Retention Policy related json names
-  public static final String RETENTION_POLICY_NAME = "policy_name";
-  public static final String RETENTION_POLICY_TYPE = "policy_type";
-  public static final String RETENTION_POLICY_USE_DURATION = "length_of_use";
-  public static final String RETENTION_POLICY_RETENTION_DURATION = "length_of_retention";
-  public static final String RETENTION_POLICY_DESCRIPTION = "description";
-  public static final String RETENTION_POLICY_TABLE = "data_retention_policy";
-
-  // Dataset Schema related json names
-  public static final String DATA_SET_SCHEMA = "data_set_schema";
-  public static final String DATA_SET_SCHEMA_ID = "data_set_schema_id";
-  public static final String DATA_SET_NAME = "data_set_name";
-  public static final String DATA_SET_DESCRIPTION = "description";
-  public static final String DATA_CATEGORY = "category_of_data";
-  public static final String DATA_TYPE = "data_type";
-  public static final String DATA_CLASSIFICATION = "classification";
-  public static final String DATA_SET_SCHEMA_CHANGES = "changes";
-  public static final String DATA_LOCATION = "data_location";
-  public static final String DATA_SET_SCHEMA_TABLE = "data_set_schema";
 
   // Validator related json names
   public static final String VALIDATE_ARGUMENT_CONTRACT_ARGUMENT = "contract_argument";
@@ -208,8 +172,6 @@ public class Constants {
       "Executor's holder ID is missing in the contract properties of the specified contract.";
   public static final String ASSET_NAME_IS_MISSING =
       "Asset name is missing in the contract properties of the specified contract.";
-  public static final String ASSET_VERSION_IS_MISSING =
-      "Asset version is missing in the contract properties of the specified contract.";
   public static final String CONTRACT_ARGUMENT_SCHEMA_IS_MISSING =
       "Contract argument schema is not specified in the properties.";
   public static final String STATUS_UPDATE_NOT_ALLOWED =

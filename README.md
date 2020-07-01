@@ -3,8 +3,9 @@
 
 # IST概要
 
-## データモデル
-## ロールモデル
+## [データモデル](docs/outline/datamodel.md)
+
+## [ロールモデル](docs/outline/rolemodel.md)
 
 
 # 機能一覧

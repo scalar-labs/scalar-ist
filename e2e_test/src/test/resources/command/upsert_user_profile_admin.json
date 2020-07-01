@@ -102,20 +102,5 @@
       "optional": {
       }
     }
-  },
-  {
-    "action": "set-database-config",
-    "scalar.db.contact_points": "localhost",
-    "scalar.db.contact_port": "9042",
-    "scalar.db.username": "cassandra",
-    "scalar.db.password": "cassandra"
-  },
-  {
-    "action": "check-asset",
-    "asset_id": "PqWgZwK6XBFb7K0DAMr2i9wO7qJaKzF5ebON1OKoTbEM7pBAdMTR7QEdvxOWfqQlK70pX7C5AKZ7JevrSvddW4z61rHepNJQ",
-    "expect": {
-      "type": "file",
-      "path": "build/resources/test/check/upsert_user_profile_admin_asset.json"
-    }
   }
 ]

@@ -90,6 +90,18 @@
     }
   },
   {
+    "action": "execute-contract",
+    "id": "UpdateConsentStatementVersion",
+    "contract_argument": {
+      "value": {
+        "type": "file",
+        "path": "build/resources/test/argument/update_consent_statement_version.json"
+      },
+      "optional": {
+      }
+    }
+  },
+  {
     "action": "set-database-config",
     "scalar.db.contact_points": "localhost",
     "scalar.db.contact_port": "9042",
@@ -101,7 +113,7 @@
     "asset_id": "adxjo6YoOPiVgyDnNWRaUa1JYWbLY4hdERLdMa2lc41d1KyeEaIKBGp7G7P6ipWxYGNnKXTy0",
     "expect": {
       "type": "file",
-      "path": "build/resources/test/check/update_consent_statement_revision_asset.json"
+      "path": "build/resources/test/check/update_consent_statement_version_asset.json"
     }
   }
 ]

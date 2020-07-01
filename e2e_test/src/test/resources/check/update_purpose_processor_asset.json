@@ -1,0 +1,15 @@
+{
+	"purpose_id": "pp01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1572514828180",
+	"company_id": "scalar-labs.com",
+	"organization_id": "9ca84f95-2e84-4707-8206-b93c9e78d7b7",
+	"category_of_purpose": "test_of_purpose",
+	"purpose_name": "purpose_test",
+	"description": "description",
+	"legal_text": "legal_test",
+	"user_friendly_text": "user_friendly_test",
+	"guidance": "guidance",
+	"note": "note",
+	"asset_id": "pp01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1572514828180",
+	"created_at": 3,
+	"created_by": "8b33472b-6dc0-4bd0-b9a9-019ce667131e"
+}

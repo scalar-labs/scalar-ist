@@ -1,0 +1,109 @@
+[
+  {
+    "action": "set-holder",
+    "client-properties": {
+      "scalar.dl.client.cert_holder_id": "data_subject",
+      "scalar.dl.client.cert_version": "1",
+      "scalar.dl.client.cert_path": "build/resources/test/holder/keys/data_subject.pem",
+      "scalar.dl.client.private_key_path": "build/resources/test/holder/keys/data_subject-key.pem"
+    }
+  },
+  {
+    "action": "register-cert"
+  },
+  {
+    "action": "register-contract",
+    "id": "PutAssetRecord",
+    "binary_name": "com.scalar.ist.contract.PutAssetRecord",
+    "path": "build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/test/schema/argument/put_asset_record.json"
+      },
+      "salt": "salt",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "register-contract",
+    "id": "GetAssetRecord",
+    "binary_name": "com.scalar.ist.contract.GetAssetRecord",
+    "path": "build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/test/schema/argument/get_asset_record.json"
+      },
+      "salt": "salt",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "register-contract",
+    "id": "ValidateArgument",
+    "binary_name": "com.scalar.ist.contract.ValidateArgument",
+    "path": "build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
+  },
+  {
+    "action": "register-contract",
+    "id": "ValidatePermission",
+    "binary_name": "com.scalar.ist.contract.ValidatePermission",
+    "path": "build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
+  },
+  {
+    "action": "register-contract",
+    "id": "UpsertConsentStatus",
+    "binary_name": "com.scalar.ist.contract.UpsertConsentStatus",
+    "path": "build/classes/java/main/com/scalar/ist/contract/UpsertConsentStatus.class",
+    "properties": {
+      "contract_argument_schema": {
+        "type": "file",
+        "path": "build/resources/test/schema/argument/upsert_consent_status.json"
+      },
+      "asset_name": "ct",
+      "asset_version": "01",
+      "holder_id": {
+        "type": "scalar.dl.client.cert_holder_id"
+      }
+    }
+  },
+  {
+    "action": "execute-contract",
+    "id": "UpsertConsentStatus",
+    "contract_argument": {
+      "value": {
+        "type": "file",
+        "path": "build/resources/test/argument/upsert_consent_status_update_notfound.json"
+      },
+      "optional": {
+      }
+    },
+    "assert_throws": {
+      "class": "com.scalar.dl.client.exception.ClientException",
+      "message": "Asset is not found in the ledger."
+    },
+    "assert_that": {
+      "hashed_asset_id": "bwLOqZoDjNtebl5wXYvvilM6NejVDBiPXj1nZjQKcWEzXbgp9WIMO7zDL2alc9V921BqZ0I2Ed2K2zDGu4e5y5VPRDfg9nMMz21aTD0"
+    }
+  },
+  {
+    "action": "set-database-config",
+    "scalar.db.contact_points": "localhost",
+    "scalar.db.contact_port": "9042",
+    "scalar.db.username": "cassandra",
+    "scalar.db.password": "cassandra"
+  },
+  {
+    "action": "check-asset",
+    "asset_id": "bwLOqZoDjNtebl5wXYvvilM6NejVDBiPXj1nZjQKcWEzXbgp9WIMO7zDL2alc9V921BqZ0I2Ed2K2zDGu4e5y5VPRDfg9nMMz21aTD0",
+    "expect": {
+      "type": "file",
+      "path": "build/resources/test/check/upsert_consent_status_update_asset.json"
+    }
+  }
+]

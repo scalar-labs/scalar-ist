@@ -4,6 +4,7 @@
   "company_name":"Scalar",
   "corporate_number":"6010001188571",
   "company_metadata":{
+    "third_party_name": "Scalar, Inc.",
     "address":"東京都新宿区袋町",
     "email":"mail@example.com"
   },

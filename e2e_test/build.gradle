@@ -38,6 +38,17 @@ task cucumber_initialize() {
     }
 }
 
+task cucumber_initialize_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/initialize_sysope.feature']
+        }
+    }
+}
+
 task cucumber_register_company() {
     dependsOn assemble, compileTestJava
     doLast {
@@ -49,24 +60,46 @@ task cucumber_register_company() {
     }
 }
 
-task cucumber_upsert_user_profile_admin() {
+task cucumber_register_company_sysope() {
     dependsOn assemble, compileTestJava
     doLast {
         javaexec {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_admin.feature']
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_company_sysope.feature']
         }
     }
 }
 
-task cucumber_upsert_user_profile_controller() {
+task cucumber_upsert_user_profile_prepare() {
     dependsOn assemble, compileTestJava
     doLast {
         javaexec {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_controller.feature']
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_prepare.feature']
+        }
+    }
+}
+
+task cucumber_register_company_admin() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_company_admin.feature']
+        }
+    }
+}
+
+task cucumber_update_company_admin() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_company_admin.feature']
         }
     }
 }
@@ -236,6 +269,28 @@ task cucumber_update_company() {
     }
 }
 
+task cucumber_update_company_sysope_owncompany() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_company_sysope_owncompany.feature']
+        }
+    }
+}
+
+task cucumber_update_company_sysope_notowncompany() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_company_sysope_notowncompany.feature']
+        }
+    }
+}
+
 task cucumber_upsert_organization() {
     dependsOn assemble, compileTestJava
     doLast {
@@ -243,6 +298,557 @@ task cucumber_upsert_organization() {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_organization.feature']
+        }
+    }
+}
+
+task cucumber_upsert_consent_status_register() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_consent_status_register.feature']
+        }
+    }
+}
+
+task cucumber_upsert_consent_status_update() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_consent_status_update.feature']
+        }
+    }
+}
+
+task cucumber_get_consent_status_data_subject() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/get_consent_status_data_subject.feature']
+        }
+    }
+}
+
+task cucumber_get_consent_status_controller() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/get_consent_status_controller.feature']
+        }
+    }
+}
+
+task cucumber_get_consent_status_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/get_consent_status_processor.feature']
+        }
+    }
+}
+
+task cucumber_register_purpose_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_purpose_processor.feature']
+        }
+    }
+}
+
+task cucumber_update_purpose_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_purpose_processor.feature']
+        }
+    }
+}
+
+task cucumber_register_benefit_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_benefit_processor.feature']
+        }
+    }
+}
+
+task cucumber_update_benefit_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_benefit_processor.feature']
+        }
+    }
+}
+
+task cucumber_register_data_retention_policy_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_data_retention_policy_processor.feature']
+        }
+    }
+}
+
+task cucumber_update_data_retention_policy_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_data_retention_policy_processor.feature']
+        }
+    }
+}
+
+task cucumber_register_data_set_schema_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_data_set_schema_processor.feature']
+        }
+    }
+}
+
+task cucumber_update_data_set_schema_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_data_set_schema_processor.feature']
+        }
+    }
+}
+
+task cucumber_upsert_user_profile_sysad_sysope_admin() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_sysad_sysope_admin.feature']
+        }
+    }
+}
+
+task cucumber_upsert_user_profile_sysad_sysope_admin_update() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_sysad_sysope_admin_update.feature']
+        }
+    }
+}
+
+
+task cucumber_upsert_user_profile_sysope_admin() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_sysope_admin.feature']
+        }
+    }
+}
+
+task cucumber_upsert_user_profile_sysope_admin_update() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_sysope_admin_update.feature']
+        }
+    }
+}
+
+task cucumber_upsert_user_profile_admin_controller_processor() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_admin_controller_processor.feature']
+        }
+    }
+}
+
+task cucumber_upsert_user_profile_admin_controller_processor_update() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_admin_controller_processor_update.feature']
+        }
+    }
+}
+
+task cucumber_upsert_organization_admin_notowncompany() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_organization_admin_notowncompany.feature']
+        }
+    }
+}
+
+task cucumber_upsert_organization_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_organization_sysope.feature']
+        }
+    }
+}
+
+task cucumber_register_third_party_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_third_party_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_third_party_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_third_party_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_third_party_admin_notowncompany() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_third_party_admin_notowncompany.feature']
+        }
+    }
+}
+
+task cucumber_register_purpose_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_purpose_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_purpose_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_purpose_sysope.feature']
+        }
+    }
+}
+
+task cucumber_register_benefit_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_benefit_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_benefit_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_benefit_sysope.feature']
+        }
+    }
+}
+
+task cucumber_register_data_retention_policy_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_data_retention_policy_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_data_retention_policy_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_data_retention_policy_sysope.feature']
+        }
+    }
+}
+
+task cucumber_register_data_set_schema_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_data_set_schema_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_data_set_schema_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_data_set_schema_sysope.feature']
+        }
+    }
+}
+
+task cucumber_register_consent_statement_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/register_consent_statement_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_consent_statement_revision_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_consent_statement_revision_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_consent_statement_revision_notfound() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_consent_statement_revision_notfound.feature']
+        }
+    }
+}
+
+task cucumber_update_consent_statement_version_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_consent_statement_version_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_consent_statement_version_notfound() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_consent_statement_version_notfound.feature']
+        }
+    }
+}
+
+task cucumber_update_consent_statement_status_sysope() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_consent_statement_status_sysope.feature']
+        }
+    }
+}
+
+task cucumber_update_consent_statement_status_notfound() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_consent_statement_status_notfound.feature']
+        }
+    }
+}
+
+task cucumber_update_consent_statement_status_invalidstatus() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/update_consent_statement_status_invalidstatus.feature']
+        }
+    }
+}
+
+task cucumber_upsert_user_profile_from_sysad_to_controller() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_from_sysad_to_controller.feature']
+        }
+    }
+}
+
+task cucumber_upsert_user_profile_from_sysope_to_controller() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_from_sysope_to_controller.feature']
+        }
+    }
+}
+
+task cucumber_upsert_user_profile_admin_controller_processor_from_admin_notowncompany() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_admin_controller_processor_from_admin_notowncompany.feature']
+        }
+    }
+}
+
+task cucumber_upsert_user_profile_admin_controller_processor_from_admin_notowncompany_update() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_user_profile_admin_controller_processor_from_admin_notowncompany_update.feature']
+        }
+    }
+}
+
+task cucumber_upsert_consent_status_register_notfound() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_consent_status_register_notfound.feature']
+        }
+    }
+}
+
+task cucumber_upsert_consent_status_update_notfound() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/upsert_consent_status_update_notfound.feature']
+        }
+    }
+}
+
+task cucumber_get_consent_status_notown_notcompanyid() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/get_consent_status_notown_notcompanyid.feature']
+        }
+    }
+}
+
+task cucumber_get_consent_status_notowncompany() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/get_consent_status_notowncompany.feature']
+        }
+    }
+}
+
+task cucumber_get_consent_status_notfound() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/get_consent_status_notfound.feature']
+        }
+    }
+}
+
+task cucumber_get_consent_status_admin() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/get_consent_status_admin.feature']
         }
     }
 }

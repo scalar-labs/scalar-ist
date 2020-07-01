@@ -1,20 +1,39 @@
 package com.scalar.ist.contract;
 
+import static com.scalar.ist.common.Constants.ASSET_ID;
+import static com.scalar.ist.common.Constants.ASSET_NAME;
+import static com.scalar.ist.common.Constants.ASSET_VERSION;
+import static com.scalar.ist.common.Constants.CONSENTED_DETAIL;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATUS;
+import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
+import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
+import static com.scalar.ist.common.Constants.CREATED_AT;
+import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
+import static com.scalar.ist.common.Constants.PUT_ASSET_RECORD;
+import static com.scalar.ist.common.Constants.RECORD_DATA;
+import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
+import static com.scalar.ist.common.Constants.RECORD_MODE;
+import static com.scalar.ist.common.Constants.RECORD_MODE_UPSERT;
+import static com.scalar.ist.common.Constants.REJECTED_DETAIL;
+import static com.scalar.ist.common.Constants.UPDATED_AT;
+import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
+import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
+import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.scalar.dl.ledger.contract.Contract;
 import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
-
-import javax.json.Json;
-import javax.json.JsonNumber;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import static com.scalar.ist.common.Constants.*;
+import javax.json.Json;
+import javax.json.JsonNumber;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 
 public class UpsertConsentStatus extends Contract {
 
@@ -35,9 +54,7 @@ public class UpsertConsentStatus extends Contract {
     List<String> params =
         new ArrayList<>(
             Arrays.asList(CONSENT_STATEMENT_ID, CONSENT_STATUS, CONSENTED_DETAIL, REJECTED_DETAIL));
-    JsonObjectBuilder data =
-        createRecordData(properties.getJsonObject(CONTRACT_ARGUMENT_SCHEMA), params, argument);
-    data.add(CREATED_BY, dataSubjectId);
+    JsonObjectBuilder data = createRecordData(params, argument);
 
     return Json.createObjectBuilder()
         .add(ASSET_ID, assetId)
@@ -48,28 +65,21 @@ public class UpsertConsentStatus extends Contract {
         .build();
   }
 
-  private JsonObjectBuilder createRecordData(
-      JsonObject assetSchema, List<String> keys, JsonObject argument) {
+  private JsonObjectBuilder createRecordData(List<String> keys, JsonObject argument) {
     JsonObjectBuilder data = Json.createObjectBuilder();
-    JsonObject metadata = assetSchema.getJsonObject(PROPERTIES).asJsonObject();
     for (String key : keys)
-      if (argument.containsKey(key) && metadata.containsKey(key)) {
-        switch (metadata.getJsonObject(key).asJsonObject().getString(ASSET_TYPE)) {
-          case ASSET_ARRAY_TYPE:
-            data.add(key, argument.getJsonArray(key));
-            break;
-          case ASSET_OBJECT_TYPE:
-            data.add(key, argument.getJsonObject(key));
-            break;
-          case ASSET_STRING_TYPE:
-            data.add(key, argument.getString(key));
-            break;
-          case ASSET_INTEGER_TYPE:
-            data.add(key, argument.getJsonNumber(key));
-            break;
-          default:
-            throw new ContractContextException(
-                "The type " + argument.get(key).getValueType() + " is not supported");
+      if (argument.containsKey(key)) {
+        JsonValue.ValueType argumentValueType = argument.get(key).getValueType();
+        if (argumentValueType == JsonValue.ValueType.ARRAY) {
+          data.add(key, argument.getJsonArray(key));
+        } else if (argumentValueType == JsonValue.ValueType.OBJECT) {
+          data.add(key, argument.getJsonObject(key));
+        } else if (argumentValueType == JsonValue.ValueType.STRING) {
+          data.add(key, argument.getString(key));
+        } else if (argumentValueType == JsonValue.ValueType.NUMBER) {
+          data.add(key, argument.getJsonNumber(key));
+        } else {
+          throw new ContractContextException("The type " + argumentValueType + " is not supported");
         }
       }
     return data;

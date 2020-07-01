@@ -1,5 +1,49 @@
 package com.scalar.ist.contract;
 
+import static com.scalar.ist.common.Constants.ASSET_ID;
+import static com.scalar.ist.common.Constants.COMPANY_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ABSTRACT;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_BENEFIT_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_CHANGES;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DATA_RETENTION_POLICY_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DATA_SET_SCHEMA_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DRAFT_STATUS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_OPTIONAL_PURPOSES;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_OPTIONAL_THIRD_PARTIES;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_PURPOSE_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_STATUS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_THIRD_PARTY_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_TITLE;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_VERSION;
+import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
+import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
+import static com.scalar.ist.common.Constants.CREATED_AT;
+import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
+import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
+import static com.scalar.ist.common.Constants.GROUP_COMPANY_IDS;
+import static com.scalar.ist.common.Constants.HOLDER_ID;
+import static com.scalar.ist.common.Constants.HOLDER_ID_IS_MISSING;
+import static com.scalar.ist.common.Constants.HOLDER_ID_IS_NOT_MATCHED;
+import static com.scalar.ist.common.Constants.ORGANIZATION_ID;
+import static com.scalar.ist.common.Constants.ORGANIZATION_IDS;
+import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_ARGUMENT;
+import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_REQUIRED;
+import static com.scalar.ist.common.Constants.PUT_ASSET_RECORD;
+import static com.scalar.ist.common.Constants.RECORD_DATA;
+import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
+import static com.scalar.ist.common.Constants.RECORD_MODE;
+import static com.scalar.ist.common.Constants.RECORD_MODE_UPDATE;
+import static com.scalar.ist.common.Constants.ROLES_REQUIRED;
+import static com.scalar.ist.common.Constants.ROLE_CONTROLLER;
+import static com.scalar.ist.common.Constants.UPDATED_AT;
+import static com.scalar.ist.common.Constants.USER_PROFILE_ROLES;
+import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
+import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
+import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
+import static com.scalar.ist.common.Constants.VALIDATE_PERMISSION;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.scalar.dl.ledger.contract.Contract;
 import com.scalar.dl.ledger.database.Ledger;
@@ -14,9 +58,7 @@ import javax.json.JsonArray;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-
-import static com.scalar.ist.common.Constants.*;
-import static com.scalar.ist.common.Constants.ASSET_INTEGER_TYPE;
+import javax.json.JsonValue;
 
 public class UpdateConsentStatementRevision extends Contract {
   private static final JsonArray ROLES = Json.createArrayBuilder().add(ROLE_CONTROLLER).build();
@@ -24,11 +66,11 @@ public class UpdateConsentStatementRevision extends Contract {
   @Override
   public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validate(ledger, argument, properties);
-    JsonObject putAssetRecordArgument = createPutAssetRecordArgument(argument, properties);
+    JsonObject putAssetRecordArgument = createPutAssetRecordArgument(argument);
     return invokeSubContract(PUT_ASSET_RECORD, ledger, putAssetRecordArgument);
   }
 
-  private JsonObject createPutAssetRecordArgument(JsonObject argument, Optional<JsonObject> properties) {
+  private JsonObject createPutAssetRecordArgument(JsonObject argument) {
     String consentStatementId = argument.getString(CONSENT_STATEMENT_ID);
     JsonNumber createdAt = argument.getJsonNumber(UPDATED_AT);
     List<String> params =
@@ -50,7 +92,7 @@ public class UpdateConsentStatementRevision extends Contract {
                 CONSENT_STATEMENT,
                 CONSENT_STATEMENT_OPTIONAL_PURPOSES));
 
-    JsonObjectBuilder data = createRecordData(properties.get().getJsonObject(CONTRACT_ARGUMENT_SCHEMA), params, argument);
+    JsonObjectBuilder data = createRecordData(params, argument);
     data.add(
         CONSENT_STATEMENT_STATUS,
         argument.getString(CONSENT_STATEMENT_STATUS, CONSENT_STATEMENT_DRAFT_STATUS));
@@ -64,28 +106,21 @@ public class UpdateConsentStatementRevision extends Contract {
         .build();
   }
 
-  private JsonObjectBuilder createRecordData(
-      JsonObject assetSchema, List<String> keys, JsonObject argument) {
+  private JsonObjectBuilder createRecordData(List<String> keys, JsonObject argument) {
     JsonObjectBuilder data = Json.createObjectBuilder();
-    JsonObject metadata = assetSchema.getJsonObject(PROPERTIES).asJsonObject();
     for (String key : keys) {
-      if (argument.containsKey(key) && metadata.containsKey(key)) {
-        switch (metadata.getJsonObject(key).asJsonObject().getString(ASSET_TYPE)) {
-          case ASSET_ARRAY_TYPE:
-            data.add(key, argument.getJsonArray(key));
-            break;
-          case ASSET_OBJECT_TYPE:
-            data.add(key, argument.getJsonObject(key));
-            break;
-          case ASSET_STRING_TYPE:
-            data.add(key, argument.getString(key));
-            break;
-          case ASSET_INTEGER_TYPE:
-            data.add(key, argument.getJsonNumber(key));
-            break;
-          default:
-            throw new ContractContextException(
-                "The type " + argument.get(key).getValueType() + " is not supported");
+      if (argument.containsKey(key)) {
+        JsonValue.ValueType argumentValueType = argument.get(key).getValueType();
+        if (argumentValueType == JsonValue.ValueType.ARRAY) {
+          data.add(key, argument.getJsonArray(key));
+        } else if (argumentValueType == JsonValue.ValueType.OBJECT) {
+          data.add(key, argument.getJsonObject(key));
+        } else if (argumentValueType == JsonValue.ValueType.STRING) {
+          data.add(key, argument.getString(key));
+        } else if (argumentValueType == JsonValue.ValueType.NUMBER) {
+          data.add(key, argument.getJsonNumber(key));
+        } else {
+          throw new ContractContextException("The type " + argumentValueType + " is not supported");
         }
       }
     }

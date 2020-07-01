@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "bigint",
+              "blob",
+              "boolean",
+              "float",
+              "int",
+              "text"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "required": [
+    "table_name",
+    "partition_keys"
+  ],
+  "properties": {
+    "table_name": {
+      "type": "string"
+    },
+    "partition_keys": {
+      "$ref": "#/definitions/values"
+    },
+    "clustering_keys": {
+      "$ref": "#/definitions/values"
+    },
+    "columns": {
+      "$ref": "#/definitions/values"
+    }
+  }
+}

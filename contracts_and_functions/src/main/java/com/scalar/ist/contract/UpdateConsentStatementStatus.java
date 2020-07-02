@@ -2,17 +2,29 @@ package com.scalar.ist.contract;
 
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ABSTRACT;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_BENEFIT_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DATA_RETENTION_POLICY_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DATA_SET_SCHEMA_IDS;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DRAFT;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_INACTIVE;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_OPTIONAL_PURPOSES;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_OPTIONAL_THIRD_PARTIES;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_PUBLISHED;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_PURPOSE_IDS;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_REVIEWED;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_STATUS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_THIRD_PARTY_IDS;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_TITLE;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_VERSION;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.CREATED_AT;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
+import static com.scalar.ist.common.Constants.GROUP_COMPANY_IDS;
 import static com.scalar.ist.common.Constants.HOLDER_ID;
 import static com.scalar.ist.common.Constants.HOLDER_ID_IS_MISSING;
 import static com.scalar.ist.common.Constants.HOLDER_ID_IS_NOT_MATCHED;
@@ -41,12 +53,16 @@ import com.scalar.dl.ledger.contract.Contract;
 import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.ist.common.Constants;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 
 public class UpdateConsentStatementStatus extends Contract {
   private static final JsonArray ROLES = Json.createArrayBuilder().add(ROLE_CONTROLLER).build();
@@ -68,7 +84,7 @@ public class UpdateConsentStatementStatus extends Contract {
 
     return Json.createObjectBuilder()
         .add(ASSET_ID, consentStatementId)
-        .add(RECORD_DATA, recordData)
+        .add(RECORD_DATA, recordData.build())
         .add(RECORD_MODE, RECORD_MODE_UPDATE)
         .add(RECORD_IS_HASHED, false)
         .add(CREATED_AT, createdAt)

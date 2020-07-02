@@ -118,7 +118,7 @@
   {
     "action": "check-record",
     "namespace": "ist",
-    "table": "company",
+    "table": "organization",
     "partition_keys": [
       {
         "name": "company_id",
@@ -128,7 +128,7 @@
     ],
     "clustering_keys": [
       {
-        "name": "oraganization_id",
+        "name": "organization_id",
         "type": "text",
         "value": "9ca84f95-2e84-4707-8206-b93c9e78d7b7"
       },

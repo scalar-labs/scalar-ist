@@ -3,9 +3,8 @@
 
 # IST概要
 
-## [データモデル](docs/outline/datamodel.md)
-
-## [アクターとロールモデル](docs/outline/actor_role_model.md)
+## データモデル
+## ロールモデル
 
 
 # 機能一覧

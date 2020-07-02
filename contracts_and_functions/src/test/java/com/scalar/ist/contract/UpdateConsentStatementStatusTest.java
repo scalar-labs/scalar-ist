@@ -62,12 +62,17 @@ import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.ist.common.Constants;
 import com.scalar.ist.util.Hasher;
 import com.scalar.ist.util.Util;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonValue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -145,7 +150,7 @@ public class UpdateConsentStatementStatusTest {
         preparePermissionValidationArgument(userProfile, argument);
     JsonObject getAssetRecordArgument = prepareGetAssetRecordArgument();
     JsonObject consentStatement = prepareConsentStatement();
-    JsonObject putRecordArgument = preparePutAssetRecordArgument(argument);
+    JsonObject putRecordArgument = preparePutAssetRecordArgument(argument, consentStatement);
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(updateConsentStatementStatus.getCertificateKey()).thenReturn(certificateKey);
     when(updateConsentStatementStatus.getCertificateKey().getHolderId())
@@ -315,32 +320,16 @@ public class UpdateConsentStatementStatusTest {
         .build();
   }
 
-  private JsonObject preparePutAssetRecordArgument(JsonObject argument) {
+  private JsonObject preparePutAssetRecordArgument(JsonObject argument, JsonObject consentStatement) {
     String consentStatementId = argument.getString(CONSENT_STATEMENT_ID);
     JsonNumber createdAt = argument.getJsonNumber(UPDATED_AT);
 
-    JsonObject data =
-        Json.createObjectBuilder()
-            .add(COMPANY_ID, MOCKED_COMPANY_ID)
-            .add(ORGANIZATION_ID, MOCKED_ORGANIZATION_ID)
-            .add(GROUP_COMPANY_IDS, mockedGroupCompanyIds)
-            .add(CONSENT_STATEMENT_VERSION, MOCKED_VERSION)
-            .add(CONSENT_STATEMENT_TITLE, MOCKED_TITLE)
-            .add(CONSENT_STATEMENT_ABSTRACT, MOCKED_ABSTRACT)
-            .add(CONSENT_STATEMENT_PURPOSE_IDS, mockedPurposeIds)
-            .add(CONSENT_STATEMENT_DATA_SET_SCHEMA_IDS, mockedDatasetSchemaIds)
-            .add(CONSENT_STATEMENT_BENEFIT_IDS, mockedBenefitIds)
-            .add(CONSENT_STATEMENT_THIRD_PARTY_IDS, mockedThirdPartyIds)
-            .add(CONSENT_STATEMENT_OPTIONAL_THIRD_PARTIES, mockedOptionalThirdParties)
-            .add(CONSENT_STATEMENT_DATA_RETENTION_POLICY_ID, mockedDataRetentionPolicyId)
-            .add(CONSENT_STATEMENT, MOCKED_CONSENT_STATEMENT)
-            .add(CONSENT_STATEMENT_OPTIONAL_PURPOSES, mockedOptionalPurposes)
-            .add(CONSENT_STATEMENT_STATUS, CONSENT_STATEMENT_PUBLISHED)
-            .build();
+    JsonObjectBuilder recordData = Json.createObjectBuilder(consentStatement);
+    recordData.add(CONSENT_STATEMENT_STATUS, argument.get(CONSENT_STATEMENT_STATUS));
 
     return Json.createObjectBuilder()
         .add(ASSET_ID, consentStatementId)
-        .add(RECORD_DATA, data)
+        .add(RECORD_DATA, recordData.build())
         .add(RECORD_MODE, RECORD_MODE_UPDATE)
         .add(RECORD_IS_HASHED, false)
         .add(CREATED_AT, createdAt)

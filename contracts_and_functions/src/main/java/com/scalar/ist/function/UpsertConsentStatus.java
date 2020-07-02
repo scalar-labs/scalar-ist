@@ -46,13 +46,13 @@ public class UpsertConsentStatus extends Function {
     Key partitionKey = new Key(new TextValue(DATA_SUBJECT_ID, dataSubjectId));
     Key clusteringKey = new Key(new TextValue(CONSENT_STATEMENT_ID, consentStatementId));
 
-    Optional<Result> optConsent = get(database, partitionKey, clusteringKey);
-
     Put put =
         new Put(partitionKey, clusteringKey)
             .withValues(createValues(params, contractArgument))
-            .forTable(CONSENT_TABLE);
-    if (!optConsent.isPresent()) {
+            .forTable(CONSENT_TABLE)
+            .forNamespace(NAMESPACE);
+    Optional<Result> consent = get(database, consentStatementId);
+    if (!consent.isPresent()) {
       put.withValue(
           new BigIntValue(CREATED_AT, contractArgument.getJsonNumber(UPDATED_AT).longValue()));
     }
@@ -60,8 +60,11 @@ public class UpsertConsentStatus extends Function {
     database.put(put);
   }
 
-  private Optional<Result> get(Database database, Key partitionKey, Key clusteringKey) {
-    Get get = new Get(partitionKey, clusteringKey).forNamespace(NAMESPACE).forTable(CONSENT_TABLE);
+  private Optional<Result> get(Database database, String consentStatementId) {
+    Get get =
+        new Get(new Key(new TextValue(CONSENT_STATEMENT_ID, consentStatementId)))
+            .forNamespace(NAMESPACE)
+            .forTable(CONSENT_TABLE);
     return database.get(get);
   }
 

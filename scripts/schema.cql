@@ -59,7 +59,7 @@ CREATE TABLE ist.consent_statement
 
     PRIMARY KEY (root_consent_statement_id, company_id, organization_id, consent_statement_id, version),
 ) WITH CLUSTERING ORDER BY (company_id ASC, organization_id ASC, consent_statement_id ASC, version ASC);
-CREATE INDEX consent_statement_id_for_consent_statement_table_idx ON ist.consent_statement (consent_statement_id);
+CREATE INDEX consent_statement_id_idx ON ist.consent_statement (consent_statement_id);
 CREATE INDEX company_id_idx ON ist.consent_statement (company_id);
 CREATE INDEX organization_id_idx ON ist.consent_statement (organization_id);
 CREATE INDEX group_company_ids_idx ON ist.consent_statement (group_company_ids);
@@ -330,42 +330,6 @@ CREATE TABLE ist.user_profile
 ) WITH CLUSTERING ORDER BY (holder_id ASC);
 CREATE INDEX holder_id_idx ON ist.user_profile (holder_id);
 
-CREATE TABLE ist.consent
-(
-    data_subject_id         TEXT,
-    consent_statement_id    TEXT,
-
-    consent_status          TEXT,
-    consent_id              TEXT,
-    consented_detail        TEXT,
-    rejected_detail         TEXT,
-    created_at              BIGINT,
-    updated_at              BIGINT,
-
-    before_consent_status   TEXT,
-    before_consent_id       TEXT,
-    before_consented_detail TEXT,
-    before_rejected_detail  TEXT,
-    before_created_at       BIGINT,
-    before_updated_at       BIGINT,
-
-    tx_id                   TEXT,
-    tx_prepared_at          BIGINT,
-    tx_committed_at         BIGINT,
-    tx_state                INT,
-    tx_version              INT,
-
-    before_tx_id            TEXT,
-    before_tx_prepared_at   BIGINT,
-    before_tx_committed_at  BIGINT,
-    before_tx_state         INT,
-    before_tx_version       INT,
-
-    PRIMARY KEY (data_subject_id, consent_statement_id),
-) WITH CLUSTERING ORDER BY (consent_statement_id ASC);
-CREATE INDEX consent_statement_id_for_consent_table_idx ON ist.consent (consent_statement_id);
-CREATE INDEX consent_id_idx ON ist.consent (consent_id);
-
 
 CREATE TABLE ist.benefit
 (
@@ -406,12 +370,38 @@ CREATE TABLE ist.benefit
     PRIMARY KEY (company_id, created_at, organization_id),
 );
 
-DROP KEYSPACE IF EXISTS coordinator;
-CREATE KEYSPACE coordinator WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'};
-
-CREATE TABLE coordinator.state
+CREATE TABLE ist.consent
 (
-    tx_id         TEXT PRIMARY KEY,
-    tx_created_at BIGINT,
-    tx_state      INT
-);
+    data_subject_id             TEXT,
+    consent_statement_id        TEXT,
+
+    consent_status              TEXT,
+    consent_id                  TEXT,
+    consented_detail            TEXT,
+    rejected_detail             TEXT,
+    created_at                  BIGINT,
+    updated_at                  BIGINT,
+
+    before_consent_status       TEXT,
+    before_consent_id           TEXT,
+    before_consented_detail     TEXT,
+    before_rejected_detail      TEXT,
+    before_created_at           BIGINT,
+    before_updated_at           BIGINT,
+
+    tx_id                       TEXT,
+    tx_prepared_at              BIGINT,
+    tx_committed_at             BIGINT,
+    tx_state                    INT,
+    tx_version                  INT,
+
+    before_tx_id                TEXT,
+    before_tx_prepared_at       BIGINT,
+    before_tx_committed_at      BIGINT,
+    before_tx_state             INT,
+    before_tx_version           INT,
+
+    PRIMARY KEY (data_subject_id, consent_statement_id),
+) WITH CLUSTERING ORDER BY (consent_statement_id ASC);
+CREATE INDEX consent_consent_statement_id_idx ON ist.consent (consent_statement_id);
+CREATE INDEX consent_id_idx ON ist.consent (consent_id);

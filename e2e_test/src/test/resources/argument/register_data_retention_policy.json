@@ -8,6 +8,8 @@
   "length_of_retention":"3months",
   "description":"description",
   "created_at":1572514828170,
+  "updated_at":1572514828170,
+  "is_active":true,
   "_functions_":[
     "UpsertMaster"
   ]

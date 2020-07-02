@@ -10,6 +10,8 @@
   "guidance":"guidance",
   "note":"note",
   "created_at":1572514828169,
+  "updated_at":1572514828169,
+  "is_active":true,
   "_functions_":[
     "UpsertMaster"
   ]

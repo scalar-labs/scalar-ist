@@ -9,6 +9,7 @@
   "time_of_provision": "reprehenderit nisi nostrud eiusmod ullamco",
   "is_active": true,
   "created_at": 2,
+  "updated_at": 2,
   "_functions_":[
     "UpsertMaster"
   ]

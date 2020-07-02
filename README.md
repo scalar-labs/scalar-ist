@@ -5,7 +5,7 @@
 
 ## [データモデル](docs/outline/datamodel.md)
 
-## [ロールモデル](docs/outline/rolemodel.md)
+## [アクターとロールモデル](docs/outline/actor_role_model.md)
 
 
 # 機能一覧

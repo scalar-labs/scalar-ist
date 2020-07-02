@@ -88,7 +88,11 @@ public class UpsertMaster extends Function {
       JsonObject contractProperties, JsonObject contractArgument, JsonArray values) {
     return values.stream()
         .map(JsonValue::asJsonObject)
-        .filter(value -> contractArgument.containsKey(value.getString(DB_VALUE_NAME)))
+        .filter(
+            value -> {
+              String valueName = value.getString(DB_VALUE_NAME);
+              return contractArgument.containsKey(valueName) || valueName.equals(CREATED_BY);
+            })
         .map(
             value -> {
               String valueName = value.getString(DB_VALUE_NAME);

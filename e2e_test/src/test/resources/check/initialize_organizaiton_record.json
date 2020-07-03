@@ -1,0 +1,9 @@
+{
+	"company_id": "service-operator.com",
+	"organization_id":"8d8f6623-30e5-40a0-982d-54ad1e629c38",
+	"created_at": 1572514828166,
+	"organization_metadata": "{\"organization_name\":\"Admin\",\"organization_description\":\"Administrator organization\"}",
+	"is_active":true,
+	"created_by": "Initializer",
+	"updated_at": 1572614828166
+}

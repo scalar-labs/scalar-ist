@@ -120,7 +120,7 @@
   {
     "action": "check-record",
     "namespace": "ist",
-    "table": "company",
+    "table": "user_profile",
     "partition_keys": [
       {
         "name": "company_id",

@@ -118,29 +118,6 @@
     "scalar.db.password": "cassandra"
   },
   {
-    "action": "check-record",
-    "namespace": "ist",
-    "table": "user_profile",
-    "partition_keys": [
-      {
-        "name": "company_id",
-        "type": "text",
-        "value": "scalar-labs.com"
-      }
-    ],
-    "clustering_keys": [
-      {
-        "name": "holder_id",
-        "type": "text",
-        "value": "23cb79a1-4d39-484a-9bdd-9a7d67b0b4a2"
-      }
-    ],
-    "expect": {
-      "type": "file",
-      "path": "build/resources/test/check/upsert_user_profile_admin_controller_processor_record.json"
-    }
-  },
-  {
     "action": "check-asset",
     "asset_id": "PqWgZwK6XBFb7K0DAMr2i9wO7qJaKzF5ebON1OKoTbEM7pBAdMTR7QEdvxOWfqQlK70pX7C5AKZ7JevrSvddW4z61rHepNJQ",
     "expect": {

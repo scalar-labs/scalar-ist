@@ -101,6 +101,13 @@
       },
       "optional": {
       }
+    },
+    "assert_throws": {
+      "class": "com.scalar.dl.client.exception.ClientException",
+      "message": "Asset provided is already registered in the database."
+    },
+    "assert_that": {
+      "hashed_asset_id": "2nrpKPYBRWF52Knq1QbeUj10eyVxnaibvg7N9rwGc5MQ6J11RXtEJrdYdrdpIEKxZKXBBRu6j5qwaD4rhLanxVVjyWTMowK7"
     }
   },
   {

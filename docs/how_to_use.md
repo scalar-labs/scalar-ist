@@ -78,16 +78,24 @@ $ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/regi
 ```
 
 ## データセットスキーマを更新する
+```
 $ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_set_schema.json
+```
 
 ## 第三者提供先を登録する
+```
 $ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_third_party.json
+```
 
 ## 第三者提供先を更新する
+```
 $ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_third_party.json
+```
 
 ## 利用停止、データ削除期限を登録する
+```
 $ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_data_retention_policy.json
+```
 
 ## 利用停止、データ削除期限を更新する
 ```

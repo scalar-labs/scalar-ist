@@ -75,9 +75,10 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/get_consent_status_admin.json"
+        "path": "build/resources/test/argument/get_consent_status.json"
       },
       "optional": {
+        "company_id": "scalar-labs.com"
       }
     },
     "assert_throws": {

@@ -97,9 +97,15 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_user_profile_admin.json"
+        "path": "build/resources/test/argument/upsert_user_profile.json"
       },
       "optional": {
+        "executor_company_id":"service-operator.com",
+        "roles":[
+          "Admin"
+        ],
+        "holder_id":"a5e9971d-32be-490d-bff4-c6d65816c1e5"
+
       }
     }
   }

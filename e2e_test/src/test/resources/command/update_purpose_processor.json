@@ -103,9 +103,10 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_purpose_processor.json"
+        "path": "build/resources/test/argument/update_purpose.json"
       },
       "optional": {
+        "created_at": 1572514828180
       }
     },
     "assert_throws": {

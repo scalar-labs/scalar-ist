@@ -97,9 +97,13 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_user_profile_admin_controller_processor_from_admin_notowncompany_update.json"
+        "path": "build/resources/test/argument/upsert_user_profile.json"
       },
       "optional": {
+        "company_id":"service-operator.com",
+        "holder_id":"3a19f64f-5c3a-42e1-9ed3-46eb41112e03",
+        "created_at":1572514828180,
+        "mode":"update"
       }
     },
     "assert_throws": {

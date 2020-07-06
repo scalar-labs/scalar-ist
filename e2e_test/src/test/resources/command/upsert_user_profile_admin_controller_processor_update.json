@@ -97,9 +97,11 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_user_profile_admin_controller_processor_update.json"
+        "path": "build/resources/test/argument/upsert_user_profile.json"
       },
       "optional": {
+        "created_at":1572514828172,
+        "mode":"update"
       }
     },
     "assert_throws": {

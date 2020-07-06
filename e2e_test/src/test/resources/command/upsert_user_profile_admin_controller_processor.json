@@ -97,7 +97,7 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_user_profile_admin_controller_processor.json"
+        "path": "build/resources/test/argument/upsert_user_profile.json"
       },
       "optional": {
       }

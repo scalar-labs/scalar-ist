@@ -97,9 +97,17 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_user_profile_sysad_sysope_admin_update.json"
+        "path": "build/resources/test/argument/upsert_user_profile.json"
       },
       "optional": {
+        "executor_company_id": "service-operator.com",
+        "roles": [
+          "SysAdmin",
+          "SysOperator",
+          "Admin"
+        ],
+        "holder_id": "de681772-6906-4dca-b423-3c54c876ab92",
+        "mode": "update"
       }
     },
     "assert_throws": {

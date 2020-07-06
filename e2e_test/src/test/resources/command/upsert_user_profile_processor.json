@@ -97,9 +97,15 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_user_profile_processor.json"
+        "path": "build/resources/test/argument/upsert_user_profile.json"
       },
       "optional": {
+        "executor_company_id":"service-operator.com",
+        "roles":[
+          "Processor"
+        ],
+        "holder_id":"8b33472b-6dc0-4bd0-b9a9-019ce667131e",
+        "created_at":1572514828169
       }
     }
   }

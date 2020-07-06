@@ -75,7 +75,7 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/get_consent_status_notown_notcompanyid.json"
+        "path": "build/resources/test/argument/get_consent_status.json"
       },
       "optional": {
       }

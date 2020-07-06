@@ -78,9 +78,22 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_consent_status_update.json"
+        "path": "build/resources/test/argument/upsert_consent_status.json"
       },
       "optional": {
+        "consented_detail": {
+          "group_company_ids": [
+            "updategroupCompanyId"
+          ],
+          "purpose_ids": [
+            "updatewg1jgHMEhwEPxbx7pTgGOiqnaBxCh2dOiiyIovwwJAQje6xaBO8BRN"
+          ],
+          "benefit_ids": [
+            "update1rdfpa7syEhJ7toWZeoPY62usMj",
+            "update2rdfpa7syEhJ7toWZeoPY62usMj"
+          ]
+        },
+        "updated_at": 1
       }
     },
     "assert_throws": {

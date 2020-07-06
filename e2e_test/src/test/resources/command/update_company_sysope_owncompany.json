@@ -95,9 +95,18 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_company_sysope_owncompany.json"
+        "path": "build/resources/test/argument/update_company.json"
       },
       "optional": {
+        "executor_company_id": "service-operator.com",
+        "company_id": "service-operator.com",
+        "company_name": "Service Operator",
+        "company_metadata": {
+          "third_party_name": "Service Operator, Inc.",
+          "address": "東京都新宿区",
+          "email": "mail@service-operator.com"
+        },
+        "created_at": 1572514828166
       }
     },
     "assert_throws": {

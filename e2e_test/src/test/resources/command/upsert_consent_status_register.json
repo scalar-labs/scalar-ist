@@ -78,7 +78,7 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_consent_status_register.json"
+        "path": "build/resources/test/argument/upsert_consent_status.json"
       },
       "optional": {
       }

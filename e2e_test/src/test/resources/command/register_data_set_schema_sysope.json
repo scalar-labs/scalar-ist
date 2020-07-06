@@ -103,9 +103,11 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/register_data_set_schema_sysope.json"
+        "path": "build/resources/test/argument/register_data_set_schema.json"
       },
       "optional": {
+        "company_id":"service-operator.com",
+        "data_set_name":"test"
       }
     },
     "assert_throws": {

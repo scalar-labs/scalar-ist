@@ -103,9 +103,11 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/register_purpose_processor.json"
+        "path": "build/resources/test/argument/register_purpose.json"
       },
       "optional": {
+        "category_of_purpose": "test_of_purpose",
+        "created_at": 1572514828180
       }
     },
     "assert_throws": {

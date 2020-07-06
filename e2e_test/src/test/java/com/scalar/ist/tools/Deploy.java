@@ -327,6 +327,9 @@ public class Deploy {
                 case STRING:
                   builder.add(key, ((JsonString) value).getString());
                   break;
+                case NUMBER:
+                  builder.add(key, ((JsonNumber) value).longValue());
+                  break;
                 case OBJECT:
                   JsonObject object = value.asJsonObject();
                   switch (object.getString(TYPE)) {

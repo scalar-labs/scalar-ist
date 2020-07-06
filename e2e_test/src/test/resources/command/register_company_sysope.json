@@ -95,9 +95,12 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/register_company_sysope.json"
+        "path": "build/resources/test/argument/register_company.json"
       },
       "optional": {
+        "company_id": "scalar-test.com",
+        "organization_id": "55716259-b9ff-4b68-adf9-67ea5bd6940c",
+        "corporate_number": "6010001188572"
       }
     },
     "assert_throws": {

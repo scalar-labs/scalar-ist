@@ -26,6 +26,8 @@ import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
 import static com.scalar.ist.common.Constants.RECORD_MODE;
 import static com.scalar.ist.common.Constants.ROLES_REQUIRED;
 import static com.scalar.ist.common.Constants.ROLE_ADMINISTRATOR;
+import static com.scalar.ist.common.Constants.ROLE_CONTROLLER;
+import static com.scalar.ist.common.Constants.ROLE_PROCESSOR;
 import static com.scalar.ist.common.Constants.ROLE_SYSADMIN;
 import static com.scalar.ist.common.Constants.ROLE_SYSOPERATOR;
 import static com.scalar.ist.common.Constants.USER_PROFILE_ASSET_NAME;
@@ -145,7 +147,7 @@ public class UpsertUserProfile extends Contract {
         || userProfile
             .getJsonArray(Constants.ROLES)
             .contains(Json.createValue(ROLE_SYSOPERATOR)))) {
-      if (!arguments.getString(EXECUTOR_COMPANY_ID).equals(userProfile.getString(COMPANY_ID))) {
+      if (!arguments.getString(EXECUTOR_COMPANY_ID).equals(arguments.getString(COMPANY_ID))) {
         throw new ContractContextException(
             EXECUTOR_COMPANY_ID_DOES_NOT_MATCH_WITH_USER_PROFILE_COMPANY_ID);
       }
@@ -189,6 +191,13 @@ public class UpsertUserProfile extends Contract {
     }
     if (argumentsRoles.contains(Json.createValue(ROLE_SYSADMIN))
         && !userProfileRoles.contains(Json.createValue(ROLE_SYSADMIN))) {
+      throw new ContractContextException(PERMISSION_DENIED);
+    }
+    boolean isArgumentControllerOrProcessor =
+        argumentsRoles.contains(Json.createValue(ROLE_CONTROLLER))
+            || argumentsRoles.contains(Json.createValue((ROLE_PROCESSOR)));
+    if (isArgumentControllerOrProcessor
+        && !userProfileRoles.contains(Json.createValue(ROLE_ADMINISTRATOR))) {
       throw new ContractContextException(PERMISSION_DENIED);
     }
   }

@@ -14,6 +14,8 @@ import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.CORPORATE_NUMBER;
 import static com.scalar.ist.common.Constants.CREATED_AT;
+import static com.scalar.ist.common.Constants.EXECUTOR_COMPANY_ID;
+import static com.scalar.ist.common.Constants.EXECUTOR_COMPANY_ID_DOES_NOT_MATCH_WITH_USER_PROFILE_COMPANY_ID;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
 import static com.scalar.ist.common.Constants.HOLDER_ID;
@@ -70,6 +72,7 @@ public class UpdateCompanyTest {
   private static final String MOCKED_ASSET_NAME = "company";
   private static final String SCHEMA_FILENAME = "update_company.json";
   private static final String MOCKED_COMPANY_ID = "scalar-labs.com";
+  private static final String MOCKED_EXECUTOR_COMPANY_ID = "service-operator.com";
   private static final String MOCKED_COMPANY_NAME = "株式会社Scalar";
   private static final String MOCKED_CORPORATE_NUMBER = "6010001188571";
   private static final JsonObject MOCKED_COMPANY_METADATA =
@@ -251,6 +254,45 @@ public class UpdateCompanyTest {
     verify(updateCompany).invokeSubContract(any(), any(), any());
   }
 
+  @Test
+  public void invoke_AdminRoleWithNonMatchingCompanyId_ShouldThrowContractContextException() {
+    // Arrange
+    JsonObject argument = prepareArgument();
+    JsonObject properties = prepareProperties();
+    JsonObject userProfileArgument = prepareUserProfileArgument();
+    JsonObject userProfile = Json.createObjectBuilder()
+        .add(COMPANY_ID, "wrong-company.com")
+        .add(ORGANIZATION_IDS, mockedOrganizationIds)
+        .add(ROLES, Json.createArrayBuilder().add(ROLE_ADMINISTRATOR).build()).build();
+    JsonObject companyRecord = prepareCompanyRecord(argument);
+    JsonObject putRecordArgument = preparePutRecordArgument(argument, companyRecord, properties);
+    JsonObject getRecordArgument = prepareGetRecordArgument(argument, properties);
+    JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
+    when(updateCompany.getCertificateKey()).thenReturn(certificateKey);
+    when(updateCompany.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
+    doReturn(userProfile)
+        .when(updateCompany)
+        .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
+    doReturn(companyRecord)
+        .when(updateCompany)
+        .invokeSubContract(GET_ASSET_RECORD, ledger, getRecordArgument);
+    doReturn(JsonObject.EMPTY_JSON_OBJECT)
+        .when(updateCompany)
+        .invokeSubContract(PUT_ASSET_RECORD, ledger, putRecordArgument);
+    doReturn(null)
+        .when(updateCompany)
+        .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
+
+    // Act
+    // Assert
+    assertThatThrownBy(() -> updateCompany.invoke(ledger, argument, Optional.of(properties)))
+        .isExactlyInstanceOf(ContractContextException.class)
+        .hasMessage(EXECUTOR_COMPANY_ID_DOES_NOT_MATCH_WITH_USER_PROFILE_COMPANY_ID);
+    verify(updateCompany).invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
+    verify(updateCompany).invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
+    verify(updateCompany, times(2)).invokeSubContract(any(), any(), any());
+  }
+
   private JsonObject preparePutRecordArgument(
       JsonObject argument, JsonObject companyRecord, JsonObject properties) {
     JsonNumber updatedAt = argument.getJsonNumber(UPDATED_AT);
@@ -303,6 +345,7 @@ public class UpdateCompanyTest {
 
   private JsonObject prepareArgument() {
     return Json.createObjectBuilder()
+        .add(EXECUTOR_COMPANY_ID, MOCKED_EXECUTOR_COMPANY_ID)
         .add(COMPANY_ID, MOCKED_COMPANY_ID)
         .add(COMPANY_NAME, MOCKED_COMPANY_NAME)
         .add(CORPORATE_NUMBER, MOCKED_CORPORATE_NUMBER)
@@ -327,13 +370,14 @@ public class UpdateCompanyTest {
   private JsonObject prepareUserProfile(String role) {
     JsonArray roles = Json.createArrayBuilder().add(role).build();
     return Json.createObjectBuilder()
+        .add(COMPANY_ID, MOCKED_EXECUTOR_COMPANY_ID)
         .add(ORGANIZATION_IDS, mockedOrganizationIds)
         .add(ROLES, roles)
         .build();
   }
 
   private JsonObject prepareUserProfileArgument() {
-    return Json.createObjectBuilder().add(COMPANY_ID, MOCKED_COMPANY_ID).build();
+    return Json.createObjectBuilder().add(COMPANY_ID, MOCKED_EXECUTOR_COMPANY_ID).build();
   }
 
   private JsonObject preparePermissionValidationArgument(

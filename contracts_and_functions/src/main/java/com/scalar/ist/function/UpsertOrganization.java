@@ -66,6 +66,11 @@ public class UpsertOrganization extends Function {
         new Key(
             new TextValue(ORGANIZATION_ID, organizationId), new BigIntValue(CREATED_AT, createdAt));
 
+    Get get = new Get(partitionKey, clusteringKey)
+        .forNamespace(NAMESPACE)
+        .forTable(ORGANIZATION_TABLE);
+    database.get(get);
+
     Put put =
         new Put(partitionKey, clusteringKey)
             .withValue(new TextValue(ORGANIZATION_METADATA, organizationMetadata))

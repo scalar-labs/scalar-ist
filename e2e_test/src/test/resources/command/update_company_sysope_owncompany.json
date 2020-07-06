@@ -101,11 +101,6 @@
         "executor_company_id": "service-operator.com",
         "company_id": "service-operator.com",
         "company_name": "Service Operator",
-        "company_metadata": {
-          "third_party_name": "Service Operator, Inc.",
-          "address": "東京都新宿区",
-          "email": "mail@service-operator.com"
-        },
         "created_at": 1572514828166
       }
     },

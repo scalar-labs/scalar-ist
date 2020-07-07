@@ -107,7 +107,7 @@
       "message": "Asset provided is already registered in the database."
     },
     "assert_that": {
-      "hashed_asset_id": "PqWgZwK6XBFb7K0DAMr2i9wO7qJaKzF5ebON1OKoTbEM7pBAdMTR7QEdvxOWfqQlK70pX7C5AKZ7JevrSvddW4z61rHepNJQ"
+      "hashed_asset_id": "1wWQAvPERDfNvzb9d6yOtj6Pqbn0z4izWGa9W9wrhWBYAJJPaySa1jeQAoratBRZrLJQLgSKqNO4bJ6yTp2MgLQQ6xSV7goA"
     }
   },
   {
@@ -119,7 +119,7 @@
   },
   {
     "action": "check-asset",
-    "asset_id": "PqWgZwK6XBFb7K0DAMr2i9wO7qJaKzF5ebON1OKoTbEM7pBAdMTR7QEdvxOWfqQlK70pX7C5AKZ7JevrSvddW4z61rHepNJQ",
+    "asset_id": "1wWQAvPERDfNvzb9d6yOtj6Pqbn0z4izWGa9W9wrhWBYAJJPaySa1jeQAoratBRZrLJQLgSKqNO4bJ6yTp2MgLQQ6xSV7goA",
     "expect": {
       "type": "file",
       "path": "build/resources/test/check/upsert_user_profile_admin_controller_processor_update_asset.json"

@@ -137,6 +137,10 @@
           }
         }
       }
+    },
+    "updated_at": {
+      "type": "integer",
+      "minimum": 0
     }
   }
 }

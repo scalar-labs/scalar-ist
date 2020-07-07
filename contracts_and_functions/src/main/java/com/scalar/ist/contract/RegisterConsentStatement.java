@@ -66,9 +66,8 @@ public class RegisterConsentStatement extends Contract {
   public JsonObject invoke(Ledger ledger, JsonObject arguments, Optional<JsonObject> properties) {
     validate(ledger, arguments, properties);
     JsonObject putRecordArgument = createPutRecordArgument(arguments, properties);
-    invokeSubContract(PUT_ASSET_RECORD, ledger, putRecordArgument);
 
-    return null;
+    return invokeSubContract(PUT_ASSET_RECORD, ledger, putRecordArgument);
   }
 
   private JsonObject createPutRecordArgument(

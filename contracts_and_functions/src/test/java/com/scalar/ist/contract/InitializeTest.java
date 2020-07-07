@@ -211,7 +211,7 @@ public class InitializeTest {
             .add(COMPANY_NAME, argument.getString(COMPANY_NAME))
             .add(CORPORATE_NUMBER, argument.getString(CORPORATE_NUMBER))
             .add(COMPANY_METADATA, argument.getJsonObject(COMPANY_METADATA))
-            .add(ORGANIZATIONS, administratorInformation)
+            .add(ORGANIZATIONS, Json.createArrayBuilder().add(administratorInformation))
             .build();
     return Json.createObjectBuilder()
         .add(ASSET_ID, assetId)
@@ -279,9 +279,5 @@ public class InitializeTest {
         .add(RECORD_IS_HASHED, false)
         .add(CREATED_AT, arguments.getJsonNumber(CREATED_AT))
         .build();
-  }
-
-  private JsonObject prepareUserProfileArgument() {
-    return Json.createObjectBuilder().add(COMPANY_ID, MOCKED_EXECUTOR_COMPANY_ID).build();
   }
 }

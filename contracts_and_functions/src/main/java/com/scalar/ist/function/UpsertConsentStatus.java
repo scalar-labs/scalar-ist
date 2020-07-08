@@ -62,7 +62,11 @@ public class UpsertConsentStatus extends Function {
       values.add(
           new BigIntValue(CREATED_AT, contractArgument.getJsonNumber(UPDATED_AT).longValue()));
     }
-    Put put = new Put(partitionKey, clusteringKey).withValues(values).forTable(CONSENT_TABLE);
+    Put put =
+        new Put(partitionKey, clusteringKey)
+            .withValues(values)
+            .forTable(CONSENT_TABLE)
+            .forNamespace(NAMESPACE);
 
     database.put(put);
   }

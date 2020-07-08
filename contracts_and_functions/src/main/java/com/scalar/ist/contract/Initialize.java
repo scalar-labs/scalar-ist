@@ -118,7 +118,7 @@ public class Initialize extends Contract {
             .add(COMPANY_NAME, arguments.getString(COMPANY_NAME))
             .add(CORPORATE_NUMBER, arguments.getString(CORPORATE_NUMBER))
             .add(COMPANY_METADATA, arguments.getJsonObject(COMPANY_METADATA))
-            .add(ORGANIZATIONS, organizations)
+            .add(ORGANIZATIONS, Json.createArrayBuilder().add(organizations).build())
             .build();
 
     return Json.createObjectBuilder()

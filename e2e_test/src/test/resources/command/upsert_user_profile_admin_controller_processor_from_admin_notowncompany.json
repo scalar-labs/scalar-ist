@@ -104,7 +104,7 @@
     },
     "assert_throws": {
       "class": "com.scalar.dl.client.exception.ClientException",
-      "message": "Permission is not granted due to inadequate roles or organization ids provided."
+      "message": "The specified executor company id does not match with the user profile company id."
     }
   }
 ]

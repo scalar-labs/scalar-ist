@@ -189,6 +189,7 @@ public class Deploy {
 
   private void compare(Result record, Map.Entry<String, JsonValue> entry) {
     String key = entry.getKey();
+    System.out.println("key: " + key);
 
     switch (entry.getValue().getValueType()) {
       case STRING:

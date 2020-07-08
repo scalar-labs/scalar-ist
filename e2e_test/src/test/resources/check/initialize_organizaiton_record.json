@@ -5,5 +5,5 @@
 	"organization_metadata": "{\"organization_name\":\"Admin\",\"organization_description\":\"Administrator organization\"}",
 	"is_active":true,
 	"created_by": "Initializer",
-	"updated_at": 1572614828166
+	"updated_at": null
 }

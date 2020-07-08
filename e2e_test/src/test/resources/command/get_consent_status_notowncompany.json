@@ -82,7 +82,7 @@
     },
     "assert_throws": {
       "class": "com.scalar.dl.client.exception.ClientException",
-      "message": "Permission is not granted due to inadequate roles or organization ids provided."
+      "message": "Asset is not found in the ledger."
     }
   }
 ]

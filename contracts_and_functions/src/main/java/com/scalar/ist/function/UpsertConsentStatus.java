@@ -1,5 +1,7 @@
 package com.scalar.ist.function;
 
+import static com.scalar.ist.common.Constants.ASSET_NAME;
+import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.CONSENTED_DETAIL;
 import static com.scalar.ist.common.Constants.CONSENT_ID;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
@@ -38,33 +40,39 @@ public class UpsertConsentStatus extends Function {
       Optional<JsonObject> contractProperties) {
     String dataSubjectId = contractProperties.get().getString(HOLDER_ID);
     String consentStatementId = contractArgument.getString(CONSENT_STATEMENT_ID);
-
+    String consentId =
+        String.format(
+            "%s%s-%s-%s",
+            contractProperties.get().getString(ASSET_NAME),
+            contractProperties.get().getString(ASSET_VERSION, ""),
+            consentStatementId,
+            dataSubjectId);
     List<String> params =
         new ArrayList<>(
-            Arrays.asList(CONSENT_STATUS, CONSENT_ID, CONSENTED_DETAIL, REJECTED_DETAIL));
+            Arrays.asList(CONSENT_STATUS, CONSENTED_DETAIL, REJECTED_DETAIL, UPDATED_AT));
 
     Key partitionKey = new Key(new TextValue(DATA_SUBJECT_ID, dataSubjectId));
     Key clusteringKey = new Key(new TextValue(CONSENT_STATEMENT_ID, consentStatementId));
 
-    Put put =
-        new Put(partitionKey, clusteringKey)
-            .withValues(createValues(params, contractArgument))
-            .forTable(CONSENT_TABLE)
-            .forNamespace(NAMESPACE);
-    Optional<Result> consent = get(database, consentStatementId);
-    if (!consent.isPresent()) {
-      put.withValue(
+    Optional<Result> optConsent = get(database, partitionKey, clusteringKey);
+
+    List<Value> values = createValues(params, contractArgument);
+    values.add(new TextValue(CONSENT_ID, consentId));
+    if (!optConsent.isPresent()) {
+      values.add(
           new BigIntValue(CREATED_AT, contractArgument.getJsonNumber(UPDATED_AT).longValue()));
     }
+    Put put =
+        new Put(partitionKey, clusteringKey)
+            .withValues(values)
+            .forTable(CONSENT_TABLE)
+            .forNamespace(NAMESPACE);
 
     database.put(put);
   }
 
-  private Optional<Result> get(Database database, String consentStatementId) {
-    Get get =
-        new Get(new Key(new TextValue(CONSENT_STATEMENT_ID, consentStatementId)))
-            .forNamespace(NAMESPACE)
-            .forTable(CONSENT_TABLE);
+  private Optional<Result> get(Database database, Key partitionKey, Key clusteringKey) {
+    Get get = new Get(partitionKey, clusteringKey).forNamespace(NAMESPACE).forTable(CONSENT_TABLE);
     return database.get(get);
   }
 

@@ -11,6 +11,8 @@ import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.CORPORATE_NUMBER;
 import static com.scalar.ist.common.Constants.CREATED_AT;
+import static com.scalar.ist.common.Constants.EXECUTOR_COMPANY_ID;
+import static com.scalar.ist.common.Constants.EXECUTOR_COMPANY_ID_DOES_NOT_MATCH_WITH_USER_PROFILE_COMPANY_ID;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
 import static com.scalar.ist.common.Constants.HOLDER_ID;
@@ -125,8 +127,17 @@ public class UpdateCompany extends Contract {
 
   private void validateUserPermissions(Ledger ledger, JsonObject arguments) {
     JsonObject userProfileArgument =
-        Json.createObjectBuilder().add(COMPANY_ID, arguments.getString(COMPANY_ID)).build();
+        Json.createObjectBuilder()
+            .add(COMPANY_ID, arguments.getString(EXECUTOR_COMPANY_ID))
+            .build();
     JsonObject userProfile = invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
+
+    JsonArray adminRole = Json.createArrayBuilder().add(ROLE_ADMINISTRATOR).build();
+    if (userProfile.getJsonArray(Constants.ROLES).equals(adminRole)
+        && !arguments.getString(EXECUTOR_COMPANY_ID).equals(arguments.getString(COMPANY_ID))
+    ) {
+      throw new ContractContextException(EXECUTOR_COMPANY_ID_DOES_NOT_MATCH_WITH_USER_PROFILE_COMPANY_ID);
+    }
 
     JsonObject validateUserPermissionsArgument =
         Json.createObjectBuilder()

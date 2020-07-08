@@ -35,7 +35,9 @@
         "enum": [
           "Administrator",
           "Processor",
-          "Controller"
+          "Controller",
+          "SysAdmin",
+          "SysOperator"
         ]
       }
     },

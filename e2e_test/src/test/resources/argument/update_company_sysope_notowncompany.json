@@ -1,15 +1,14 @@
 {
 	"executor_company_id": "service-operator.com",
-	"company_id": "scalar-labs.com",
-	"company_name": "Scalar-labs",
-	"corporate_number": "6010001188571",
+	"company_id": "scalar-test.com",
+	"company_name": "Scalar Test",
+	"corporate_number": "6010001188572",
 	"company_metadata": {
-		"third_party_name": "Scalar, Inc.",
 		"address": "Shinjuku, Tokyo",
 		"email": "mail@example.com"
 	},
-	"created_at": 1572514828167,
-	"updated_at": 1572514828200,
+	"created_at": 1572514828200,
+	"updated_at": 1572514828201,
 	"_functions_": [
 		"UpdateCompany"
 	]

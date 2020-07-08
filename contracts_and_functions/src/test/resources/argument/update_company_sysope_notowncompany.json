@@ -1,0 +1,15 @@
+{
+	"executor_company_id": "service-operator.com",
+	"company_id": "scalar-test.com",
+	"company_name": "Scalar Test",
+	"corporate_number": "6010001188572",
+	"company_metadata": {
+		"address": "Shinjuku, Tokyo",
+		"email": "mail@example.com"
+	},
+	"created_at": 1572514828200,
+	"updated_at": 1572514828201,
+	"_functions_": [
+		"UpdateCompany"
+	]
+}

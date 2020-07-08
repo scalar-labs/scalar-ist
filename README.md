@@ -18,11 +18,11 @@ Scalar IST は、データ収集、利用目的、第三者提供先、利用期
 Link to Contract/Function設計書
 
 # 利用手順
-## 環境構築
+## [環境構築](docs/infra/)
 
 ## [ISTデプロイ手順](docs/how_to_use.md)
 
-## 事前準備
+## リポジトリ内のファイル説明
 
 # 実行手順
 ## 証明書の登録

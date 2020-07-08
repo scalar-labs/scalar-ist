@@ -1,0 +1,23 @@
+{
+  "company_id":"service-operator.com",
+  "third_party_domain":"thirdparty.com",
+  "third_party_name":"third test inc",
+  "corporate_number":"1234567890123",
+  "third_party_metadata":{
+    "third_party_name":"THIRD TEST, Inc.",
+    "address":"Shinjuku, Tokyo",
+    "email":"mail@thirtparty.com"
+  },
+  "organizations":[
+    {
+      "organization_id":"sample_orgtest",
+      "organization_name":"third-party-orgtest",
+      "organization_description":"third party orgtest",
+      "is_active":true
+    }
+  ],
+  "created_at":1572514828171,
+  "_functions_":[
+    "RegisterThirdParty"
+  ]
+}

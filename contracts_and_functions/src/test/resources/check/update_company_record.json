@@ -1,0 +1,10 @@
+{
+  "company_id":"scalar-labs.com",
+  "created_at":1572514828167,
+  "company_metadata":"{\"address\":\"東京都新宿区袋町\",\"email\":\"mail@example.com\"}",
+  "company_name":"Scalar-labs",
+  "corporate_number":"6010001188571",
+  "created_by": "a5e9971d-32be-490d-bff4-c6d65816c1e5",
+  "updated_at":1572514828200,
+  "is_active":true
+}

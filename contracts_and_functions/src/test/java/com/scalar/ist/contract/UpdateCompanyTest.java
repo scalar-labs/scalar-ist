@@ -102,26 +102,31 @@ public class UpdateCompanyTest {
 
   @Test
   public void invoke_ProperArgumentsAndPropertiesGivenFromAdministrator_ShouldPass() {
-    invokeProperArgumentsWithGivenRole(ROLE_ADMINISTRATOR);
+    JsonObject contractArgument =
+        Json.createObjectBuilder(prepareArgument())
+            .add(COMPANY_ID, MOCKED_EXECUTOR_COMPANY_ID)
+            .build();
+    invokeProperArgumentsWithGivenRole(ROLE_ADMINISTRATOR, contractArgument);
   }
 
   @Test
   public void invoke_ProperArgumentsAndPropertiesGivenFromSysOperator_ShouldPass() {
-    invokeProperArgumentsWithGivenRole(ROLE_SYSOPERATOR);
+    invokeProperArgumentsWithGivenRole(ROLE_SYSOPERATOR, prepareArgument());
   }
 
-  private void invokeProperArgumentsWithGivenRole(String executorRole) {
+  private void invokeProperArgumentsWithGivenRole(
+      String executorRole, JsonObject contractArgument) {
     // Arrange
-    JsonObject argument = prepareArgument();
     JsonObject properties = prepareProperties();
     JsonObject userProfileArgument = prepareUserProfileArgument();
     JsonObject userProfile = prepareUserProfile(executorRole);
     JsonObject permissionValidationArgument =
-        preparePermissionValidationArgument(userProfile, argument);
-    JsonObject companyRecord = prepareCompanyRecord(argument);
-    JsonObject putRecordArgument = preparePutRecordArgument(argument, companyRecord, properties);
-    JsonObject getRecordArgument = prepareGetRecordArgument(argument, properties);
-    JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
+        preparePermissionValidationArgument(userProfile, contractArgument);
+    JsonObject companyRecord = prepareCompanyRecord(contractArgument);
+    JsonObject putRecordArgument =
+        preparePutRecordArgument(contractArgument, companyRecord, properties);
+    JsonObject getRecordArgument = prepareGetRecordArgument(contractArgument, properties);
+    JsonObject validateArgumentArgument = prepareValidationArgument(contractArgument, properties);
     when(updateCompany.getCertificateKey()).thenReturn(certificateKey);
     when(updateCompany.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
@@ -141,7 +146,7 @@ public class UpdateCompanyTest {
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
 
     // Act
-    updateCompany.invoke(ledger, argument, Optional.of(properties));
+    updateCompany.invoke(ledger, contractArgument, Optional.of(properties));
 
     // Assert
     verify(updateCompany).invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
@@ -260,10 +265,12 @@ public class UpdateCompanyTest {
     JsonObject argument = prepareArgument();
     JsonObject properties = prepareProperties();
     JsonObject userProfileArgument = prepareUserProfileArgument();
-    JsonObject userProfile = Json.createObjectBuilder()
-        .add(COMPANY_ID, "wrong-company.com")
-        .add(ORGANIZATION_IDS, mockedOrganizationIds)
-        .add(ROLES, Json.createArrayBuilder().add(ROLE_ADMINISTRATOR).build()).build();
+    JsonObject userProfile =
+        Json.createObjectBuilder()
+            .add(COMPANY_ID, "wrong-company.com")
+            .add(ORGANIZATION_IDS, mockedOrganizationIds)
+            .add(ROLES, Json.createArrayBuilder().add(ROLE_ADMINISTRATOR).build())
+            .build();
     JsonObject companyRecord = prepareCompanyRecord(argument);
     JsonObject putRecordArgument = preparePutRecordArgument(argument, companyRecord, properties);
     JsonObject getRecordArgument = prepareGetRecordArgument(argument, properties);

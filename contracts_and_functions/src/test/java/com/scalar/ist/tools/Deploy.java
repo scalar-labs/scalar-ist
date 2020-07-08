@@ -36,35 +36,38 @@ public class Deploy {
           JsonObjectBuilder builder =
               Json.createObjectBuilder().add(ACTION, json.getString(ACTION));
 
-          switch (json.getString(ACTION)) {
-            case SET_HOLDER:
-              setContractProperties(json);
-              break;
-            case REGISTER_CERT:
-              util.registerCertificate();
-              break;
-            case REGISTER_FUNCTIONS:
-              registerFunctions(json);
-              break;
-            case REGISTER_CONTRACT:
-              registerContract(json);
-              break;
-            case EXECUTE_CONTRACT:
-              executeContract(json, builder);
-              break;
-            case SET_DATABASE_CONFIG:
-              setDatabaseConfig(json);
-              break;
-            case CHECK_ASSET:
-              checkAsset(json, builder);
-              break;
-            case CHECK_RECORD:
-              checkRecord(json, builder);
-              break;
-            default:
-              builder.add("command error", "specified invalid action");
+          try {
+            switch (json.getString(ACTION)) {
+              case SET_HOLDER:
+                setContractProperties(json, builder);
+                break;
+              case REGISTER_CERT:
+                util.registerCertificate();
+                break;
+              case REGISTER_FUNCTIONS:
+                registerFunctions(json);
+                break;
+              case REGISTER_CONTRACT:
+                registerContract(json, builder);
+                break;
+              case EXECUTE_CONTRACT:
+                executeContract(json, builder);
+                break;
+              case SET_DATABASE_CONFIG:
+                setDatabaseConfig(json);
+                break;
+              case CHECK_ASSET:
+                checkAsset(json, builder);
+                break;
+              case CHECK_RECORD:
+                checkRecord(json, builder);
+                break;
+              default:
+                builder.add("command error", "specified invalid action");
+            }
+          } finally {
+            System.out.println(builder.build());
           }
-          System.out.println(builder.build());
         });
   }
 
@@ -82,13 +85,15 @@ public class Deploy {
         });
   }
 
-  private void registerContract(JsonObject json) {
+  private void registerContract(JsonObject json, JsonObjectBuilder builder) {
     JsonObject contractProperties;
     if (json.containsKey(PROPERTIES)) {
       contractProperties = createContractProperties(json.getJsonObject(PROPERTIES));
     } else {
       contractProperties = Json.createObjectBuilder().build();
     }
+    builder.add(CONTRACT_ID, json.getString(ID));
+    builder.add(CONTRACT_PROPERTIES, contractProperties);
     util.registerContract(
         json.getString(ID),
         json.getString(BINARY_NAME),
@@ -105,6 +110,8 @@ public class Deploy {
     }
 
     try {
+      builder.add(CONTRACT_ID, json.getString(ID));
+      builder.add(CONTRACT_ARGUMENT, contractArgument);
       ContractExecutionResult result =
           util.executeContract(
               json.getString(ID),
@@ -154,6 +161,7 @@ public class Deploy {
         .forEach(
             jsonValueEntry -> {
               String key = jsonValueEntry.getKey();
+              builder.add("Key", key);
 
               if (!asset.containsKey(key)) {
                 builder.add("compare error", "Key not found in asset :" + key);
@@ -180,6 +188,7 @@ public class Deploy {
       expect.entrySet().stream()
           .forEach(
               entry -> {
+                builder.add("Key", entry.getKey());
                 compare(record, entry);
               });
     } catch (ExecutionException e) {
@@ -189,7 +198,6 @@ public class Deploy {
 
   private void compare(Result record, Map.Entry<String, JsonValue> entry) {
     String key = entry.getKey();
-    System.out.println("key: " + key);
 
     switch (entry.getValue().getValueType()) {
       case STRING:
@@ -309,7 +317,6 @@ public class Deploy {
     switch (setting.getString(TYPE)) {
       case TYPE_STRING:
         return setting.getJsonObject(VALUE);
-
       case TYPE_FILE:
         return Util.readJsonFromFile(setting.getString(PATH));
     }
@@ -321,38 +328,40 @@ public class Deploy {
     JsonObject argument = createJsonObjectFromSetting(json.getJsonObject(VALUE));
     JsonObjectBuilder builder = Json.createObjectBuilder(argument);
 
-    json.getJsonObject(OPTIONAL)
-        .forEach(
-            (key, value) -> {
-              switch (value.getValueType()) {
-                case STRING:
-                  builder.add(key, ((JsonString) value).getString());
-                  break;
-                case NUMBER:
-                  builder.add(key, ((JsonNumber) value).longValue());
-                  break;
-                case OBJECT:
-                  JsonObject object = value.asJsonObject();
-                  switch (object.getString(TYPE)) {
-                    case ClientConfig.CERT_HOLDER_ID:
-                      builder.add(key, clientProps.getProperty(ClientConfig.CERT_HOLDER_ID));
-                      break;
-                    case NOW:
-                      builder.add(key, new Date().getTime());
-                      break;
-                    default:
-                      throw new IllegalStateException("Unexpected type: " + key);
-                  }
-                  break;
-                default:
-                  throw new IllegalStateException("Unexpected entry: " + value.getValueType());
-              }
-            });
+    if (json.containsKey(OPTIONAL)) {
+      json.getJsonObject(OPTIONAL)
+          .forEach(
+              (key, value) -> {
+                switch (value.getValueType()) {
+                  case STRING:
+                    builder.add(key, ((JsonString) value).getString());
+                    break;
+                  case NUMBER:
+                    builder.add(key, ((JsonNumber) value).longValue());
+                    break;
+                  case OBJECT:
+                    JsonObject object = value.asJsonObject();
+                    switch (object.getString(TYPE)) {
+                      case ClientConfig.CERT_HOLDER_ID:
+                        builder.add(key, clientProps.getProperty(ClientConfig.CERT_HOLDER_ID));
+                        break;
+                      case NOW:
+                        builder.add(key, new Date().getTime());
+                        break;
+                      default:
+                        throw new IllegalStateException("Unexpected type: " + key);
+                    }
+                    break;
+                  default:
+                    throw new IllegalStateException("Unexpected entry: " + value.getValueType());
+                }
+              });
+    }
 
     return builder.build();
   }
 
-  private void setContractProperties(JsonObject json) {
+  private void setContractProperties(JsonObject json, JsonObjectBuilder builder) {
     clientProps = new Properties();
     JsonObject jsonObject = json.getJsonObject(CLIENT_PROPERTIES);
     clientProps.setProperty(
@@ -380,6 +389,7 @@ public class Deploy {
     clientProps.setProperty(
         ClientConfig.TLS_ENABLED, jsonObject.getString(ClientConfig.TLS_ENABLED, ""));
     util.setup(clientProps);
+    builder.add(ClientConfig.CERT_HOLDER_ID, jsonObject.getString(ClientConfig.CERT_HOLDER_ID, ""));
   }
 
   private JsonObject readAsset(String assetId) {

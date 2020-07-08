@@ -97,6 +97,9 @@
       },
       "optional": {
       }
+    },
+    "assert_that": {
+      "hashed_asset_id": "bwLqVg2VXjS2pJ6Q70gaFEOJWBgxW4tPXARPYzdQFWPEPNxvwLFwYENJEJVdi9PbV04KBeTlY"
     }
   },
   {
@@ -105,6 +108,44 @@
     "scalar.db.contact_port": "9042",
     "scalar.db.username": "cassandra",
     "scalar.db.password": "cassandra"
+  },
+  {
+    "action": "check-record",
+    "namespace": "ist",
+    "table": "consent_statement",
+    "partition_keys": [
+      {
+        "name": "root_consent_statement_id",
+        "type": "text",
+        "value": "cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-0"
+      }
+    ],
+    "clustering_keys": [
+      {
+        "name": "company_id",
+        "type": "text",
+        "value": "scalar-labs.com"
+      },
+      {
+        "name": "organization_id",
+        "type": "text",
+        "value": "9ca84f95-2e84-4707-8206-b93c9e78d7b7"
+      },
+      {
+        "name": "consent_statement_id",
+        "type": "text",
+        "value": "cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-0"
+      },
+      {
+        "name": "version",
+        "type": "text",
+        "value": "20200601"
+      }
+    ],
+    "expect": {
+      "type": "file",
+      "path": "build/resources/test/check/update_consent_statement_revision_record.json"
+    }
   },
   {
     "action": "check-asset",

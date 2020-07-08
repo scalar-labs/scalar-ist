@@ -82,6 +82,13 @@
       },
       "optional": {
       }
+    },
+    "assert_throws": {
+      "class": "com.scalar.dl.client.exception.ClientException",
+      "message": "Asset provided is already registered in the database."
+    },
+    "assert_that": {
+      "hashed_asset_id": "adxNjZgBPzfKljzYMO77cv9oxXgMNWHdEBonOBl4t4dBo7ZLp4IebvZMjJzWipYp4dKvQGsqNjqrqQzJUQW1z1PXjYInLoGG4wdRsdg"
     }
   },
   {
@@ -92,8 +99,31 @@
     "scalar.db.password": "cassandra"
   },
   {
+    "action": "check-record",
+    "namespace": "ist",
+    "table": "consent",
+    "partition_keys": [
+      {
+        "name": "data_subject_id",
+        "type": "text",
+        "value": "data_subject"
+      }
+    ],
+    "clustering_keys": [
+      {
+        "name": "consent_statement_id",
+        "type": "text",
+        "value": "cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1"
+      }
+    ],
+    "expect": {
+      "type": "file",
+      "path": "build/resources/test/check/upsert_consent_status_register_record.json"
+    }
+  },
+  {
     "action": "check-asset",
-    "asset_id": "bwLOqZoDjNtebl5wXYvvilM6NejVDBiPXj1nZjQKcWEzXbgp9WIMO7zDL2alc9V921BqZ0I2Ed2K2zDGu4e5y5VPRDfg9nMMz21aTD0",
+    "asset_id": "adxNjZgBPzfKljzYMO77cv9oxXgMNWHdEBonOBl4t4dBo7ZLp4IebvZMjJzWipYp4dKvQGsqNjqrqQzJUQW1z1PXjYInLoGG4wdRsdg",
     "expect": {
       "type": "file",
       "path": "build/resources/test/check/upsert_consent_status_register_asset.json"

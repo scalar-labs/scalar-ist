@@ -103,24 +103,6 @@
     "assert_throws": {
       "class": "com.scalar.dl.client.exception.ClientException",
       "message": "Permission is not granted due to inadequate roles or organization ids provided."
-    },
-    "assert_that": {
-      "hashed_asset_id": "YAgrDv7wj0U5njR9VKrpUjbnMy9ZAXiGZoqPA2NBHZWyB4NLG5C5RoPJQG6"
-    }
-  },
-  {
-    "action": "set-database-config",
-    "scalar.db.contact_points": "localhost",
-    "scalar.db.contact_port": "9042",
-    "scalar.db.username": "cassandra",
-    "scalar.db.password": "cassandra"
-  },
-  {
-    "action": "check-asset",
-    "asset_id": "YAgrDv7wj0U5njR9VKrpUjbnMy9ZAXiGZoqPA2NBHZWyB4NLG5C5RoPJQG6",
-    "expect": {
-      "type": "file",
-      "path": "build/resources/test/check/register_third_party_asset.json"
     }
   }
 ]

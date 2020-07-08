@@ -107,6 +107,13 @@
       },
       "optional": {
       }
+    },
+    "assert_throws": {
+      "class": "com.scalar.dl.client.exception.ClientException",
+      "message": "Asset provided is already registered in the database."
+    },
+    "assert_that": {
+      "hashed_asset_id": "Q2low1RZq0UPvrAJeVBlTKrw2WZ72oUJbPGJwKEBixqaq7MgK0ILoBdaBapjUo7vNOxGV2hL67NAA9DWuKeWpG5zvdSrn"
     }
   },
   {
@@ -115,6 +122,39 @@
     "scalar.db.contact_port": "9042",
     "scalar.db.username": "cassandra",
     "scalar.db.password": "cassandra"
+  },
+  {
+    "action": "check-record",
+    "namespace": "ist",
+    "table": "data_retention_policy",
+    "partition_keys": [
+      {
+        "name": "company_id",
+        "type": "text",
+        "value": "scalar-labs.com"
+      }
+    ],
+    "clustering_keys": [
+      {
+        "name": "created_at",
+        "type": "bigint",
+        "value": 1572514828170
+      },
+      {
+        "name": "policy_type",
+        "type": "text",
+        "value": "finite"
+      },
+      {
+        "name": "organization_id",
+        "type": "text",
+        "value": "9ca84f95-2e84-4707-8206-b93c9e78d7b7"
+      }
+    ],
+    "expect": {
+      "type": "file",
+      "path": "build/resources/test/check/register_data_retention_policy_record.json"
+    }
   },
   {
     "action": "check-asset",

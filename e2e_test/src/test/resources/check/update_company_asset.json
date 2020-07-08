@@ -2,6 +2,7 @@
 	"company_id": "scalar-labs.com",
 	"company_name": "Scalar-labs",
 	"company_metadata": {
+		"third_party_name": "Scalar, Inc.",
 		"address": "東京都新宿区袋町",
 		"email": "mail@example.com"
 	},

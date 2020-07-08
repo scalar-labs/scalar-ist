@@ -107,6 +107,13 @@
       },
       "optional": {
       }
+    },
+    "assert_throws": {
+      "class": "com.scalar.dl.client.exception.ClientException",
+      "message": "Asset provided is already registered in the database."
+    },
+    "assert_that": {
+      "hashed_asset_id": "yvzaRyDZgPFJgd7wOYpWi0eyVEnrVbso6zBoEwaGF6nZngPKo4S0pWNvWvyKFQ6n0MBPrbuvw"
     }
   },
   {
@@ -115,6 +122,34 @@
     "scalar.db.contact_port": "9042",
     "scalar.db.username": "cassandra",
     "scalar.db.password": "cassandra"
+  },
+  {
+    "action": "check-record",
+    "namespace": "ist",
+    "table": "benefit",
+    "partition_keys": [
+      {
+        "name": "company_id",
+        "type": "text",
+        "value": "scalar-labs.com"
+      }
+    ],
+    "clustering_keys": [
+      {
+        "name": "created_at",
+        "type": "bigint",
+        "value": 2
+      },
+      {
+        "name": "organization_id",
+        "type": "text",
+        "value": "9ca84f95-2e84-4707-8206-b93c9e78d7b7"
+      }
+    ],
+    "expect": {
+      "type": "file",
+      "path": "build/resources/test/check/register_benefit_record.json"
+    }
   },
   {
     "action": "check-asset",

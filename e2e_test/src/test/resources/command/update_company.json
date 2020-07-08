@@ -99,6 +99,13 @@
       },
       "optional": {
       }
+    },
+    "assert_throws": {
+      "class": "com.scalar.dl.client.exception.ClientException",
+      "message": "Asset provided is already registered in the database."
+    },
+    "assert_that": {
+      "hashed_asset_id": "dq1xlMz1AacbWDYAreL9i2NPayO46BTy9KJ"
     }
   },
   {
@@ -107,6 +114,29 @@
     "scalar.db.contact_port": "9042",
     "scalar.db.username": "cassandra",
     "scalar.db.password": "cassandra"
+  },
+  {
+    "action": "check-record",
+    "namespace": "ist",
+    "table": "company",
+    "partition_keys": [
+      {
+        "name": "company_id",
+        "type": "text",
+        "value": "scalar-labs.com"
+      }
+    ],
+    "clustering_keys": [
+      {
+        "name": "created_at",
+        "type": "bigint",
+        "value": 1572514828167
+      }
+    ],
+    "expect": {
+      "type": "file",
+      "path": "build/resources/test/check/update_company_record.json"
+    }
   },
   {
     "action": "check-asset",

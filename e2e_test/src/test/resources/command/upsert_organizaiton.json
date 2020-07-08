@@ -87,6 +87,13 @@
       "holder_id": {
         "type": "scalar.dl.client.cert_holder_id"
       }
+    },
+    "assert_throws": {
+      "class": "com.scalar.dl.client.exception.ClientException",
+      "message": "Asset provided is already registered in the database."
+    },
+    "assert_that": {
+      "hashed_asset_id": "dq1xlMz1AacbWDYAreL9i2NPayO46BTy9KJ"
     }
   },
   {
@@ -99,6 +106,13 @@
       },
       "optional": {
       }
+    },
+    "assert_throws": {
+      "class": "com.scalar.dl.client.exception.ClientException",
+      "message": "Asset provided is already registered in the database."
+    },
+    "assert_that": {
+      "hashed_asset_id": "dq1xlMz1AacbWDYAreL9i2NPayO46BTy9KJ"
     }
   },
   {
@@ -107,6 +121,34 @@
     "scalar.db.contact_port": "9042",
     "scalar.db.username": "cassandra",
     "scalar.db.password": "cassandra"
+  },
+  {
+    "action": "check-record",
+    "namespace": "ist",
+    "table": "organization",
+    "partition_keys": [
+      {
+        "name": "company_id",
+        "type": "text",
+        "value": "scalar-labs.com"
+      }
+    ],
+    "clustering_keys": [
+      {
+        "name": "organization_id",
+        "type": "text",
+        "value": "9ca84f95-2e84-4707-8206-b93c9e78d7b7"
+      },
+      {
+        "name": "created_at",
+        "type": "bigint",
+        "value": 1572514828167
+      }
+    ],
+    "expect": {
+      "type": "file",
+      "path": "build/resources/test/check/upsert_organizaiton_record.json"
+    }
   },
   {
     "action": "check-asset",

@@ -5,6 +5,9 @@
   "description": "description",
   "policy_type":"finite",
   "is_active": false,
+  "policy_name":"policy_name",
+  "length_of_use":"30",
+  "length_of_retention":"3months",
   "created_at": 1572514828171,
   "updated_at": 300,
   "_functions_":[

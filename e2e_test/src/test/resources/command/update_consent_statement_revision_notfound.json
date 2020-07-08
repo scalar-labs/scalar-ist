@@ -101,24 +101,6 @@
     "assert_throws": {
       "class": "com.scalar.dl.client.exception.ClientException",
       "message": "Asset is not found in the ledger."
-    },
-    "assert_that": {
-      "hashed_asset_id": "bwLqVg2VXjS2pJ6Q70gaFEOJWBgxW4tPXARPYzdQFWPEPNxvwLFwYENJEJVdi9PbV04KBeTlY"
-    }
-  },
-  {
-    "action": "set-database-config",
-    "scalar.db.contact_points": "localhost",
-    "scalar.db.contact_port": "9042",
-    "scalar.db.username": "cassandra",
-    "scalar.db.password": "cassandra"
-  },
-  {
-    "action": "check-asset",
-    "asset_id": "bwLqVg2VXjS2pJ6Q70gaFEOJWBgxW4tPXARPYzdQFWPEPNxvwLFwYENJEJVdi9PbV04KBeTlY",
-    "expect": {
-      "type": "file",
-      "path": "build/resources/test/check/update_consent_statement_revision_asset.json"
     }
   }
 ]

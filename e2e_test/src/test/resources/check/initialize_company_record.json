@@ -1,0 +1,10 @@
+{
+  "company_id":"service-operator.com",
+  "created_at":1572514828166,
+  "company_metadata":"{\"third_party_name\":\"Service Operator, Inc.\",\"address\":\"東京都新宿区\",\"email\":\"mail@service-operator.com\"}",
+  "company_name":"Service Operator",
+  "corporate_number":"6010001188571",
+  "created_by": "Initializer",
+  "updated_at":1572514828166,
+  "is_active":true
+}

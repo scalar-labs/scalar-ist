@@ -1,5 +1,5 @@
 {
-	"consent_statement_id": "cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-0",
+	"consent_statement_id": "cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1",
 	"consent_status": "configured",
 	"consented_detail": {
 		"group_company_ids": [
@@ -73,6 +73,6 @@
 		]
 	},
 	"created_by": "data_subject",
-	"asset_id": "ct01-cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-0-data_subject",
+	"asset_id": "ct01-cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1-data_subject",
 	"created_at": 0
 }

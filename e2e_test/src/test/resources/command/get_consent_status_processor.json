@@ -79,21 +79,85 @@
       },
       "optional": {
       }
-    }
-  },
-  {
-    "action": "set-database-config",
-    "scalar.db.contact_points": "localhost",
-    "scalar.db.contact_port": "9042",
-    "scalar.db.username": "cassandra",
-    "scalar.db.password": "cassandra"
-  },
-  {
-    "action": "check-asset",
-    "asset_id": "bwLOqZoDjNtebl5wXYvvilM6NejVDBiPXj1nZjQKcWEzXbgp9WIMO7zDL2alc9V921BqZ0I2Ed2K2zDGu4e5y5VPRDfg9nMMz21aTD0",
-    "expect": {
-      "type": "file",
-      "path": "build/resources/test/check/get_consent_status_processor_asset.json"
+    },
+    "assert_that": {
+      "consent_statement_id": "cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1",
+      "consent_status": "configured",
+      "consented_detail": {
+        "group_company_ids": [
+          "updategroupCompanyId"
+        ],
+        "purpose_ids": [
+          "updatewg1jgHMEhwEPxbx7pTgGOiqnaBxCh2dOiiyIovwwJAQje6xaBO8BRN"
+        ],
+        "data_set_schema_ids": [
+          "akAgmLvrmMF5juAlfW4GawT1WZ7dQr9CboWZq6OshTO5OaeebeONBkeE1bjnr3hHpWoz6dbLkgHh"
+        ],
+        "benefit_ids": [
+          "update1rdfpa7syEhJ7toWZeoPY62usMj",
+          "update2rdfpa7syEhJ7toWZeoPY62usMj"
+        ],
+        "third_party_ids": [
+          "vGSmvLXbsOxqWf8UnKYeV8rBL2"
+        ],
+        "optional_third_party_ids": [
+          "RGFWPo5XMBCVZJ3euGuvAi83S4eGmLKfnv4GsDO2noHzSkRG9l1UnKNypR"
+        ],
+        "data_retention_policy": {
+          "nondeletion_purging": "20200731",
+          "deletion_purging": "20201231"
+        },
+        "optional_purposes": [
+          {
+            "purpose_ids": [
+              "optionalPurposeId"
+            ],
+            "data_set_schema_ids": [
+              "optionalDataSetSchemaId"
+            ],
+            "benefit_ids": [
+              "optionalBenefitId"
+            ],
+            "third_party_ids": [
+              "xTkt2oqmD2YpheJPFDkFjkB9U3kAJ5O1eEjHGioi0meDADKo4eFOAA8njqYXjDEUFLDJJig003E1K0UOGJsR9zViCxaYzpt"
+            ],
+            "optional_third_party_ids": [
+              "Ha7fShOhBkRcGVLl5i79ZYZpQ7CPksbL7eeOYrrdARsGURANzpDJ7XHy99adQ1hAuQKx49z"
+            ],
+            "data_retention_policy": {
+              "nondeletion_purging": "20200630",
+              "deletion_purging": "20201130"
+            }
+          }
+        ]
+      },
+      "rejected_detail": {
+        "optional_third_party_ids": [
+          "rejectedOptionalThirdPartyIds"
+        ],
+        "optional_purposes": [
+          {
+            "purpose_ids": [
+              "rejectedOptionalPurposeId"
+            ],
+            "data_set_schema_ids": [
+              "rejectedOptionalDataSetSchemaId"
+            ],
+            "benefit_ids": [
+              "rejectedOptionalBenefitId"
+            ],
+            "third_party_ids": [
+              "rejectedOptionalThirdPartyId"
+            ],
+            "optional_third_party_ids": [
+              "rejectedOptionalOptionalThirdPartyId"
+            ]
+          }
+        ]
+      },
+      "created_by": "data_subject",
+      "asset_id": "ct01-cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1-data_subject",
+      "created_at": 1
     }
   }
 ]

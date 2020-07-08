@@ -134,7 +134,7 @@ public class UpdateCompany extends Contract {
 
     JsonArray adminRole = Json.createArrayBuilder().add(ROLE_ADMINISTRATOR).build();
     if (userProfile.getJsonArray(Constants.ROLES).equals(adminRole)
-        && !arguments.getString(EXECUTOR_COMPANY_ID).equals(userProfile.getString(COMPANY_ID))
+        && !arguments.getString(EXECUTOR_COMPANY_ID).equals(arguments.getString(COMPANY_ID))
     ) {
       throw new ContractContextException(EXECUTOR_COMPANY_ID_DOES_NOT_MATCH_WITH_USER_PROFILE_COMPANY_ID);
     }

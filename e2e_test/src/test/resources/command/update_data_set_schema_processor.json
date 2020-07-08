@@ -103,10 +103,9 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_data_set_schema.json"
+        "path": "build/resources/test/argument/update_data_set_schema_processor.json"
       },
       "optional": {
-        "created_at": 1572514828173
       }
     },
     "assert_throws": {

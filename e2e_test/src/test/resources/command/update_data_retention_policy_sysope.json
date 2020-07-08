@@ -103,11 +103,9 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_data_retention_policy.json"
+        "path": "build/resources/test/argument/update_data_retention_policy_sysope.json"
       },
       "optional": {
-        "company_id": "service-operator.com",
-        "description": "descriptiontest"
       }
     },
     "assert_throws": {

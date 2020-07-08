@@ -75,11 +75,9 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/get_consent_status.json"
+        "path": "build/resources/test/argument/get_consent_status_notfound.json"
       },
       "optional": {
-        "consent_id": "getconsentstatustest",
-        "company_id": "scalar-labs.com"
       }
     },
     "assert_throws": {

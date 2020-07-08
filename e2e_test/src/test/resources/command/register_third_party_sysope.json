@@ -95,10 +95,9 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/register_third_party.json"
+        "path": "build/resources/test/argument/register_third_party_sysope.json"
       },
       "optional": {
-        "company_id":"service-operator.com"
       }
     },
     "assert_throws": {

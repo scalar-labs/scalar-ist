@@ -95,11 +95,9 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/register_company.json"
+        "path": "build/resources/test/argument/register_company_admin.json"
       },
       "optional": {
-        "executor_company_id":"scalar-labs.com",
-        "company_id":"scalar-admin-test.com"
       }
     },
     "assert_throws": {

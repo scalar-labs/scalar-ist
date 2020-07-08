@@ -95,10 +95,9 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_company.json"
+        "path": "build/resources/test/argument/update_company_sysope_notowncompany.json"
       },
       "optional": {
-        "executor_company_id": "service-operator.com"
       }
     },
     "assert_throws": {

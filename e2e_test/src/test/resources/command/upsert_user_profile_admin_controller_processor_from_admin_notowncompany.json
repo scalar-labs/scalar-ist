@@ -97,16 +97,14 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_user_profile.json"
+        "path": "build/resources/test/argument/upsert_user_profile_admin_controller_processor_from_admin_notowncompany.json"
       },
       "optional": {
-        "company_id":"service-operator.com",
-        "holder_id":"3a19f64f-5c3a-42e1-9ed3-46eb41112e03"
       }
     },
     "assert_throws": {
       "class": "com.scalar.dl.client.exception.ClientException",
-      "message": "Permission is not granted due to inadequate roles or organization ids provided."
+      "message": "The specified executor company id does not match with the user profile company id."
     }
   }
 ]

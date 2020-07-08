@@ -103,11 +103,9 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_benefit.json"
+        "path": "build/resources/test/argument/update_benefit_sysope.json"
       },
       "optional": {
-        "description": "ut test",
-        "company_id": "service-operator.com"
       }
     },
     "assert_throws": {

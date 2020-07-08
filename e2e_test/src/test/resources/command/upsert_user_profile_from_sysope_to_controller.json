@@ -97,15 +97,9 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_user_profile.json"
+        "path": "build/resources/test/argument/upsert_user_profile_from_sysope_to_controller.json"
       },
       "optional": {
-        "executor_company_id":"service-operator.com",
-        "roles":[
-          "Controller"
-        ],
-        "holder_id":"ba857670-4fc0-410c-8c83-5dc911c6dc12",
-        "created_at":1572514828169
       }
     },
     "assert_throws": {

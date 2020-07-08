@@ -106,7 +106,6 @@
         "path": "build/resources/test/argument/update_purpose_sysope.json"
       },
       "optional": {
-        "company_id": "service-operator.com"
       }
     },
     "assert_throws": {

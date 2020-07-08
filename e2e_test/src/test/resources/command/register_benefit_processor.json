@@ -103,11 +103,9 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/register_benefit.json"
+        "path": "build/resources/test/argument/register_benefit_processor.json"
       },
       "optional": {
-        "benefit_name": "dolore test",
-        "created_at": 200
       }
     },
     "assert_throws": {

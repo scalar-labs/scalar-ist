@@ -100,12 +100,8 @@
       "optional": {
       }
     },
-    "assert_throws": {
-      "class": "com.scalar.dl.client.exception.ClientException",
-      "message": "Asset provided is already registered in the database."
-    },
     "assert_that": {
-      "hashed_asset_id": "dq1xlMz1AacbWDYAreL9i2NPayO46BTy9KJ"
+      "hashed_asset_id": "GDbGpE0baAHGYqg2oWRlT0q5jxGZKRcxrO6"
     }
   },
   {
@@ -117,7 +113,7 @@
   },
   {
     "action": "check-asset",
-    "asset_id": "dq1xlMz1AacbWDYAreL9i2NPayO46BTy9KJ",
+    "asset_id": "GDbGpE0baAHGYqg2oWRlT0q5jxGZKRcxrO6",
     "expect": {
       "type": "file",
       "path": "build/resources/test/check/update_company_sysope_notowncompany_asset.json"

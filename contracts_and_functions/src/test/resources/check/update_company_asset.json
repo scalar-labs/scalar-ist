@@ -1,0 +1,20 @@
+{
+	"company_id": "scalar-labs.com",
+	"company_name": "Scalar-labs",
+	"company_metadata": {
+		"address": "東京都新宿区袋町",
+		"email": "mail@example.com"
+	},
+	"organizations": [
+		{
+			"organization_id": "9ca84f95-2e84-4707-8206-b93c9e78d7b7",
+			"organization_name": "Admin",
+			"organization_description": "Administrator organization",
+			"is_active": true
+		}
+	],
+	"corporate_number": "6010001188571",
+	"asset_id": "cp01-scalar-labs.com",
+	"created_at": 1572514828200,
+	"created_by": "a5e9971d-32be-490d-bff4-c6d65816c1e5"
+}

@@ -1,0 +1,20 @@
+{
+	"company_id": "service-operator.com",
+	"company_name": "Service Operator",
+	"company_metadata": {
+		"address": "東京都新宿区",
+		"email": "mail@service-operator.com"
+	},
+	"organizations": [
+		{
+			"organization_id": "8d8f6623-30e5-40a0-982d-54ad1e629c38",
+			"organization_name": "Admin",
+			"organization_description": "Administrator organization",
+			"is_active": true
+		}
+	],
+	"corporate_number": "6010001188571",
+	"asset_id": "cp01-service-operator.com",
+	"created_at": 1572514828200,
+	"created_by": "967e4495-90e9-473a-82fd-99fba3218b22"
+}

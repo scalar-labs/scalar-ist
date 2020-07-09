@@ -1,0 +1,9 @@
+{
+	"company_id": "service-operator.com",
+	"organization_ids": ["8d8f6623-30e5-40a0-982d-54ad1e629c38"],
+	"holder_id": "61b1af48-75f7-4626-af37-2d9973c7a5c2",
+	"roles": ["SysAdmin"],
+	"asset_id": "up01-service-operator.com-61b1af48-75f7-4626-af37-2d9973c7a5c2",
+	"created_at": 1572514828166,
+	"created_by": "Initializer"
+}

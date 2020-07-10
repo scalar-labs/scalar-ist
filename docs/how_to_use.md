@@ -1,10 +1,11 @@
-
 # Scalar ISTの実行手順
-## 証明書の登録
-## コントラクトの登録
-## コントラクトの実行
+Scalar ISTの実行のためには、以下の作業を行う必要があります。
 
-
+- コントラクト実行者のHolder ID、秘密鍵、証明書を作成
+- コントラクト実行者の証明書をScalar DLTに登録する
+- コントラクト実行者が使用するコントラクト、ファンクションをScalar DLTに登録する
+- コントラクト実行者の秘密鍵を使用してコントラクト実行時のリクエストデータの電子署名を生成する
+- Scalar DLTにリクエストデータと電子署名を送信し、コントラクトを実行する
 
 # Scalar IST のユーザーストーリー
 
@@ -187,7 +188,3 @@ $ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_
 ```
 $ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_controller.json
 ```
-
-
-
-

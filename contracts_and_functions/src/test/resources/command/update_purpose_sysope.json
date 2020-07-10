@@ -19,7 +19,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_user_profile.json"
+        "path": "build/resources/main/arguments/schema/get_user_profile.json"
       },
       "asset_name": "up",
       "asset_version": "01",
@@ -36,7 +36,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_asset_record.json"
+        "path": "build/resources/main/arguments/schema/get_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -52,7 +52,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/put_asset_record.json"
+        "path": "build/resources/main/arguments/schema/put_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -80,15 +80,15 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/update_purpose.json"
+        "path": "build/resources/main/arguments/schema/update_purpose.json"
       },
       "asset_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/asset/purpose.json"
+        "path": "build/resources/main/asset/schema/purpose.json"
       },
       "table_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/table/purpose.json"
+        "path": "build/resources/main/table/schema/purpose.json"
       },
       "asset_name": "pp",
       "asset_version": "01",

@@ -1,12 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "organization": {
-      "type": "object",
-      "properties": {
-      }
-    }
-  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "required": [
     "company_id",
@@ -24,7 +17,7 @@
     },
     "organization_id": {
       "type": "string",
-      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+      "format": "uuid"
     },
     "organization_name": {
       "type": "string",
@@ -46,4 +39,4 @@
       "minimum": 0
     }
   }
-}				
+}

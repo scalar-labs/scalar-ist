@@ -19,7 +19,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/put_asset_record.json"
+        "path": "build/resources/main/arguments/schema/put_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -41,7 +41,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/initialize.json"
+        "path": "build/resources/main/arguments/schema/initialize.json"
       },
       "company_asset_name": "cp",
       "company_asset_version": "01",
@@ -60,8 +60,7 @@
         "type": "file",
         "path": "build/resources/test/argument/initialize.json"
       },
-      "optional": {
-      }
+      "optional": {}
     },
     "assert_throws": {
       "class": "com.scalar.dl.client.exception.ClientException",

@@ -19,7 +19,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_user_profile.json"
+        "path": "build/resources/main/arguments/schema/get_user_profile.json"
       },
       "asset_name": "up",
       "asset_version": "01",
@@ -36,7 +36,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_asset_record.json"
+        "path": "build/resources/main/arguments/schema/get_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -52,7 +52,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/put_asset_record.json"
+        "path": "build/resources/main/arguments/schema/put_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -80,15 +80,15 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/register_data_retention_policy.json"
+        "path": "build/resources/main/arguments/schema/register_data_retention_policy.json"
       },
       "asset_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/asset/data_retention_policy.json"
+        "path": "build/resources/main/asset/schema/data_retention_policy.json"
       },
       "table_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/table/data_retention_policy.json"
+        "path": "build/resources/main/table/schema/data_retention_policy.json"
       },
       "asset_name": "rp",
       "asset_version": "01",
@@ -105,8 +105,7 @@
         "type": "file",
         "path": "build/resources/test/argument/register_data_retention_policy.json"
       },
-      "optional": {
-      }
+      "optional": {}
     },
     "assert_that": {
       "hashed_asset_id": "Q2low1RZq0UPvrAJeVBlTKrw2WZ72oUJbPGJwKEBixqaq7MgK0ILoBdaBapjUo7vNOxGV2hL67NAA9DWuKeWpG5zvdSrn"

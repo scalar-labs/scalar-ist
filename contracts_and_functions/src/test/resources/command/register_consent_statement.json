@@ -19,7 +19,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_user_profile.json"
+        "path": "build/resources/main/arguments/schema/get_user_profile.json"
       },
       "asset_name": "up",
       "asset_version": "01",
@@ -36,7 +36,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_asset_record.json"
+        "path": "build/resources/main/arguments/schema/get_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -52,7 +52,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/put_asset_record.json"
+        "path": "build/resources/main/arguments/schema/put_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -80,7 +80,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/register_consent_statement.json"
+        "path": "build/resources/main/arguments/schema/register_consent_statement.json"
       },
       "asset_name": "cs",
       "asset_version": "01",
@@ -97,8 +97,7 @@
         "type": "file",
         "path": "build/resources/test/argument/register_consent_statement.json"
       },
-      "optional": {
-      }
+      "optional": {}
     },
     "assert_that": {
       "hashed_asset_id": "bwLqVg2VXjS2pJ6Q70gaFEOJWBgxW4tPXARPYzdQFWPEPNxvwLFwYENJEJVdi9PbV04KBeTlY"

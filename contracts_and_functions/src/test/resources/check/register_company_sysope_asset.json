@@ -1,21 +1,21 @@
 {
   "company_id": "scalar-test.com",
-	"company_name": "Scalar",
-  "corporate_number":"6010001188572",
-  "company_metadata":{
+  "company_name": "Scalar",
+  "corporate_number": "6010001188572",
+  "company_metadata": {
     "third_party_name": "Scalar, Inc.",
-    "address":"東京都新宿区袋町",
-    "email":"mail@example.com"
+    "address": "東京都新宿区袋町",
+    "email": "mail@example.com"
   },
-  "organizations":[
+  "organizations": [
     {
-      "organization_id":"55716259-b9ff-4b68-adf9-67ea5bd6940c",
-      "organization_name":"Admin",
-      "organization_description":"Administrator organization",
-      "is_active":true
+      "organization_id": "55716259-b9ff-4b68-adf9-67ea5bd6940c",
+      "organization_name": "Admin",
+      "organization_description": "Administrator organization",
+      "is_active": true
     }
   ],
-  "asset_id":"cp01-scalar-test.com",
-  "created_at":1572514828167,
+  "asset_id": "cp01-scalar-test.com",
+  "created_at": 1572514828167,
   "created_by": "967e4495-90e9-473a-82fd-99fba3218b22"
 }

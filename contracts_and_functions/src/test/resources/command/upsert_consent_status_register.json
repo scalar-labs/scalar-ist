@@ -19,7 +19,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/put_asset_record.json"
+        "path": "build/resources/main/arguments/schema/put_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -35,7 +35,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_asset_record.json"
+        "path": "build/resources/main/arguments/schema/get_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -63,7 +63,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/upsert_consent_status.json"
+        "path": "build/resources/main/arguments/schema/upsert_consent_status.json"
       },
       "asset_name": "ct",
       "asset_version": "01",
@@ -80,8 +80,7 @@
         "type": "file",
         "path": "build/resources/test/argument/upsert_consent_status.json"
       },
-      "optional": {
-      }
+      "optional": {}
     },
     "assert_that": {
       "hashed_asset_id": "adxNjZgBPzfKljzYMO77cv9oxXgMNWHdEBonOBl4t4dBo7ZLp4IebvZMjJzWipYp4dKvQGsqNjqrqQzJUQW1z1PXjYInLoGG4wdRsdg"

@@ -28,12 +28,10 @@
       "pattern": "^[0-9]{13}$"
     },
     "third_party_metadata": {
-      "type": "string",
-      "minLength": 1
+      "type": "object"
     },
     "organizations": {
-      "type": "string",
-      "minLength": 1
+      "type": "array"
     },
     "created_at": {
       "type": "integer",
@@ -44,4 +42,4 @@
       "minimum": 0
     }
   }
-}				
+}

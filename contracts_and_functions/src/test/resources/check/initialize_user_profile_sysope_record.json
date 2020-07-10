@@ -1,9 +1,9 @@
 {
-	"company_id": "service-operator.com",
-	"holder_id": "967e4495-90e9-473a-82fd-99fba3218b22",
-	"organization_ids": "[\"8d8f6623-30e5-40a0-982d-54ad1e629c38\"]",
-	"roles": "[\"SysOperator\"]",
-	"created_by": "Initializer",
-	"created_at": 1572514828166,
-	"updated_at": 1572514828166
+  "company_id": "service-operator.com",
+  "holder_id": "967e4495-90e9-473a-82fd-99fba3218b22",
+  "organization_ids": "[\"8d8f6623-30e5-40a0-982d-54ad1e629c38\"]",
+  "roles": "[\"SysOperator\"]",
+  "created_by": "Initializer",
+  "created_at": 1572514828166,
+  "updated_at": 1572514828166
 }

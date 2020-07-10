@@ -1,23 +1,23 @@
 {
-  "$schema":"http://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "required": [
     "action",
     "company_id",
     "organization_id",
-    "data_set_name",
+    "category_of_purpose",
+    "purpose_name",
     "description",
-    "category_of_data",
-    "data_type",
-    "classification",
-    "data_set_schema",
-    "changes",
+    "legal_text",
+    "user_friendly_text",
+    "guidance",
+    "note",
     "created_at"
   ],
   "properties": {
-    "action":{
-      "type":"string",
-      "enum":[
+    "action": {
+      "type": "string",
+      "enum": [
         "insert"
       ]
     },
@@ -29,7 +29,11 @@
       "type": "string",
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
     },
-    "data_set_name": {
+    "category_of_purpose": {
+      "type": "string",
+      "minLength": 1
+    },
+    "purpose_name": {
       "type": "string",
       "minLength": 1
     },
@@ -37,23 +41,19 @@
       "type": "string",
       "minLength": 1
     },
-    "category_of_data": {
-      "type": "array",
+    "legal_text": {
+      "type": "string",
       "minLength": 1
     },
-    "data_type": {
-      "type": "array",
+    "user_friendly_text": {
+      "type": "string",
       "minLength": 1
     },
-    "classification": {
-      "type": "array",
+    "guidance": {
+      "type": "string",
       "minLength": 1
     },
-    "data_set_schema": {
-      "type": "object",
-      "minLength": 1
-    },
-    "changes": {
+    "note": {
       "type": "string",
       "minLength": 1
     },

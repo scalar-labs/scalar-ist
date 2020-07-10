@@ -1,10 +1,10 @@
 {
-  "company_id":"scalar-labs.com",
-  "created_at":1572514828167,
-  "company_metadata":"{\"third_party_name\":\"Scalar, Inc.\",\"address\":\"東京都新宿区袋町\",\"email\":\"mail@example.com\"}",
-  "company_name":"Scalar",
-  "corporate_number":"6010001188571",
+  "company_id": "scalar-labs.com",
+  "created_at": 1572514828167,
+  "company_metadata": "{\"third_party_name\":\"Scalar, Inc.\",\"address\":\"東京都新宿区袋町\",\"email\":\"mail@example.com\"}",
+  "company_name": "Scalar",
+  "corporate_number": "6010001188571",
   "created_by": "61b1af48-75f7-4626-af37-2d9973c7a5c2",
-  "updated_at":1572514828167,
-  "is_active":true
+  "updated_at": 1572514828167,
+  "is_active": true
 }

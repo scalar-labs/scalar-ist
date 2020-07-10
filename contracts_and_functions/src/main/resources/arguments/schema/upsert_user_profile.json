@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "required": [
     "executor_company_id",
@@ -8,7 +8,6 @@
     "roles",
     "holder_id",
     "created_at",
-    "updated_at",
     "mode"
   ],
   "properties": {
@@ -33,11 +32,11 @@
       "items": {
         "type": "string",
         "enum": [
-          "Administrator",
-          "Processor",
-          "Controller",
           "SysAdmin",
-          "SysOperator"
+          "SysOperator",
+          "Admin",
+          "Processor",
+          "Controller"
         ]
       }
     },
@@ -46,10 +45,6 @@
       "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
     },
     "created_at": {
-      "type": "integer",
-      "minimum": 0
-    },
-    "updated_at": {
       "type": "integer",
       "minimum": 0
     },

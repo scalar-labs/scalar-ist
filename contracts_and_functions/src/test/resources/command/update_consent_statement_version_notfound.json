@@ -19,7 +19,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_user_profile.json"
+        "path": "build/resources/main/arguments/schema/get_user_profile.json"
       },
       "asset_name": "up",
       "asset_version": "01",
@@ -36,7 +36,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_asset_record.json"
+        "path": "build/resources/main/arguments/schema/get_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -52,7 +52,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/put_asset_record.json"
+        "path": "build/resources/main/arguments/schema/put_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -80,7 +80,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/update_consent_statement_version.json"
+        "path": "build/resources/main/arguments/schema/update_consent_statement_version.json"
       },
       "asset_name": "cs",
       "asset_version": "01",
@@ -98,7 +98,7 @@
         "path": "build/resources/test/argument/update_consent_statement_version.json"
       },
       "optional": {
-        "parent_consent_statement_id":"cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1111111111"
+        "parent_consent_statement_id": "cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1111111111"
       }
     },
     "assert_throws": {

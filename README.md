@@ -87,7 +87,7 @@ IST実装しているコントラクト、ファンクション設計書およ�
 # 利用手順
 Scalar ISTの利用のためには、Scalar DLT環境の構築と、Scalar ISTのデプロイが必要です。
 
-Scalar DLT環境の構築手順は [環境構築](docs/infrastructure/infrastructure.md) を参照して下さい。
+Scalar DLT環境の構築手順は [環境構築](docs/infrastructure.md) を参照して下さい。
 
 Scalar ISTの実行手順は、[ユーザーストーリー、およびデプロイツールを使ったデプロイ手順](docs/how_to_use.md) を参照して下さい。
 

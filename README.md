@@ -12,13 +12,9 @@ Scalar ISTによって、データ主体の同意に基づくデータ収集、�
 # Scalar DLT
 Scalar DLTは、Scalar社が提供するプロダクトであり、Scalar ISTの実行基盤であり、コントラクトによる改ざん検知が可能なアセットに対する操作と、ファンクションによる検索用のDBの操作を行う事が出来ます。
 
-Scalar ISTはScalar DLT環境での実行を前提に実装されているため、Scalar ISTの実行にはScalar DLT環境が必須となります。
+Scalar ISTはScalar DLT環境での実行を前提に実装されているため、Scalar ISTの実行にはScalar DLT環境が必須です。
 
-## コントラクト / ファンクション
-コントラクトは改ざん検知が可能なAssetの操作を行うプログラムであり、Scalar DLTに対して実行者毎にコントラクトを登録し、登録したコントラクトを実行します。
-
-ファンクションは検索用のTableの操作を行うプログラムであり、コントラクトと同様にScalar DLTに登録するが、実行者毎に共有するため個別に登録する必要はありません。
-ファンクションは、コントラクト実行時の引数で実行するファンクションを指定することで、実行が可能です。
+Scalar DLTについては、[Scalar DLT基礎](docs/basics_of_scalar_dlt.md)に記載しています。
 
 # Scalar ISTの概要
 Scalar ISTは、データ主体による同意の記録と同意の対象となる同意文書を記録する、Scalar DLT上で動作するライブラリです。

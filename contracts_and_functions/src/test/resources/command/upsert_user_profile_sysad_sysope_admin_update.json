@@ -19,7 +19,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_user_profile.json"
+        "path": "build/resources/main/arguments/schema/get_user_profile.json"
       },
       "asset_name": "up",
       "asset_version": "01",
@@ -36,7 +36,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_asset_record.json"
+        "path": "build/resources/main/arguments/schema/get_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -52,7 +52,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/put_asset_record.json"
+        "path": "build/resources/main/arguments/schema/put_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -80,7 +80,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/upsert_user_profile.json"
+        "path": "build/resources/main/arguments/schema/upsert_user_profile.json"
       },
       "company_asset_name": "cp",
       "company_asset_version": "01",
@@ -101,7 +101,7 @@
       },
       "optional": {
         "created_at": 1572514828168,
-      	"mode": "update"
+        "mode": "update"
       }
     },
     "assert_that": {

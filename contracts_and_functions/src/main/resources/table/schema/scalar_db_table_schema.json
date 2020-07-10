@@ -19,6 +19,7 @@
               "bigint",
               "blob",
               "boolean",
+              "double",
               "float",
               "int",
               "text"

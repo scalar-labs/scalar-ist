@@ -3,31 +3,31 @@
   "company_id": "scalar-labs.com",
   "organization_id": "9ca84f95-2e84-4707-8206-b93c9e78d7b7",
   "description": "description",
-  "data_set_name":"pii",
-  "data_location":{
-    "uri":"https://example.com/pds/uuid",
-    "connect":"access_token",
-    "authenticate":"oauth server"
+  "data_set_name": "pii",
+  "data_location": {
+    "uri": "https://example.com/pds/uuid",
+    "connect": "access_token",
+    "authenticate": "oauth server"
   },
-  "category_of_data":[
+  "category_of_data": [
     "PII",
     "Identify"
   ],
-  "data_type":[
+  "data_type": [
     "Cookie data",
     "GPS data"
   ],
-  "classification":[
+  "classification": [
     "purchase history"
   ],
-  "data_set_schema":{
-    "sample":"sample"
+  "data_set_schema": {
+    "sample": "sample"
   },
-  "changes":"changes",
+  "changes": "changes",
   "is_active": false,
   "created_at": 1572514828172,
   "updated_at": 3,
-  "_functions_":[
+  "_functions_": [
     "UpsertMaster"
   ]
 }

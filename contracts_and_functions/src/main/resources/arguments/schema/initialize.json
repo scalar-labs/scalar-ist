@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "required": [
     "company_id",
@@ -11,6 +11,9 @@
     "created_at"
   ],
   "properties": {
+    "executor_holder_id": {
+      "const": "Initializer"
+    },
     "company_id": {
       "type": "string",
       "format": "hostname"
@@ -24,8 +27,7 @@
       "pattern": "^[0-9]{0,13}$"
     },
     "company_metadata": {
-      "type": "string",
-      "minLength": 1
+      "type": "object"
     },
     "organization_id": {
       "type": "string",

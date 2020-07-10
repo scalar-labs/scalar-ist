@@ -19,7 +19,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_asset_record.json"
+        "path": "build/resources/main/arguments/schema/get_asset_record.json"
       },
       "salt": "salt",
       "holder_id": {
@@ -47,7 +47,7 @@
     "properties": {
       "contract_argument_schema": {
         "type": "file",
-        "path": "build/resources/test/schema/argument/get_consent_statement.json"
+        "path": "build/resources/main/arguments/schema/get_consent_statement.json"
       }
     }
   },
@@ -59,8 +59,7 @@
         "type": "file",
         "path": "build/resources/test/argument/get_consent_statement.json"
       },
-      "optional": {
-      }
+      "optional": {}
     }
   }
 ]

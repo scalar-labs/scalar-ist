@@ -1,17 +1,17 @@
 {
-  "executor_company_id":"service-operator.com",
-  "company_id":"scalar-labs.com",
-  "organization_ids":[
+  "executor_company_id": "service-operator.com",
+  "company_id": "scalar-labs.com",
+  "organization_ids": [
     "9ca84f95-2e84-4707-8206-b93c9e78d7b7"
   ],
-  "roles":[
+  "roles": [
     "SysOperator",
     "Admin"
   ],
-  "holder_id":"6383ef9e-29f3-41a3-9e4e-0a90e8d506c2",
-  "created_at":1572514828168,
-  "mode":"insert",
-  "_functions_":[
+  "holder_id": "6383ef9e-29f3-41a3-9e4e-0a90e8d506c2",
+  "created_at": 1572514828168,
+  "mode": "insert",
+  "_functions_": [
     "UpsertUserProfile"
   ]
 }

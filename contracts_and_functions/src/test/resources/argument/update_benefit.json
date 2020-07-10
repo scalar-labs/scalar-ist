@@ -6,7 +6,7 @@
   "is_active": false,
   "created_at": 2,
   "updated_at": 3,
-  "_functions_":[
+  "_functions_": [
     "UpsertMaster"
   ]
 }

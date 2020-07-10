@@ -1,9 +1,0 @@
-{
-	"company_id": "scalar-labs.com",
-	"organization_id":"9ca84f95-2e84-4707-8206-b93c9e78d7b7",
-	"created_at": 1572514828167,
-	"organization_metadata": "{\"organization_name\":\"sample\",\"organization_description\":\"Administrator organization\"}",
-	"is_active":true,
-	"created_by": "a5e9971d-32be-490d-bff4-c6d65816c1e5",
-	"updated_at": 1572614828201
-}

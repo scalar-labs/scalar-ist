@@ -3,17 +3,16 @@
 	"consent_status": "configured",
 	"consented_detail": {
 		"group_company_ids": [
-			"updategroupCompanyId"
+			"groupCompanyId"
 		],
 		"purpose_ids": [
-			"updatewg1jgHMEhwEPxbx7pTgGOiqnaBxCh2dOiiyIovwwJAQje6xaBO8BRN"
+			"1JyeXNGg41it7EXqbZN66wys91zozQwg1jgHMEhwEPxbx7pTgGOiqnaBxCh2dOiiyIovwwJAQje6xaBO8BRN"
 		],
 		"data_set_schema_ids": [
 			"akAgmLvrmMF5juAlfW4GawT1WZ7dQr9CboWZq6OshTO5OaeebeONBkeE1bjnr3hHpWoz6dbLkgHh"
 		],
 		"benefit_ids": [
-			"update1rdfpa7syEhJ7toWZeoPY62usMj",
-			"update2rdfpa7syEhJ7toWZeoPY62usMj"
+			"LIZFy7scJvWCnyVjS0rdfpa7syEhJ7toWZeoPY62usMj"
 		],
 		"third_party_ids": [
 			"vGSmvLXbsOxqWf8UnKYeV8rBL2"

@@ -95,9 +95,11 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_organization_sysope.json"
+        "path": "build/resources/test/argument/upsert_organization.json"
       },
       "optional": {
+        "company_id": "service-operator.com",
+        "created_at": 1572514828167
       }
     },
     "assert_throws": {

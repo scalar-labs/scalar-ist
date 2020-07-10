@@ -93,9 +93,10 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_consent_statement_status_invalidstatus.json"
+        "path": "build/resources/test/argument/update_consent_statement_status.json"
       },
       "optional": {
+        "status":"draft"
       }
     },
     "assert_throws": {

@@ -1,11 +1,11 @@
 {
   "company_id": "scalar-test.com",
-	"company_name": "Scalar Test",
+	"company_name": "Scalar",
   "corporate_number":"6010001188572",
   "company_metadata":{
-    "third_party_name": "Scalar, Test.",
-		"address": "Shinjuku, Tokyo",
-		"email": "mail@example.com"
+    "third_party_name": "Scalar, Inc.",
+    "address":"東京都新宿区袋町",
+    "email":"mail@example.com"
   },
   "organizations":[
     {
@@ -16,6 +16,6 @@
     }
   ],
   "asset_id":"cp01-scalar-test.com",
-  "created_at":1572514828200,
+  "created_at":1572514828167,
   "created_by": "967e4495-90e9-473a-82fd-99fba3218b22"
 }

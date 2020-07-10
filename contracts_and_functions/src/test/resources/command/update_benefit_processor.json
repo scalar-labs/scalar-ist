@@ -103,9 +103,11 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_benefit_processor.json"
+        "path": "build/resources/test/argument/update_benefit.json"
       },
       "optional": {
+        "created_at": 200,
+        "updated_at": 300
       }
     },
     "assert_that": {

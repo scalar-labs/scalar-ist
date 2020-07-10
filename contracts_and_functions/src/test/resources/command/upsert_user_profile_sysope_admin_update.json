@@ -97,9 +97,11 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_user_profile_sysope_admin_update.json"
+        "path": "build/resources/test/argument/upsert_user_profile_sysope_admin.json"
       },
       "optional": {
+        "created_at":1572514828169,
+        "mode":"update"
       }
     },
     "assert_that": {

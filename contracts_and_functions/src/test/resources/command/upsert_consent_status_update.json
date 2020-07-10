@@ -78,9 +78,10 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/upsert_consent_status_update.json"
+        "path": "build/resources/test/argument/upsert_consent_status.json"
       },
       "optional": {
+        "updated_at": 1
       }
     },
     "assert_that": {

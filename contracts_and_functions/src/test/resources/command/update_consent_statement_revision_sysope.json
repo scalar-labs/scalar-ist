@@ -93,9 +93,10 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_consent_statement_revision_sysope.json"
+        "path": "build/resources/test/argument/update_consent_statement_revision.json"
       },
       "optional": {
+        "company_id":"service-operator.com"
       }
     },
     "assert_throws": {

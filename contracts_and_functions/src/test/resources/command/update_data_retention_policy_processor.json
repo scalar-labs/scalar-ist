@@ -103,9 +103,11 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_data_retention_policy_processor.json"
+        "path": "build/resources/test/argument/update_data_retention_policy.json"
       },
       "optional": {
+        "created_at": 1572514828171,
+        "updated_at": 300
       }
     },
     "assert_that": {

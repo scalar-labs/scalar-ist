@@ -95,14 +95,15 @@
     "contract_argument": {
       "value": {
         "type": "file",
-        "path": "build/resources/test/argument/update_third_party_admin_notowncompany.json"
+        "path": "build/resources/test/argument/update_third_party.json"
       },
       "optional": {
+        "company_id":"service-operator.com"
       }
     },
     "assert_throws": {
       "class": "com.scalar.dl.client.exception.ClientException",
-      "message": "Asset is not found in the ledger."
+      "message": "Permission is not granted due to inadequate roles or organization ids provided."
     }
   }
 ]

@@ -1,4 +1,4 @@
-# Scalar DLTの用語、および実行コマンドの説明
+# Scalar DLTの用語、および実行コマンドの説明
 ## Holder / Certificate
 Holderは、コントラクトの実行を行うユーザーに相当し、Holder IDはScalar DLTのクラスタ内で一意でとなる必要があります。
 

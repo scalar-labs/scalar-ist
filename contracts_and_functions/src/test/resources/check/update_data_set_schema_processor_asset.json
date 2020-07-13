@@ -2,7 +2,7 @@
   "data_set_schema_id": "ds01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1572514828173",
   "company_id": "scalar-labs.com",
   "organization_id": "9ca84f95-2e84-4707-8206-b93c9e78d7b7",
-  "data_set_name": "pii",
+  "data_set_name": "test",
   "description": "description",
   "category_of_data": [
     "PII",

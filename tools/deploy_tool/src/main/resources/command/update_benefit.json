@@ -105,8 +105,7 @@
         "type": "file",
         "path": "build/resources/main/argument/update_benefit.json"
       },
-      "optional": {
-      }
+      "optional": {}
     }
   }
 ]

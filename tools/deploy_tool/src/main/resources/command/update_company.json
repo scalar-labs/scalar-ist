@@ -97,8 +97,7 @@
         "type": "file",
         "path": "build/resources/main/argument/update_company.json"
       },
-      "optional": {
-      }
+      "optional": {}
     }
   }
 ]

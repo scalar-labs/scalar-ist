@@ -80,8 +80,7 @@
         "type": "file",
         "path": "build/resources/main/argument/upsert_consent_status_register.json"
       },
-      "optional": {
-      }
+      "optional": {}
     }
   }
 ]

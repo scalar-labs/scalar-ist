@@ -1,37 +1,37 @@
 {
-  "$schema":"http://json-schema.org/draft-07/schema#",
-  "type":"object",
-  "properties":{
-    "data_set_schema_id":{
-      "type":"string",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "data_set_schema_id": {
+      "type": "string",
       "pattern": "asset_id"
     },
-    "company_id":{
-      "type":"string"
+    "company_id": {
+      "type": "string"
     },
-    "organization_id":{
-      "type":"string"
+    "organization_id": {
+      "type": "string"
     },
-    "data_set_name":{
-      "type":"string"
+    "data_set_name": {
+      "type": "string"
     },
-    "description":{
-      "type":"string"
+    "description": {
+      "type": "string"
     },
-    "category_of_data":{
-      "type":"array"
+    "category_of_data": {
+      "type": "array"
     },
-    "data_type":{
-      "type":"array"
+    "data_type": {
+      "type": "array"
     },
-    "classification":{
-      "type":"array"
+    "classification": {
+      "type": "array"
     },
-    "data_set_schema":{
-      "type":"object"
+    "data_set_schema": {
+      "type": "object"
     },
-    "changes":{
-      "type":"string"
+    "changes": {
+      "type": "string"
     }
   }
 }

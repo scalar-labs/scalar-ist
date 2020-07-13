@@ -95,8 +95,7 @@
         "type": "file",
         "path": "build/resources/main/argument/update_consent_statement_status.json"
       },
-      "optional": {
-      }
+      "optional": {}
     }
   }
 ]

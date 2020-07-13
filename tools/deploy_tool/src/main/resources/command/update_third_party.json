@@ -97,8 +97,7 @@
         "type": "file",
         "path": "build/resources/main/argument/update_third_party.json"
       },
-      "optional": {
-      }
+      "optional": {}
     }
   }
 ]

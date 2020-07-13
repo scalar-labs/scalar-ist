@@ -1,7 +1,7 @@
 {
-  "$schema":"http://json-schema.org/draft-07/schema#",
-  "type":"object",
-  "required":[
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
     "company_id",
     "third_party_domain",
     "third_party_name",
@@ -9,32 +9,32 @@
     "organizations",
     "created_at"
   ],
-  "properties":{
-    "company_id":{
-      "type":"string",
-      "format":"hostname"
+  "properties": {
+    "company_id": {
+      "type": "string",
+      "format": "hostname"
     },
-    "third_party_domain":{
-      "type":"string",
-      "format":"hostname"
+    "third_party_domain": {
+      "type": "string",
+      "format": "hostname"
     },
-    "third_party_name":{
-      "type":"string",
-      "minLength":1
+    "third_party_name": {
+      "type": "string",
+      "minLength": 1
     },
-    "corporate_number":{
-      "type":"string",
-      "pattern":"^[0-9]{13}$"
+    "corporate_number": {
+      "type": "string",
+      "pattern": "^[0-9]{13}$"
     },
-    "third_party_metadata":{
-      "type":"object"
+    "third_party_metadata": {
+      "type": "object"
     },
-    "organizations":{
-      "type":"array"
+    "organizations": {
+      "type": "array"
     },
-    "created_at":{
-      "type":"integer",
-      "minimum":0
+    "created_at": {
+      "type": "integer",
+      "minimum": 0
     }
   }
 }

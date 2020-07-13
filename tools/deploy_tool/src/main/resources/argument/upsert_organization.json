@@ -4,8 +4,8 @@
   "organization_name": "sample",
   "organization_description": "Administrator organization",
   "is_active": true,
-  "created_at": 1572514828167,
-  "updated_at": 1572614828200,
+  "created_at": 1572514828200,
+  "updated_at": 1572614828201,
   "_functions_": [
     "UpsertOrganization"
   ]

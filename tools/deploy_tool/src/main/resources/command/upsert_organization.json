@@ -97,8 +97,7 @@
         "type": "file",
         "path": "build/resources/main/argument/upsert_organization.json"
       },
-      "optional": {
-      }
+      "optional": {}
     }
   }
 ]

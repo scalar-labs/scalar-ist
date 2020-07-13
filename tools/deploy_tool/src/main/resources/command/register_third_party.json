@@ -97,8 +97,7 @@
         "type": "file",
         "path": "build/resources/main/argument/register_third_party.json"
       },
-      "optional": {
-      }
+      "optional": {}
     }
   }
 ]

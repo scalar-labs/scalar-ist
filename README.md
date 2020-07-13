@@ -122,7 +122,7 @@ Scalar DLTは、Scalar社が提供するプロダクトであり、Scalar ISTの
 
 Scalar ISTはScalar DLT環境での実行を前提に実装されているため、Scalar ISTの実行にはScalar DLT環境が必須です。
 
-Scalar DLTについては、[Scalar DLT基礎](docs/basics_of_scalar_dlt.md)に記載しています。
+Scalar DLTについては、[Scalar DLTの用語�、および実行コマンドの説明](docs/basics_of_scalar_dlt.md)に記載しています。
 
 
 

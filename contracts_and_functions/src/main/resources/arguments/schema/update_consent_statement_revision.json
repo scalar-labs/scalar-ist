@@ -8,6 +8,7 @@
     "version",
     "title",
     "abstract",
+    "changes",
     "consent_statement",
     "updated_at"
   ],

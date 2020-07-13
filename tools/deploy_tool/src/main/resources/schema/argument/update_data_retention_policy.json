@@ -5,6 +5,7 @@
     "action",
     "company_id",
     "organization_id",
+    "policy_type",
     "description",
     "is_active",
     "created_at",

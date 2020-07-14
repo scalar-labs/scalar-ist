@@ -10,6 +10,7 @@
     "description",
     "provider",
     "time_of_provision",
+    "is_active",
     "created_at"
   ],
   "properties": {

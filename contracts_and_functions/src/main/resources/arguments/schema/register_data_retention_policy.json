@@ -10,6 +10,7 @@
     "length_of_use",
     "length_of_retention",
     "description",
+    "is_active",
     "created_at"
   ],
   "properties": {
@@ -49,6 +50,9 @@
     "description": {
       "type": "string",
       "minLength": 1
+    },
+    "is_active": {
+      "type": "boolean"
     },
     "created_at": {
       "type": "integer",

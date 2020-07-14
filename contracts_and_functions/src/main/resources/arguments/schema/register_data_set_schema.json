@@ -7,11 +7,13 @@
     "organization_id",
     "data_set_name",
     "description",
+    "data_location",
     "category_of_data",
     "data_type",
     "classification",
     "data_set_schema",
     "changes",
+    "is_active",
     "created_at"
   ],
   "properties": {
@@ -37,6 +39,10 @@
       "type": "string",
       "minLength": 1
     },
+    "data_location": {
+      "type": "object",
+      "minLength": 1
+    },
     "category_of_data": {
       "type": "array",
       "minLength": 1
@@ -56,6 +62,9 @@
     "changes": {
       "type": "string",
       "minLength": 1
+    },
+    "is_active": {
+      "type": "boolean"
     },
     "created_at": {
       "type": "integer",

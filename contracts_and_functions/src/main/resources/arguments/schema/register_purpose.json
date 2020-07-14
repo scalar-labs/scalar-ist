@@ -12,6 +12,7 @@
     "user_friendly_text",
     "guidance",
     "note",
+    "is_active",
     "created_at"
   ],
   "properties": {
@@ -56,6 +57,9 @@
     "note": {
       "type": "string",
       "minLength": 1
+    },
+    "is_active": {
+      "type": "boolean"
     },
     "created_at": {
       "type": "integer",

@@ -1,0 +1,13 @@
+{
+  "data_retention_policy_id": "rp01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1572514828170",
+  "company_id": "scalar-labs.com",
+  "organization_id": "9ca84f95-2e84-4707-8206-b93c9e78d7b7",
+  "policy_name": "policy_name",
+  "policy_type": "finite",
+  "length_of_use": "30",
+  "length_of_retention": "3months",
+  "description": "description",
+  "asset_id": "rp01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-1572514828170",
+  "created_at": 3,
+  "created_by": "ba857670-4fc0-410c-8c83-5dc911c6dc12"
+}

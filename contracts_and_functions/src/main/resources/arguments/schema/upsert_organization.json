@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "company_id",
+    "organization_id",
+    "organization_name",
+    "organization_description",
+    "is_active",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "company_id": {
+      "type": "string",
+      "format": "hostname"
+    },
+    "organization_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "organization_name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "organization_description": {
+      "type": "string",
+      "minLength": 1
+    },
+    "is_active": {
+      "type": "boolean"
+    },
+    "created_at": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "updated_at": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

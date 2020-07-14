@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": [
+    "consent_statement_id",
+    "consent_status",
+    "updated_at"
+  ],
+  "properties": {
+    "consent_statement_id": {
+      "type": "string",
+      "pattern": "^([a-zA-Z0-9-]+)$"
+    },
+    "consent_status": {
+      "type": "string",
+      "enum": [
+        "approved",
+        "rejected",
+        "configured"
+      ]
+    },
+    "consented_detail": {
+      "type": "object",
+      "properties": {
+        "group_company_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([a-zA-Z0-9]+)$"
+          }
+        },
+        "purpose_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([a-zA-Z0-9]+)$"
+          }
+        },
+        "data_set_schema_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([a-zA-Z0-9]+)$"
+          }
+        },
+        "benefit_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([a-zA-Z0-9]+)$"
+          }
+        },
+        "third_party_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([a-zA-Z0-9]+)$"
+          }
+        },
+        "optional_third_party_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([a-zA-Z0-9]+)$"
+          }
+        },
+        "data_retention_policy": {
+          "type": "object",
+          "properties": {
+            "nondeletion_purging": {
+              "type": "string"
+            },
+            "deletion_purging": {
+              "type": "string"
+            }
+          }
+        },
+        "optional_purposes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "purpose_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              },
+              "data_set_schema_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              },
+              "benefit_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              },
+              "third_party_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              },
+              "optional_third_party_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              },
+              "data_retention_policy": {
+                "type": "object",
+                "properties": {
+                  "nondeletion_purging": {
+                    "type": "string"
+                  },
+                  "deletion_purging": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "rejected_detail": {
+      "type": "object",
+      "properties": {
+        "optional_third_party_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^([a-zA-Z0-9]+)$"
+          }
+        },
+        "optional_purposes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "purpose_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              },
+              "data_set_schema_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              },
+              "benefit_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              },
+              "third_party_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              },
+              "optional_third_party_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^([a-zA-Z0-9]+)$"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "updated_at": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

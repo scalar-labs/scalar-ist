@@ -146,7 +146,7 @@
               "pattern": "^([a-zA-Z0-9]+)$"
             }
           },
-          "data_retention_policy": {
+          "data_retention_policy_id": {
             "type": "string",
             "pattern": "^([a-zA-Z0-9]+)$"
           },

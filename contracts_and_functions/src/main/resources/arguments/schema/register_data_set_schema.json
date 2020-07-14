@@ -40,8 +40,7 @@
       "minLength": 1
     },
     "data_location": {
-      "type": "object",
-      "minLength": 1
+      "type": "object"
     },
     "category_of_data": {
       "type": "array",

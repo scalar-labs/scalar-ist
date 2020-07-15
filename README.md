@@ -1,5 +1,4 @@
-# Scalar IST
-Scalar IST とは、Scalar Information-banking Solution Template の略称です。
+# Scalar IST : Scalar Information-banking Solution Template
 Scalar IST は、情報銀行などのパーソナルデータを収集し、利用するために必要になる業務の記録を行うシステムを、Scalar DLT で構築するためのテンプレート・ライブラリです。
 Scalar IST は、個人情報保護法、GDPR、CCPAなどの法規への準拠に必要な基本機能を有しています。
 

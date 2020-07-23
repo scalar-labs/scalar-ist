@@ -48,7 +48,10 @@
       "contract_argument_schema": {
         "type": "file",
         "path": "build/resources/main/arguments/schema/get_consent_statement.json"
-      }
+      },
+      "asset_name": "cs",
+      "asset_version": "01",
+      "salt": "salt"
     }
   },
   {
@@ -58,6 +61,17 @@
       "value": {
         "type": "file",
         "path": "build/resources/test/argument/get_consent_statement.json"
+      },
+      "optional": {}
+    }
+  },
+  {
+    "action": "execute-contract",
+    "id": "GetConsentStatement",
+    "contract_argument": {
+      "value": {
+        "type": "file",
+        "path": "build/resources/test/argument/get_consent_statement_with_raw_id.json"
       },
       "optional": {}
     }

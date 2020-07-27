@@ -1,33 +1,33 @@
 package com.scalar.ist.contract;
 
 import static com.scalar.ist.common.Constants.ASSET_ID;
-import static com.scalar.ist.common.Constants.CONSENT_STATEMENT;
-import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ABSTRACT;
-import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_CHANGES;
-import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DATA_RETENTION_POLICY_ID;
-import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DATA_SET_SCHEMA_IDS;
-import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_PURPOSE_IDS;
-import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_THIRD_PARTY_IDS;
-import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_VERSION;
+import static com.scalar.ist.common.Constants.ASSET_NAME;
+import static com.scalar.ist.common.Constants.ASSET_VERSION;
+import static com.scalar.ist.common.Constants.COMPANY_ID;
+import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
+import static com.scalar.ist.common.Constants.CREATED_BY;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
-import static com.scalar.ist.common.Constants.HASHED_CONSENT_STATEMENT_ID;
+import static com.scalar.ist.common.Constants.ORGANIZATION_ID;
+import static com.scalar.ist.common.Constants.PERMISSION_DENIED;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
+import static com.scalar.ist.common.Constants.RECORD_SALT;
 import static com.scalar.ist.common.Constants.REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.hash.HashCode;
 import com.scalar.dl.ledger.contract.Contract;
 import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
+import org.hashids.Hashids;
+
 import java.util.Optional;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonValue;
 
 public class GetConsentStatement extends Contract {
 
@@ -35,42 +35,24 @@ public class GetConsentStatement extends Contract {
   public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validate(ledger, argument, properties);
 
+    String assetId =
+        argument.getBoolean(RECORD_IS_HASHED, true)
+            ? decodeHashid(
+                argument.getString(CONSENT_STATEMENT_ID), properties.get().getString(RECORD_SALT))
+            : argument.getString(CONSENT_STATEMENT_ID);
+
+    if (!assetId.startsWith(
+        properties.get().getString(ASSET_NAME) + properties.get().getString(ASSET_VERSION))) {
+      throw new ContractContextException(PERMISSION_DENIED);
+    }
+
     JsonObject getAssetArgument =
-        Json.createObjectBuilder()
-            .add(ASSET_ID, argument.getString(HASHED_CONSENT_STATEMENT_ID))
-            .add(RECORD_IS_HASHED, true)
-            .build();
-    JsonObject consentStatement = invokeSubContract(GET_ASSET_RECORD, ledger, getAssetArgument);
+        Json.createObjectBuilder().add(ASSET_ID, assetId).add(RECORD_IS_HASHED, false).build();
 
-    JsonObjectBuilder consentStatementBuilder = Json.createObjectBuilder();
-
-    if (!consentStatement.containsKey(CONSENT_STATEMENT_DATA_RETENTION_POLICY_ID)) {
-      consentStatementBuilder.add(CONSENT_STATEMENT_DATA_RETENTION_POLICY_ID, JsonValue.NULL);
-    } else {
-      consentStatementBuilder.add(
-          CONSENT_STATEMENT_DATA_RETENTION_POLICY_ID,
-          consentStatement.getString(CONSENT_STATEMENT_DATA_RETENTION_POLICY_ID));
-    }
-    if (!consentStatement.containsKey(CONSENT_STATEMENT_CHANGES)) {
-      consentStatementBuilder.add(CONSENT_STATEMENT_CHANGES, JsonValue.NULL);
-    } else {
-      consentStatementBuilder.add(
-          CONSENT_STATEMENT_CHANGES, consentStatement.getString(CONSENT_STATEMENT_CHANGES));
-    }
-
-    return consentStatementBuilder
-        .add(CONSENT_STATEMENT, consentStatement.getString(CONSENT_STATEMENT))
-        .add(CONSENT_STATEMENT_VERSION, consentStatement.getString(CONSENT_STATEMENT_VERSION))
-        .add(CONSENT_STATEMENT_ABSTRACT, consentStatement.getString(CONSENT_STATEMENT_ABSTRACT))
-        .add(
-            CONSENT_STATEMENT_DATA_SET_SCHEMA_IDS,
-            consentStatement.getJsonArray(CONSENT_STATEMENT_DATA_SET_SCHEMA_IDS))
-        .add(
-            CONSENT_STATEMENT_PURPOSE_IDS,
-            consentStatement.getJsonArray(CONSENT_STATEMENT_PURPOSE_IDS))
-        .add(
-            CONSENT_STATEMENT_THIRD_PARTY_IDS,
-            consentStatement.getJsonArray(CONSENT_STATEMENT_THIRD_PARTY_IDS))
+    return Json.createObjectBuilder(invokeSubContract(GET_ASSET_RECORD, ledger, getAssetArgument))
+        .remove(COMPANY_ID)
+        .remove(ORGANIZATION_ID)
+        .remove(CREATED_BY)
         .build();
   }
 
@@ -97,6 +79,10 @@ public class GetConsentStatement extends Contract {
             .build();
 
     invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentJson);
+  }
+
+  public String decodeHashid(String source, String salt) {
+    return new String(HashCode.fromString(new Hashids(salt).decodeHex(source)).asBytes());
   }
 
   @VisibleForTesting

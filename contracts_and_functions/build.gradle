@@ -258,6 +258,17 @@ task cucumber_update_consent_statement_status() {
     }
 }
 
+task cucumber_get_consent_statement() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'com.scalar.ist.e2e', 'src/test/resources/feature/get_consent_statement.feature']
+        }
+    }
+}
+
 task cucumber_update_company() {
     dependsOn assemble, compileTestJava
     doLast {

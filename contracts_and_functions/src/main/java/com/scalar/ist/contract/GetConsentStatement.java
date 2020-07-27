@@ -3,10 +3,13 @@ package com.scalar.ist.contract;
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_NAME;
 import static com.scalar.ist.common.Constants.ASSET_VERSION;
+import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
+import static com.scalar.ist.common.Constants.CREATED_BY;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
+import static com.scalar.ist.common.Constants.ORGANIZATION_ID;
 import static com.scalar.ist.common.Constants.PERMISSION_DENIED;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
 import static com.scalar.ist.common.Constants.RECORD_SALT;
@@ -45,7 +48,12 @@ public class GetConsentStatement extends Contract {
 
     JsonObject getAssetArgument =
         Json.createObjectBuilder().add(ASSET_ID, assetId).add(RECORD_IS_HASHED, false).build();
-    return invokeSubContract(GET_ASSET_RECORD, ledger, getAssetArgument);
+
+    return Json.createObjectBuilder(invokeSubContract(GET_ASSET_RECORD, ledger, getAssetArgument))
+        .remove(COMPANY_ID)
+        .remove(ORGANIZATION_ID)
+        .remove(CREATED_BY)
+        .build();
   }
 
   private void validate(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {

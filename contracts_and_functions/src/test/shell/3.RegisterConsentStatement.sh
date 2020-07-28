@@ -12,3 +12,6 @@ echo "同意文書を改訂"
 
 echo "同意文書のステータスを変更"
 ./gradlew cucumber_update_consent_statement_status
+
+echo "同意文書を取得"
+./gradlew cucumber_get_consent_statement

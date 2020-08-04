@@ -1,31 +1,30 @@
-# Get Master
+# マスターの取得(Contract)
+同意文書に紐付ける Mater (Purpose, DatasetSchema, DataRetentionPolicy, Benefit) の内容を取得します。
+取得可能なマスターのアセットは、Contract Propertiesで指定します。
 
-# User Story
+個人情報取扱事業者が実行した場合はアセットの内容を全て返却し、データ主体が実行した場合は個人情報取扱事業者に係わる情報は削除して返却します。
 
-## 同意文書を登録する
-
-## What
-同意文書に紐付ける Mater (Purpose, DatasetSchema, DataRetentionPolicy, Benefit) の内容を取得する。
-取得する Master の項目は、Asset Schemaで指定する。
-
-## Why
-- 個人情報取扱事業者のユーザーが、登録したMasterの内容を確認するため
-- データ主体が同意文書への同意を検討する際に、同意文書に登録されたMasterの詳細を確認するため
-
-## Who
-情報処理者（Processor）、情報管理者（Controller）のロールを持つ実行者のみが行える。
-データ主体の実行は、ハッシュ化されたIDによる実行のみ許可する。
-
-# Interface
-| title | content |
+| | |
 | ----- | ------ |
-|Contract Name|GetMaster |
-|実行者|情報処理者（Processor）、情報管理者（Controller）, Data Subject |
-|操作対象アセット| Purpose, DatasetSchema, DataRetentionPolicy, Benefit (Contract Propertiesで指定) |
-|参照アセット|user_profile|
-|Sub Contracts| GetUserProfile, PutAssetRecord |
-|Functions| n/a |
+|Contract Name|UpdateConsentStatementRevision|
+|Contract Argument| JSON Schema (see below) |
+|Function Name|n/a|
+|Function Argumen|n/a|
+|Return| content of Asset |
 
+# 権限
+情報処理者（Processor）、情報管理者（Controller）のロールを持つ実行者、データ主体が実行できます。
+データ主体の実行は、ハッシュ化されたIDによる実行のみ許可します。
+
+# アセット
+取得対象のアセットは、同意文書のマスターとして指定する以下のアセットです。
+- Porpose
+- Data Set Schema
+- Data Retention Policy
+- Benefit
+
+# テーブル
+テーブルの参照は行いません。
 
 ## Asset ID Format
 **properties.asset_name + properties.asset_version + "-" + "組織ID" + "-" + "文書番号"**
@@ -36,7 +35,6 @@
 | バージョン | properties.asset_version | NN | "01" | |
 | 組織ID | 組織ID | UUID | "a5e9971d-32be-490d-bff4-c6d65816c1e5" |  |
 | 文書番号 | 登録時のUNIX Epch Time（ミリ秒） | BIGINT型の数値 | 1573098580650 | milliseconds since the UNIX epoch |
-
 
 ## Contract Properties
 
@@ -59,7 +57,6 @@
 | ---------- | ------- | --- | ---  | ------ | --------------------------- | ------ |
 |n/a|||||||
 
-
 # Contract Process
 
 | 処理 | 説明 | エラー処理 |
@@ -68,10 +65,12 @@
 | **[contract_argument.is_hashed = falseの場合]** |  |  |
 | ContractArgumentを確認 | `contract_argument.company_id` が指定されていることを確認 | company_idが指定されていない |
 | 実行権限を確認 | `Controller`、`Processor` ロールが、実行者に付与されているかを確認 | ロールが付与されていない |
-| アセットを取得 | Asset IDをキーに `PutAssetRecord` コントラクトを実行してアセットを取得し、取得したアセットを返却する | アセットが存在しない |
+| アセットIDが許可されたIDであるか確認 | Asset IDの先頭の文字が `contract_properties.permitted_asset_names` で指定している文字列のいずれかと一致する事を確認 | アセットの参照権限がない |
+| アセットを取得 | Asset IDをキーに `GetUserProfile` コントラクトを実行してアセットを取得し、取得したアセットを返却する | アセットが存在しない |
+| アセットを返却 | 取得したアセットの `company_id` と `contract_argument.company_id` を比較し、一致していればアセットの内容を返却する | アセットの参照権限がない |
 | **[contract_argument.is_hashed = trueの場合]** |  |  |
-| アセットIDが許可されたIDであるか確認 | Asset IDをデコードし、デコードしたAsset IDの先頭の文字が `contract_properties.permitted_asset_names` で指定している文字列のいずれかと一致する事を確認 | 参照許可がないアセットを参照している |
-| アセットを取得 | デコードしたAsset IDをキーに `PutAssetRecord` コントラクトを実行してアセットを取得し、アセットから`contract_properties.remove_columns` に該当する項目を削除し、コントラクト実行結果として返却する | アセットが存在しない |
+| アセットIDが許可されたIDであるか確認 | Asset IDをデコードし、デコードしたAsset IDの先頭の文字が `contract_properties.permitted_asset_names` で指定している文字列のいずれかと一致する事を確認 | アセットの参照権限がない |
+| アセットを取得して返却 | デコードしたAsset IDをキーに `GetUserProfile` コントラクトを実行してアセットを取得し、アセットから`contract_properties.remove_columns` に該当する項目を削除し、コントラクト実行結果として返却する | アセットが存在しない |
 
 
 # Function Process

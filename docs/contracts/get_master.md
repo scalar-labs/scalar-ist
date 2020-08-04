@@ -4,7 +4,7 @@
 
 個人情報取扱事業者が実行した場合はアセットの内容を全て返却し、データ主体が実行した場合は個人情報取扱事業者に係わる情報は削除して返却します。
 
-| | |
+| 項目名 | 内容 |
 | ----- | ------ |
 |Contract Name|UpdateConsentStatementRevision|
 |Contract Argument| JSON Schema (see below) |

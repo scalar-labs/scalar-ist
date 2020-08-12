@@ -8,7 +8,7 @@
 | 項目名 | 内容 |
 | ----- | ------ |
 |Contract Name| GetMaster |
-|Contract Argument| JSON Schema (see below) |
+|Contract Argument| [JSON Schema](https://github.com/scalar-labs/scalar-ist-internal/blob/master/docs/contracts_and_functions/get_master.md#contract-argument-schema) |
 |Function Name|n/a|
 |Function Argumen|n/a|
 |Return| Content of Asset |
@@ -51,9 +51,6 @@ properties.asset_name + properties.asset_version + "-" + organization_id + "-" +
 | ---------- | ------- | --- | ---  | ------ | --------------------------- | ------ |
 | asset_id | TEXT    | ○   | TEXT |        | コントラクトが操作するアセット名 | "bn" |
 | company_id | TEXT  | ○   | TEXT | user_profile.company_id | 個人情報取扱事業者ID | scalar-labs.com |
-
-
-| is_hashed | BOOLEAN | ○   | BOOLEAN |        | アセットIDがハッシュ化されているか | true |
 
 ## Function Argument
 

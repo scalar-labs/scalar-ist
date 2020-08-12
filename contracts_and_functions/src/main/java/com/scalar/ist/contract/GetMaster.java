@@ -2,17 +2,15 @@ package com.scalar.ist.contract;
 
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_ID_IS_NOT_PERMITTED;
-import static com.scalar.ist.common.Constants.ASSET_NAME;
-import static com.scalar.ist.common.Constants.ASSET_NAME_IS_MISSING;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.COMPANY_ID_DOES_NOT_MATCH_WITH_ASSET_COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
+import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
-import static com.scalar.ist.common.Constants.HOLDER_ID;
-import static com.scalar.ist.common.Constants.HOLDER_ID_IS_MISSING;
 import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES;
 import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES_IS_MISSING;
+import static com.scalar.ist.common.Constants.REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING;
 import static com.scalar.ist.common.Constants.ROLES_REQUIRED;
 import static com.scalar.ist.common.Constants.ROLE_ADMINISTRATOR;
 import static com.scalar.ist.common.Constants.ROLE_CONTROLLER;
@@ -49,8 +47,7 @@ public class GetMaster extends Contract {
             .build();
     JsonObject asset = invokeSubContract(GET_ASSET_RECORD, ledger, getAssetArgument);
 
-    // Compare company_id of the acquired asset with contract_argument.company_id, and return the content of the asset if they match.
-    if (asset.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID))) {
+    if (!asset.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID))) {
       throw new ContractContextException(COMPANY_ID_DOES_NOT_MATCH_WITH_ASSET_COMPANY_ID);
     }
     return asset;
@@ -63,15 +60,14 @@ public class GetMaster extends Contract {
   }
 
   private void validateProperties(Optional<JsonObject> propertiesOpt) {
-    JsonObject properties = propertiesOpt.get();
-    if (!properties.containsKey(HOLDER_ID)) {
-      throw new ContractContextException(HOLDER_ID_IS_MISSING);
+    if (!propertiesOpt.isPresent()) {
+      throw new ContractContextException(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
     }
-    if (!properties.containsKey(ASSET_NAME)) {
-      throw new ContractContextException(ASSET_NAME_IS_MISSING);
-    }
-    if (!properties.containsKey(PERMITTED_ASSET_NAMES)) {
+    if (!propertiesOpt.get().containsKey(PERMITTED_ASSET_NAMES)) {
       throw new ContractContextException(PERMITTED_ASSET_NAMES_IS_MISSING);
+    }
+    if (!propertiesOpt.get().containsKey(CONTRACT_ARGUMENT_SCHEMA)) {
+      throw new ContractContextException(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
     }
   }
 
@@ -79,7 +75,7 @@ public class GetMaster extends Contract {
     JsonObject schema = properties.getJsonObject(CONTRACT_ARGUMENT_SCHEMA);
     JsonArray permittedAssetNames = properties.getJsonArray(PERMITTED_ASSET_NAMES);
     String assetName = arguments.getString(ASSET_ID).substring(0, 2);
-    if (!permittedAssetNames.contains(assetName)) {
+    if (!permittedAssetNames.contains(Json.createValue(assetName))) {
       throw new ContractContextException(ASSET_ID_IS_NOT_PERMITTED);
     }
     JsonObject validateArgumentJson =

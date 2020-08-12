@@ -66,7 +66,7 @@ properties.asset_name + properties.asset_version + "-" + organization_id + "-" +
 | Contract Argumentを確認 | `contract_argument.asset_id`, `contract_argument.company_id`が指定されていることを確認 | Contract Argumentが不正 |
 | 実行権限を確認 | `Admin`、`Controller`、`Processor` ロールが、実行者に付与されているかを確認 | ユーザープロファイルが取得できない<br>ロールが付与されていない |
 | アセットIDが許可されたIDであるか確認 | Asset IDの先頭の文字が `contract_properties.permitted_asset_names` で指定している文字列のいずれかと一致する事を確認 | アセットの参照権限がない |
-| アセットを取得 | Asset IDをキーに `GetUserProfile` コントラクトを実行してアセットを取得 | アセットが存在しない |
+| アセットを取得 | Asset IDをキーに `GetAssetRecord` コントラクトを実行してアセットを取得 | アセットが存在しない |
 | アセットを返却 | 取得したアセットの `company_id` と `contract_argument.company_id` を比較し、一致していればアセットの内容を返却する | アセットの参照権限がない |
 
 # Function Process

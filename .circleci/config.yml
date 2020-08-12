@@ -1,0 +1,47 @@
+# Java Gradle CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/openjdk:8-jdk
+        environment:
+          MAX_HEAP_SIZE: 2048m
+          HEAP_NEWSIZE: 512m
+
+    environment:
+      # Customize the JVM maximum heap limit
+      JVM_OPTS: -Xmx2048m
+      HEAP_NEWSIZE: 512m
+
+    steps:
+      - checkout
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "contracts_and_functions/build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - save_cache:
+          paths:
+            - startup_db/api/main/.gradle
+          key: v1-dependencies-{{ checksum "contracts_and_functions/build.gradle" }}
+
+      - run:
+          name: Contracts and functions unit tests
+          command: gradle test
+          working_directory: contracts_and_functions/
+
+      - run:
+          name: Save the Contracts and functions test report
+          command: |
+            mkdir -p /tmp/gradle_test_reports/contracts_and_functions
+            cp -a contracts_and_functions/build/reports/tests /tmp/gradle_test_reports/contracts_and_functions/
+          when: always
+
+      - store_artifacts:
+          path: /tmp/gradle_test_reports
+          destination: gradle_test_reports

@@ -39,7 +39,7 @@ jobs:
           name: Save the Contracts and functions test report
           command: |
             mkdir -p /tmp/gradle_test_reports/contracts_and_functions
-            cp -a contracts_and_functions/build/reports/tests /tmp/gradle_test_reports/startup_db/
+            cp -a contracts_and_functions/build/reports/tests /tmp/gradle_test_reports/contracts_and_functions/
           when: always
 
       - store_artifacts:

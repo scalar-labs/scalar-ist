@@ -153,9 +153,7 @@ public class GetMasterTest {
   }
 
   private JsonObject prepareArguments() {
-    return Json.createObjectBuilder().add(COMPANY_ID, MOCKED_COMPANY_ID)
-        .add(ASSET_ID, MOCKED_ASSET_ID)
-        .build();
+    return Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build();
   }
 
   private JsonObject prepareUserProfile(String role) {
@@ -186,6 +184,7 @@ public class GetMasterTest {
                 .add(VALIDATE_ARGUMENT_SCHEMA, Util.readJsonSchemaFromResources(SCHEMA_FILENAME))
                 .build())
         .add(PERMITTED_ASSET_NAMES, MOCKED_PERMITTED_ASSET_NAMES)
+        .add(COMPANY_ID, MOCKED_COMPANY_ID)
         .build();
   }
 

@@ -47,7 +47,7 @@ public class GetMaster extends Contract {
             .build();
     JsonObject asset = invokeSubContract(GET_ASSET_RECORD, ledger, getAssetArgument);
 
-    if (!asset.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID))) {
+    if (!asset.getString(COMPANY_ID).equals(properties.get().getString(COMPANY_ID))) {
       throw new ContractContextException(COMPANY_ID_DOES_NOT_MATCH_WITH_ASSET_COMPANY_ID);
     }
     return asset;
@@ -56,7 +56,7 @@ public class GetMaster extends Contract {
   private void validate(Ledger ledger, JsonObject arguments, Optional<JsonObject> properties) {
     validateProperties(properties);
     validateArguments(ledger, arguments, properties.get());
-    validateUserPermissions(ledger, arguments);
+    validateUserPermissions(ledger, properties.get());
   }
 
   private void validateProperties(Optional<JsonObject> propertiesOpt) {
@@ -87,10 +87,10 @@ public class GetMaster extends Contract {
     invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentJson);
   }
 
-  private void validateUserPermissions(Ledger ledger, JsonObject arguments) {
+  private void validateUserPermissions(Ledger ledger, JsonObject properties) {
     JsonObject userProfileArgument =
         Json.createObjectBuilder()
-            .add(COMPANY_ID, arguments.getString(COMPANY_ID))
+            .add(COMPANY_ID, properties.getString(COMPANY_ID))
             .build();
     JsonObject userProfile = invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
 

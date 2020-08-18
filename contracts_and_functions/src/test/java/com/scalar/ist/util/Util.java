@@ -7,14 +7,15 @@ import javax.json.Json;
 import javax.json.JsonObject;
 
 public class Util {
+
   public static String readJsonSchemaFromResources(String fileName) {
     return readJson(Paths.get("arguments", "schema", fileName));
   }
 
   public static JsonObject readJsonObject(Path relativePath) {
     return Json.createReader(
-            Objects.requireNonNull(
-                Util.class.getClassLoader().getResourceAsStream(relativePath.toString())))
+        Objects.requireNonNull(
+            Util.class.getClassLoader().getResourceAsStream(relativePath.toString())))
         .readObject();
   }
 
@@ -31,10 +32,10 @@ public class Util {
   }
 
   public static JsonObject readArgumentsSampleFromResources(String filename) {
-    return readJsonObject(Paths.get("arguments", "sample", filename));
+    return readJsonObject(Paths.get("argument", filename));
   }
 
   public static JsonObject readAssetSampleFromResources(String filename) {
-    return readJsonObject(Paths.get("asset", "sample", filename));
+    return readJsonObject(Paths.get("asset", filename));
   }
 }

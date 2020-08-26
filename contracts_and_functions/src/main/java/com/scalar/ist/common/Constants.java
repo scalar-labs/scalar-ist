@@ -32,6 +32,7 @@ public class Constants {
   public static final String TABLE_SCHEMA = "table_schema";
   public static final String PROPERTIES = "properties";
   public static final String DATA_SUBJECT_ID = "data_subject_id";
+  public static final String PERMITTED_ASSET_NAMES = "permitted_asset_names";
 
   // User roles
   public static final String ROLE_CONTROLLER = "Controller";
@@ -172,6 +173,10 @@ public class Constants {
       "Executor's holder ID is missing in the contract properties of the specified contract.";
   public static final String ASSET_NAME_IS_MISSING =
       "Asset name is missing in the contract properties of the specified contract.";
+  public static final String PERMITTED_ASSET_NAMES_IS_MISSING =
+      "Permitted asset names are missing in the contract properties of the specified contract.";
+  public static final String ASSET_ID_IS_NOT_PERMITTED =
+      "The specified asset id is not one of the permitted asset names";
   public static final String CONTRACT_ARGUMENT_SCHEMA_IS_MISSING =
       "Contract argument schema is not specified in the properties.";
   public static final String STATUS_UPDATE_NOT_ALLOWED =
@@ -195,6 +200,8 @@ public class Constants {
       "Contract properties are not provided.";
   public static final String EXECUTOR_COMPANY_ID_DOES_NOT_MATCH_WITH_USER_PROFILE_COMPANY_ID =
       "The specified executor company id does not match with the user profile company id.";
+  public static final String COMPANY_ID_DOES_NOT_MATCH_WITH_ASSET_COMPANY_ID =
+      "The specified specified argument company id does not match with the asset company id.";
   public static final String ORGANIZATION_ID_DOES_NOT_MATCH =
       "The specified argument organization id does not match with the consent statement organization id";
   public static final String EXECUTION_RESTRICTED_TO_INITIALIZER_ACCOUNT =

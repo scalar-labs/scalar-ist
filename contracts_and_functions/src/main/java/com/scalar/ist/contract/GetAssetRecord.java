@@ -57,13 +57,14 @@ public class GetAssetRecord extends Contract {
       if (argument.containsKey(RECORD_VERSION_ORDER)) {
         assetFilter.withVersionOrder(AssetFilter.VersionOrder.valueOf(argument.getString(RECORD_VERSION_ORDER)));
       }
-      Json.createObjectBuilder().add(RECORD_VERSIONS,
+      return Json.createObjectBuilder().add(RECORD_VERSIONS,
           Json.createArrayBuilder(
           ledger
               .scan(assetFilter)
               .stream()
               .map(Asset::data)
-              .collect(Collectors.toList())));
+              .collect(Collectors.toList())))
+          .build();
     }
 
     return ledger

@@ -57,8 +57,15 @@ public class Constants {
   public static final String RECORD_MODE_INSERT = "insert";
   public static final String RECORD_MODE_UPDATE = "update";
   public static final String RECORD_MODE_UPSERT = "upsert";
+  public static final String RECORD_MODE_GET = "get";
+  public static final String RECORD_MODE_SCAN = "scan";
   public static final String RECORD_DATA = "data";
   public static final String RECORD_SALT = "salt";
+  public static final String RECORD_START_VERSION = "start_version";
+  public static final String RECORD_END_VERSION = "end_version";
+  public static final String RECORD_LIMIT = "with_limit";
+  public static final String RECORD_VERSIONS = "versions";
+  public static final String RECORD_VERSION_ORDER = "version_order";
   public static final String GET_ASSET_RECORD = "GetAssetRecord";
   public static final String RECORD_IS_HASHED = "is_hashed";
   public static final String PUT_ASSET_RECORD = "PutAssetRecord";

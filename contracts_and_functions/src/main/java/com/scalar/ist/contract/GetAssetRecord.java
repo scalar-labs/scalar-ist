@@ -5,8 +5,15 @@ import static com.scalar.ist.common.Constants.ASSET_NOT_FOUND;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.DISALLOWED_CONTRACT_EXECUTION_ORDER;
+import static com.scalar.ist.common.Constants.RECORD_END_VERSION;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
+import static com.scalar.ist.common.Constants.RECORD_LIMIT;
+import static com.scalar.ist.common.Constants.RECORD_MODE;
+import static com.scalar.ist.common.Constants.RECORD_MODE_SCAN;
 import static com.scalar.ist.common.Constants.RECORD_SALT;
+import static com.scalar.ist.common.Constants.RECORD_START_VERSION;
+import static com.scalar.ist.common.Constants.RECORD_VERSIONS;
+import static com.scalar.ist.common.Constants.RECORD_VERSION_ORDER;
 import static com.scalar.ist.common.Constants.REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING;
 import static com.scalar.ist.common.Constants.SALT_IS_MISSING;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
@@ -17,10 +24,12 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.hash.HashCode;
 import com.scalar.dl.ledger.asset.Asset;
 import com.scalar.dl.ledger.contract.Contract;
+import com.scalar.dl.ledger.database.AssetFilter;
 import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.json.Json;
 import javax.json.JsonObject;
 import org.hashids.Hashids;
@@ -31,8 +40,34 @@ public class GetAssetRecord extends Contract {
   public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validate(ledger, argument, properties);
 
+    String assetId = getHashedAssetId(argument, properties.get());
+
+    if (argument.containsKey(RECORD_MODE)
+        && argument.getString(RECORD_MODE).equals(RECORD_MODE_SCAN)) {
+      AssetFilter assetFilter = new AssetFilter(assetId);
+      if (argument.containsKey(RECORD_START_VERSION)) {
+        assetFilter.withStartVersion(argument.getInt(RECORD_START_VERSION), true);
+      }
+      if (argument.containsKey(RECORD_END_VERSION)) {
+        assetFilter.withEndVersion(argument.getInt(RECORD_END_VERSION), true);
+      }
+      if (argument.containsKey(RECORD_LIMIT)) {
+        assetFilter.withLimit(argument.getInt(RECORD_LIMIT));
+      }
+      if (argument.containsKey(RECORD_VERSION_ORDER)) {
+        assetFilter.withVersionOrder(AssetFilter.VersionOrder.valueOf(argument.getString(RECORD_VERSION_ORDER)));
+      }
+      Json.createObjectBuilder().add(RECORD_VERSIONS,
+          Json.createArrayBuilder(
+          ledger
+              .scan(assetFilter)
+              .stream()
+              .map(Asset::data)
+              .collect(Collectors.toList())));
+    }
+
     return ledger
-        .get(getHashedAssetId(argument, properties.get()))
+        .get(assetId)
         .map(Asset::data)
         .orElseThrow(() -> new ContractContextException(ASSET_NOT_FOUND));
   }

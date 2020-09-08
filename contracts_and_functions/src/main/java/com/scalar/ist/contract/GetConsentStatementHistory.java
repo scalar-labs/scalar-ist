@@ -4,7 +4,6 @@ import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_ID_IS_NOT_PERMITTED;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
-import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
 import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES;
@@ -32,6 +31,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
 public class GetConsentStatementHistory extends Contract {
@@ -46,23 +46,20 @@ public class GetConsentStatementHistory extends Contract {
   public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validate(ledger, argument, properties);
 
-    return Json.createObjectBuilder()
-        .add(
-            RECORD_VERSIONS,
-            Json.createArrayBuilder(
-                    invokeSubContract(
-                            GET_ASSET_RECORD,
-                            ledger,
-                            Json.createObjectBuilder()
-                                .add(ASSET_ID, argument.getString(ASSET_ID))
-                                .add(RECORD_IS_HASHED, argument.getString(RECORD_IS_HASHED))
-                                .add(RECORD_MODE, RECORD_MODE_SCAN)
-                                .build())
-                        .getJsonArray(RECORD_VERSIONS).getValuesAs(JsonObject.class).stream()
-                        .filter(c -> c.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID)))
-                        .collect(Collectors.toList()))
-                .build())
-        .build();
+    JsonArrayBuilder filteredList = Json.createArrayBuilder();
+    invokeSubContract(
+        GET_ASSET_RECORD,
+        ledger,
+        Json.createObjectBuilder()
+            .add(ASSET_ID, argument.getString(ASSET_ID))
+            .add(RECORD_IS_HASHED, argument.getBoolean(RECORD_IS_HASHED))
+            .add(RECORD_MODE, RECORD_MODE_SCAN)
+            .build())
+        .getJsonArray(RECORD_VERSIONS).getValuesAs(JsonObject.class).stream()
+        .filter(c -> c.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID)))
+        .collect(Collectors.toList()).forEach(filteredList::add);
+
+    return Json.createObjectBuilder().add(RECORD_VERSIONS, filteredList.build()).build();
   }
 
   private void validate(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
@@ -74,9 +71,6 @@ public class GetConsentStatementHistory extends Contract {
   private void validateProperties(Optional<JsonObject> properties) {
     if (!properties.isPresent()) {
       throw new ContractContextException(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
-    }
-    if (!properties.get().containsKey(CONTRACT_ARGUMENT_SCHEMA)) {
-      throw new ContractContextException(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
     }
   }
 

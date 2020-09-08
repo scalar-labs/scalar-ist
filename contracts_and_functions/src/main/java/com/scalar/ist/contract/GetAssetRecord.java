@@ -29,8 +29,8 @@ import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import org.hashids.Hashids;
 
@@ -55,16 +55,13 @@ public class GetAssetRecord extends Contract {
         assetFilter.withLimit(argument.getInt(RECORD_LIMIT));
       }
       if (argument.containsKey(RECORD_VERSION_ORDER)) {
-        assetFilter.withVersionOrder(AssetFilter.VersionOrder.valueOf(argument.getString(RECORD_VERSION_ORDER)));
+        assetFilter.withVersionOrder(
+            AssetFilter.VersionOrder.valueOf(argument.getString(RECORD_VERSION_ORDER)));
       }
-      return Json.createObjectBuilder().add(RECORD_VERSIONS,
-          Json.createArrayBuilder(
-          ledger
-              .scan(assetFilter)
-              .stream()
-              .map(Asset::data)
-              .collect(Collectors.toList())))
-          .build();
+      JsonArrayBuilder recordVersions = Json.createArrayBuilder();
+      ledger.scan(assetFilter).stream().map(Asset::data).forEach(recordVersions::add);
+
+      return Json.createObjectBuilder().add(RECORD_VERSIONS, recordVersions.build()).build();
     }
 
     return ledger

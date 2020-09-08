@@ -5,13 +5,17 @@ import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_VERSION;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
+import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
+import static com.scalar.ist.common.Constants.HOLDER_ID;
+import static com.scalar.ist.common.Constants.HOLDER_ID_IS_MISSING;
 import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
 import static com.scalar.ist.common.Constants.RECORD_MODE;
 import static com.scalar.ist.common.Constants.RECORD_MODE_SCAN;
 import static com.scalar.ist.common.Constants.RECORD_VERSIONS;
+import static com.scalar.ist.common.Constants.REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING;
 import static com.scalar.ist.common.Constants.ROLES;
 import static com.scalar.ist.common.Constants.ROLES_REQUIRED;
 import static com.scalar.ist.common.Constants.ROLE_ADMINISTRATOR;
@@ -23,13 +27,16 @@ import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMEN
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.VALIDATE_PERMISSION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.ist.common.Constants;
 import com.scalar.ist.util.Util;
 import java.util.Optional;
@@ -45,7 +52,7 @@ import org.mockito.MockitoAnnotations;
 public class GetConsentStatementHistoryTest {
   private static final String SCHEMA_FILENAME = "get_consent_statement_history.json";
   private static final String MOCKED_ASSET_ID =
-      "ds" + UUID.randomUUID().toString() + "-" + System.currentTimeMillis();
+      "cs" + UUID.randomUUID().toString() + "-" + System.currentTimeMillis();
   private static final String MOCKED_SALT = "mocked_salt";
   private static final String MOCKED_SCHEMA = "mocked_schema";
   private static final String MOCKED_COMPANY_ID = "scalar-labs";
@@ -68,7 +75,7 @@ public class GetConsentStatementHistoryTest {
 
   private JsonObject prepareProperties() {
     JsonArray permittedAssetNames =
-        Json.createArrayBuilder().add("pp").add("ds").add("rp").add("bn").add("tp").build();
+        Json.createArrayBuilder().add("cs").build();
     return Json.createObjectBuilder()
         .add(PERMITTED_ASSET_NAMES, permittedAssetNames)
         .add(
@@ -151,6 +158,52 @@ public class GetConsentStatementHistoryTest {
     verify(getConsentStatementHistory)
         .invokeSubContract(GET_ASSET_RECORD, ledger, getAssetRecordArgument);
     verify(getConsentStatementHistory, times(4)).invokeSubContract(any(), any(), any());
+  }
+
+  @Test
+  public void invoke_PropertyWithoutSchema_ShouldThrowContractContextException() {
+    // Arrange
+    JsonArray permittedAssetNames =
+        Json.createArrayBuilder().add("cs").build();
+    JsonObject properties = Json.createObjectBuilder()
+        .add(PERMITTED_ASSET_NAMES, permittedAssetNames)
+        .build();
+    JsonObject argument = prepareArgument();
+
+    // Act
+    // Assert
+    assertThatThrownBy(
+        () -> {
+          getConsentStatementHistory.invoke(ledger, argument, Optional.of(properties));
+        })
+        .isExactlyInstanceOf(ContractContextException.class)
+        .hasMessage(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
+    verify(getConsentStatementHistory, never()).invokeSubContract(any(), any(), any());
+  }
+
+  @Test
+  public void invoke_PropertyWithoutPermittedAssetNames_ShouldThrowContractContextException() {
+    // Arrange
+    JsonObject argument = prepareArgument();
+    JsonObject properties =
+        Json.createObjectBuilder()
+            .add(
+                CONTRACT_ARGUMENT_SCHEMA,
+                Json.createObjectBuilder()
+                    .add(
+                        VALIDATE_ARGUMENT_SCHEMA, Util.readJsonSchemaFromResources(SCHEMA_FILENAME))
+                    .build())
+            .build();
+
+    // Act
+    // Assert
+    assertThatThrownBy(
+        () -> {
+          getConsentStatementHistory.invoke(ledger, argument, Optional.of(properties));
+        })
+        .isExactlyInstanceOf(ContractContextException.class)
+        .hasMessage(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
+    verify(getConsentStatementHistory, never()).invokeSubContract(any(), any(), any());
   }
 
   private JsonObject preparePermissionValidationArgument(JsonObject userProfile) {

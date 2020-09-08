@@ -4,6 +4,7 @@ import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_ID_IS_NOT_PERMITTED;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
+import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
 import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES;
@@ -70,6 +71,12 @@ public class GetConsentStatementHistory extends Contract {
 
   private void validateProperties(Optional<JsonObject> properties) {
     if (!properties.isPresent()) {
+      throw new ContractContextException(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
+    }
+    if (!properties.get().containsKey(CONTRACT_ARGUMENT_SCHEMA)) {
+      throw new ContractContextException(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
+    }
+    if (!properties.get().containsKey(PERMITTED_ASSET_NAMES)) {
       throw new ContractContextException(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
     }
   }

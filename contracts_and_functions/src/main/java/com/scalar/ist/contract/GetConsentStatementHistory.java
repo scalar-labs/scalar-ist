@@ -58,7 +58,7 @@ public class GetConsentStatementHistory extends Contract {
             .build())
         .getJsonArray(RECORD_VERSIONS).getValuesAs(JsonObject.class).stream()
         .filter(c -> c.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID)))
-        .collect(Collectors.toList()).forEach(filteredList::add);
+        .map(filteredList::add);
 
     return Json.createObjectBuilder().add(RECORD_VERSIONS, filteredList.build()).build();
   }

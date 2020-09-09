@@ -37,7 +37,8 @@ properties.asset_name + properties.asset_version + "-" + organization_id + "-" +
 
 | 項目名      | データ型 | 必須 | 書式         | 説明                        | サンプル |
 | ---------- | ------- | --- | ----------  | --------------------------- | ------ |
-| permitted_asset_names | TEXT    | ○   | Array(TEXT) | コントラクトに操作を許可するアセット名の配列 | ["pp", "ds", "rp", "bn", "tp"] |
+| permitted_asset_names | TEXT    | ○   | Array(TEXT) | コントラクトに操作を許可するアセット名の配列 | ["cs"] |
+| contract_argument_schema | TEXT    | ○   | JSON Schema | Contract Argument のフォーマットを定義したJSONスキーマ | [JSON Schema](./get_consent_statement_history.md#contract-argument-schema) |
 
 ## Contract Argument
 

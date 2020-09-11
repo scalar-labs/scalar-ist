@@ -5,6 +5,7 @@ import static com.scalar.ist.common.Constants.ASSET_NOT_FOUND;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.DISALLOWED_CONTRACT_EXECUTION_ORDER;
+import static com.scalar.ist.common.Constants.RECORD_DATA;
 import static com.scalar.ist.common.Constants.RECORD_END_VERSION;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
 import static com.scalar.ist.common.Constants.RECORD_LIMIT;
@@ -13,6 +14,7 @@ import static com.scalar.ist.common.Constants.RECORD_MODE_GET;
 import static com.scalar.ist.common.Constants.RECORD_MODE_SCAN;
 import static com.scalar.ist.common.Constants.RECORD_SALT;
 import static com.scalar.ist.common.Constants.RECORD_START_VERSION;
+import static com.scalar.ist.common.Constants.RECORD_VERSION;
 import static com.scalar.ist.common.Constants.RECORD_VERSIONS;
 import static com.scalar.ist.common.Constants.RECORD_VERSION_ORDER;
 import static com.scalar.ist.common.Constants.REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING;
@@ -111,6 +113,33 @@ public class GetAssetRecordTest {
         .build();
   }
 
+  private JsonObject prepareMockedAssetList() {
+    JsonObject mockedAssetJsonObject =
+        Json.createObjectBuilder()
+            .add(RECORD_VERSION, 0)
+            .add(RECORD_DATA, Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build())
+            .build();
+    JsonObject mockedAssetJsonObject2 =
+        Json.createObjectBuilder()
+            .add(RECORD_VERSION, 1)
+            .add(RECORD_DATA, Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build())
+            .build();
+    JsonObject mockedAssetJsonObject3 =
+        Json.createObjectBuilder()
+            .add(RECORD_VERSION, 2)
+            .add(RECORD_DATA, Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build())
+            .build();
+    return Json.createObjectBuilder()
+        .add(
+            RECORD_VERSIONS,
+            Json.createArrayBuilder()
+                .add(mockedAssetJsonObject)
+                .add(mockedAssetJsonObject2)
+                .add(mockedAssetJsonObject3)
+                .build())
+        .build();
+  }
+
   @Test
   public void invoke_ScanMode_ProperArgumentsGiven_ShouldRetrieveAssetDataListFromLedger() {
     // arrange
@@ -118,33 +147,30 @@ public class GetAssetRecordTest {
     JsonObject properties = prepareProperties();
     String hashedId = Hasher.hash(properties.getString(RECORD_SALT), argument.getString(ASSET_ID));
     Asset asset = mock(Asset.class);
+    Asset asset2 = mock(Asset.class);
+    Asset asset3 = mock(Asset.class);
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
+    JsonObject mockedAssetData = Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build();
     doReturn(null)
         .when(getAssetRecord)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
     AssetFilter mockedAssetFilter = prepareAssetFilter(hashedId, argument);
-    List<Asset> mockedList = new ArrayList<>(Arrays.asList(asset, asset, asset));
-    JsonObject mockedAssetJsonObject =
-        Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build();
+    List<Asset> mockedList = new ArrayList<>(Arrays.asList(asset, asset2, asset3));
     when(ledger.scan(mockedAssetFilter)).thenReturn(mockedList);
-    when(asset.data()).thenReturn(mockedAssetJsonObject);
+    when(asset.data()).thenReturn(mockedAssetData);
+    when(asset2.data()).thenReturn(mockedAssetData);
+    when(asset3.data()).thenReturn(mockedAssetData);
+    when(asset.age()).thenReturn(0);
+    when(asset2.age()).thenReturn(1);
+    when(asset3.age()).thenReturn(2);
     when(getAssetRecord.isRoot()).thenReturn(false);
 
     // act
     JsonObject assetData = getAssetRecord.invoke(ledger, argument, Optional.of(properties));
-    JsonObject mockedAssetData =
-        Json.createObjectBuilder()
-            .add(
-                RECORD_VERSIONS,
-                Json.createArrayBuilder()
-                    .add(mockedAssetJsonObject)
-                    .add(mockedAssetJsonObject)
-                    .add(mockedAssetJsonObject)
-                    .build())
-            .build();
+    JsonObject mockedAssetList = prepareMockedAssetList();
 
     // assert
-    assertThat(assetData).isEqualTo(mockedAssetData);
+    assertThat(assetData).isEqualTo(mockedAssetList);
     verify(getAssetRecord).invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
     verify(getAssetRecord).invokeSubContract(any(), any(), any());
   }

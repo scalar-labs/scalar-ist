@@ -5,6 +5,7 @@ import static com.scalar.ist.common.Constants.ASSET_NOT_FOUND;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.DISALLOWED_CONTRACT_EXECUTION_ORDER;
+import static com.scalar.ist.common.Constants.RECORD_DATA;
 import static com.scalar.ist.common.Constants.RECORD_END_VERSION;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
 import static com.scalar.ist.common.Constants.RECORD_LIMIT;
@@ -12,6 +13,7 @@ import static com.scalar.ist.common.Constants.RECORD_MODE;
 import static com.scalar.ist.common.Constants.RECORD_MODE_SCAN;
 import static com.scalar.ist.common.Constants.RECORD_SALT;
 import static com.scalar.ist.common.Constants.RECORD_START_VERSION;
+import static com.scalar.ist.common.Constants.RECORD_VERSION;
 import static com.scalar.ist.common.Constants.RECORD_VERSIONS;
 import static com.scalar.ist.common.Constants.RECORD_VERSION_ORDER;
 import static com.scalar.ist.common.Constants.REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING;
@@ -59,7 +61,14 @@ public class GetAssetRecord extends Contract {
             AssetFilter.VersionOrder.valueOf(argument.getString(RECORD_VERSION_ORDER)));
       }
       JsonArrayBuilder recordVersions = Json.createArrayBuilder();
-      ledger.scan(assetFilter).stream().map(Asset::data).forEach(recordVersions::add);
+      ledger.scan(assetFilter).forEach(asset -> {
+        recordVersions.add(
+            Json.createObjectBuilder()
+            .add(RECORD_VERSION, asset.age())
+            .add(RECORD_DATA, asset.data())
+            .build()
+        );
+      });
 
       return Json.createObjectBuilder().add(RECORD_VERSIONS, recordVersions.build()).build();
     }

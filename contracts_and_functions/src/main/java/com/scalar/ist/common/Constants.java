@@ -65,6 +65,7 @@ public class Constants {
   public static final String RECORD_END_VERSION = "end_version";
   public static final String RECORD_LIMIT = "with_limit";
   public static final String RECORD_VERSIONS = "versions";
+  public static final String RECORD_VERSION = "version";
   public static final String RECORD_VERSION_ORDER = "version_order";
   public static final String GET_ASSET_RECORD = "GetAssetRecord";
   public static final String RECORD_IS_HASHED = "is_hashed";

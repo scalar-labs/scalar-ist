@@ -179,7 +179,7 @@
     "columns": {
       "company_id": "TEXT",
       "organization_id": "TEXT",
-      "created_at": "TEXT",
+      "created_at": "BIGINT",
       "organization_metadata": "TEXT",
       "is_active": "BOOLEAN",
       "created_by": "TEXT",

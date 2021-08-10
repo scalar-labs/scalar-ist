@@ -9,30 +9,28 @@ import java.util.concurrent.Callable;
 
 public class DeployTool implements Callable<Integer> {
 
-  @CommandLine.Option(
-      names = {"-f", "--file"},
-      paramLabel = "Json File",
-      description =
-          "a file contains list of commands that will be executed. The file should be json.")
-  private File commandsFile;
+    @CommandLine.Option(
+            names = {"-f", "--file"},
+            paramLabel = "Json File",
+            description =
+                    "a file contains list of commands that will be executed. The file should be json.")
+    private File commandsFile;
 
-  public static void main(String... args) {
-    CommandLine cmd = new CommandLine(new DeployTool());
-    cmd.execute(args);
-  }
-
-  @Override
-  public Integer call() {
-
-    try {
-      JsonArray array =
-          Json.createReader(new BufferedInputStream(new FileInputStream(commandsFile))).readArray();
-      Deploy deploy = new Deploy();
-      deploy.process(array);
-
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
+    public static void main(String... args) {
+        CommandLine cmd = new CommandLine(new DeployTool());
+        cmd.execute(args);
     }
-    return 0;
-  }
+
+    @Override
+    public Integer call() {
+        try {
+            JsonArray array =
+                    Json.createReader(new BufferedInputStream(new FileInputStream(commandsFile))).readArray();
+            Deploy deploy = new Deploy();
+            deploy.process(array);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

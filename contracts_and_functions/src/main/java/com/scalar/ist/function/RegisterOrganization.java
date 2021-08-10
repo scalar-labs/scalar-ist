@@ -25,55 +25,56 @@ import com.scalar.db.io.TextValue;
 import com.scalar.dl.ledger.database.Database;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.dl.ledger.function.Function;
+
 import java.util.Optional;
 import javax.json.Json;
 import javax.json.JsonObject;
 
 public class RegisterOrganization extends Function {
 
-  @Override
-  public void invoke(
-      Database database,
-      Optional<JsonObject> functionArgument,
-      JsonObject contractArgument,
-      Optional<JsonObject> contractProperties) {
+    @Override
+    public void invoke(
+            Database database,
+            Optional<JsonObject> functionArgument,
+            JsonObject contractArgument,
+            Optional<JsonObject> contractProperties) {
 
-    String companyId = contractArgument.getString(COMPANY_ID);
-    String organizationId = contractArgument.getString(ORGANIZATION_ID);
-    if (get(database, companyId, organizationId).isPresent()) {
-      throw new ContractContextException(RECORD_IS_ALREADY_REGISTERED);
+        String companyId = contractArgument.getString(COMPANY_ID);
+        String organizationId = contractArgument.getString(ORGANIZATION_ID);
+        long createdAt = contractArgument.getJsonNumber(CREATED_AT).longValue();
+        if (get(database, companyId, organizationId, createdAt).isPresent()) {
+            throw new ContractContextException(RECORD_IS_ALREADY_REGISTERED);
+        }
+
+
+        Key partitionKey = new Key(new TextValue(COMPANY_ID, companyId));
+        Key clusteringKey =
+                new Key(
+                        new TextValue(ORGANIZATION_ID, organizationId), new BigIntValue(CREATED_AT, createdAt));
+
+        JsonObject organizationInformation =
+                Json.createObjectBuilder()
+                        .add(ORGANIZATION_NAME, ADMIN)
+                        .add(ORGANIZATION_DESCRIPTION, ADMINISTRATOR_ORGANIZATION)
+                        .build();
+        Put put =
+                new Put(partitionKey, clusteringKey)
+                        .withValue(new TextValue(ORGANIZATION_METADATA, organizationInformation.toString()))
+                        .withValue(new BooleanValue(IS_ACTIVE, true))
+                        .withValue(new TextValue(CREATED_BY, contractProperties.get().getString(HOLDER_ID)))
+                        .forNamespace(NAMESPACE)
+                        .forTable(ORGANIZATION_TABLE);
+
+        database.put(put);
     }
 
-    long createdAt = contractArgument.getJsonNumber(CREATED_AT).longValue();
-
-    Key partitionKey = new Key(new TextValue(COMPANY_ID, companyId));
-    Key clusteringKey =
-        new Key(
-            new TextValue(ORGANIZATION_ID, organizationId), new BigIntValue(CREATED_AT, createdAt));
-
-    JsonObject organizationInformation =
-        Json.createObjectBuilder()
-            .add(ORGANIZATION_NAME, ADMIN)
-            .add(ORGANIZATION_DESCRIPTION, ADMINISTRATOR_ORGANIZATION)
-            .build();
-    Put put =
-        new Put(partitionKey, clusteringKey)
-            .withValue(new TextValue(ORGANIZATION_METADATA, organizationInformation.toString()))
-            .withValue(new BooleanValue(IS_ACTIVE, true))
-            .withValue(new TextValue(CREATED_BY, contractProperties.get().getString(HOLDER_ID)))
-            .forNamespace(NAMESPACE)
-            .forTable(ORGANIZATION_TABLE);
-
-    database.put(put);
-  }
-
-  private Optional<Result> get(Database database, String companyId, String organizationId) {
-    Get get =
-        new Get(
-                new Key(new TextValue(COMPANY_ID, companyId)),
-                new Key(new TextValue(ORGANIZATION_ID, organizationId)))
-            .forNamespace(NAMESPACE)
-            .forTable(ORGANIZATION_TABLE);
-    return database.get(get);
-  }
+    private Optional<Result> get(Database database, String companyId, String organizationId, long createdAt) {
+        Key partitionKey = new Key(new TextValue(COMPANY_ID, companyId));
+        Key clusteringKey = new Key(new TextValue(ORGANIZATION_ID, organizationId), new BigIntValue(CREATED_AT, createdAt));
+        Get get =
+                new Get(partitionKey, clusteringKey)
+                        .forNamespace(NAMESPACE)
+                        .forTable(ORGANIZATION_TABLE);
+        return database.get(get);
+    }
 }

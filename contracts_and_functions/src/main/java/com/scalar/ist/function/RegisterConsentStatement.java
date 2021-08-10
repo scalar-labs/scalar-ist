@@ -33,10 +33,8 @@ import com.scalar.db.io.Value;
 import com.scalar.dl.ledger.database.Database;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.dl.ledger.function.Function;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
@@ -97,8 +95,8 @@ public class RegisterConsentStatement extends Function {
     database.put(put);
   }
 
-  private List<Value> createValues(List<String> keys, JsonObject contractArgument) {
-    List<Value> values = new ArrayList<>();
+  private List<Value<?>> createValues(List<String> keys, JsonObject contractArgument) {
+    List<Value<?>> values = new ArrayList<>();
     for (String key : keys)
       if (contractArgument.containsKey(key)) {
         JsonValue.ValueType argumentValueType = contractArgument.get(key).getValueType();

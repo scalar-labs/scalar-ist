@@ -30,7 +30,7 @@ public class DeployTool implements Callable<Integer> {
       Deploy deploy = new Deploy();
       deploy.process(array);
 
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return 0;

@@ -23,8 +23,8 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.0'
-    testCompile group: 'io.cucumber', name: 'cucumber-java', version: '5.6.0'
-    testCompile group: 'io.cucumber', name: 'cucumber-junit', version: '5.6.0'
+    testImplementation group: 'io.cucumber', name: 'cucumber-java', version: '5.6.0'
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '5.6.0'
 }
 
 test {

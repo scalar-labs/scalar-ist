@@ -11,8 +11,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     openssl=1.1.1d-0+deb10u6 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY image .
+# Copy all necessary files to the image
+COPY docker-files/scalar-ist-installer .
+
+# Set default ENV values for the image
 ENV IST_INSTALL_CONTRACTS true
 ENV IST_INSTALL_FUNCTIONS true
 
-ENTRYPOINT ["bin/bash", "./init.sh"]
+ENTRYPOINT ["bin/bash", "./install.sh"]

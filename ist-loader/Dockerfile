@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy all necessary files to the image
-COPY docker-files/scalar-ist-installer .
+COPY docker-files/scalar-ist-loader .
 
 # Set default ENV values for the image
 ENV IST_INSTALL_CONTRACTS true

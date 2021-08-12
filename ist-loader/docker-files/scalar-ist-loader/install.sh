@@ -35,10 +35,8 @@ register_functions(){
 
       if  [[ $OUTPUT == *"OK"* ]];
       then
-        echo "$OUTPUT" the function has been registered
-      elif [[ $OUTPUT == *"CERTIFICATE_ALREADY_REGISTERED"* ]];
-        echo "$OUTPUT" the function has already been registered and is being skipped
-      then
+        echo "$OUTPUT" the function has been registered or did already exist
+      else
          echo "$OUTPUT" the function registeration failed
                 STATUS=1
                 break
@@ -55,15 +53,15 @@ register_contracts(){
     do
       OUTPUT=$($line | sed -n '2 p')
 
-
       echo $line
 
       if  [[ $OUTPUT == *"OK"* ]];
       then
         echo "$OUTPUT" the contract has been registered
-      elif [[ $OUTPUT == *"CERTIFICATE_ALREADY_REGISTERED"* ]];
-        echo "$OUTPUT" the contract has already been registered and is being skipped
+      elif [[ $OUTPUT == *"CONTRACT_ALREADY_REGISTERED"* ]];
       then
+        echo "$OUTPUT" the contract has already been registered and is being skipped
+      else
         echo "$OUTPUT" the contract registeration failed
         STATUS=1
         break

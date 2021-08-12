@@ -36,8 +36,10 @@ services:
       - scalar-ledger
     volumes:
       - ./client.properties:/client.properties
+      - ./initializer.pem:/initializer.pem
+      - ./initializer-key.pem:/initializer-key.pem
     environment:
-      - IST_INSTALL_FUNCTIONS=false
+      - IST_INSTALL_FUNCTIONS=true
       - IST_INSTALL_CONTRACTS=true
     networks:
       - scalar-network

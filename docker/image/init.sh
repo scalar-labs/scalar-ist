@@ -1,13 +1,64 @@
 STATUS=0
-while IFS= read line;
-do
-  OUTPUT=$($line | sed -n '2 p')
-  if  [[ $OUTPUT != *"OK"* && $OUTPUT != *"CERTIFICATE_ALREADY_REGISTERED"* ]];
+
+register_cert(){
+  echo registering certificate
+  while IFS= read line;
+    do
+      OUTPUT=$($line | sed -n '2 p')
+      if  [[ $OUTPUT != *"OK"* && $OUTPUT != *"CERTIFICATE_ALREADY_REGISTERED"* ]];
+      then
+        echo "$OUTPUT" certificate registeration failed
+        STATUS=1
+        break
+      fi
+  done < "./register-cert.txt"
+}
+
+register_functions(){
+  if [[ $IST_INSTALL_FUNCTIONS == true ]];
   then
-    echo "$OUTPUT"
-    STATUS=1
-    break
+    echo registering functions
+    while IFS= read line;
+    do
+      OUTPUT=$($line | sed -n '2 p')
+      if  [[ $OUTPUT != *"OK"* && $OUTPUT != *"CERTIFICATE_ALREADY_REGISTERED"* ]];
+      then
+        echo "$OUTPUT" function registeration failed
+        STATUS=1
+        break
+      fi
+    done < "./register-functions.txt"
   fi
-done < "./register.txt"
-echo finish
+}
+
+register_contracts(){
+  if [[ $IST_INSTALL_CONTRACTS == true ]];
+  then
+    echo registering contracts
+    while IFS= read line;
+    do
+      OUTPUT=$($line | sed -n '2 p')
+      if  [[ $OUTPUT != *"OK"* && $OUTPUT != *"CERTIFICATE_ALREADY_REGISTERED"* ]];
+      then
+        echo "$OUTPUT" contract registeration failed
+        STATUS=1
+        break
+      fi
+    done < "./register-contracts.txt"
+  fi
+}
+
+register_cert
+if [[ $STATUS == 1 ]];
+then
+  exit $STATUS
+fi
+register_functions
+if [[ $STATUS == 1 ]];
+then
+  exit $STATUS
+fi
+register_contracts
 exit $STATUS
+
+

@@ -33,6 +33,12 @@ services:
     image: ist-loader
     depends_on:
       - cassandra
+      - scalar-ledger
+    volumes:
+      - ./client.properties:/client.properties
+    environment:
+      - IST_INSTALL_FUNCTIONS=false
+      - IST_INSTALL_CONTRACTS=true
     networks:
       - scalar-network
     restart: on-failure

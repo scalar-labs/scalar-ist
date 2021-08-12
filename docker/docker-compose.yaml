@@ -39,8 +39,8 @@ services:
       - ./initializer.pem:/initializer.pem
       - ./initializer-key.pem:/initializer-key.pem
     environment:
-      - IST_INSTALL_FUNCTIONS=true
-      - IST_INSTALL_CONTRACTS=true
+      - IST_INSTALL_FUNCTIONS=true #default true
+      - IST_INSTALL_CONTRACTS=true #default true
     networks:
       - scalar-network
     restart: on-failure

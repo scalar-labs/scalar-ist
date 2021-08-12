@@ -12,5 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY image .
+ENV IST_INSTALL_CONTRACTS true
+ENV IST_INSTALL_FUNCTIONS true
 
 ENTRYPOINT ["bin/bash", "./init.sh"]

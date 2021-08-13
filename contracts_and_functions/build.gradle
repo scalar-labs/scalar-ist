@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '3.0.1'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '3.0.1'
     //TODO: remove scalardb dependency once the scalardl sdk includes the dependency again
     implementation group: 'com.scalar-labs', name: 'scalardb', version: '3.1.0'
     implementation 'com.github.everit-org.json-schema:org.everit.json.schema:1.12.1'
@@ -25,8 +25,8 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.0'
-    testCompile group: 'io.cucumber', name: 'cucumber-java', version: '5.6.0'
-    testCompile group: 'io.cucumber', name: 'cucumber-junit', version: '5.6.0'
+    testImplementation group: 'io.cucumber', name: 'cucumber-java', version: '5.6.0'
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '5.6.0'
 }
 
 test {

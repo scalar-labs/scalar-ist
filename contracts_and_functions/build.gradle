@@ -6,7 +6,7 @@ sourceCompatibility = 1.8
 
 configurations {
     cucumberRuntime {
-        extendsFrom testRuntime
+        extendsFrom testRuntimeOnly
     }
 }
 

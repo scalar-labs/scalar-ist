@@ -1,10 +1,9 @@
 STATUS=0
-
 register_cert(){
   echo registering certificate...
   while IFS= read line;
     do
-      OUTPUT=$($line | sed -n '2 p')
+      OUTPUT=$($line --properties $CLIENT_PROPERTIES_PATH | sed -n '2 p')
 
       echo $line
 
@@ -29,7 +28,7 @@ register_functions(){
     echo registering functions...
     while IFS= read line;
     do
-      OUTPUT=$($line | sed -n '2 p')
+      OUTPUT=$($line --properties $CLIENT_PROPERTIES_PATH | sed -n '2 p')
 
       echo $line
 
@@ -51,7 +50,7 @@ register_contracts(){
     echo registering contracts...
     while IFS= read line;
     do
-      OUTPUT=$($line | sed -n '2 p')
+      OUTPUT=$($line --properties $CLIENT_PROPERTIES_PATH | sed -n '2 p')
 
       echo $line
 

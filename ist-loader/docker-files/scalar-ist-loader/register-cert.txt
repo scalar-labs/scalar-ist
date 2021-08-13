@@ -1,1 +1,1 @@
-client/bin/register-cert --properties ./client.properties
+client/bin/register-cert

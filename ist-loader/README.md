@@ -26,8 +26,9 @@ scalar-ist-loader:
 #      - ./initializer.pem:/initializer.pem
 #      - ./initializer-key.pem:/initializer-key.pem
     environment:
-      - IST_INSTALL_FUNCTIONS=true
-      - IST_INSTALL_CONTRACTS=false
+      - IST_INSTALL_FUNCTIONS=false #default=true
+      - IST_INSTALL_CONTRACTS=true  #default=true
+      - CLIENT_PROPERTIES_PATH=my/path #default=sample-client.properties
     networks:
       - scalar-ist-network
     restart: on-failure

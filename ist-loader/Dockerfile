@@ -19,4 +19,4 @@ ENV IST_INSTALL_CONTRACTS true
 ENV IST_INSTALL_FUNCTIONS true
 ENV CLIENT_PROPERTIES_PATH sample-client.properties
 
-ENTRYPOINT ["bin/bash", "./install.sh"]
+ENTRYPOINT ["/bin/bash", "./install.sh"]

@@ -6,7 +6,7 @@ sourceCompatibility = 1.8
 
 configurations {
     cucumberRuntime {
-        extendsFrom testRuntime
+        extendsFrom testRuntimeOnly
     }
 }
 
@@ -16,15 +16,15 @@ repositories {
 }
 
 dependencies {
-    compile group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '2.0.8'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '2.0.8'
     implementation 'com.github.everit-org.json-schema:org.everit.json.schema:1.12.1'
     implementation 'org.hashids:hashids:1.0.3'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '3.2.0'
-    testCompile group: 'io.cucumber', name: 'cucumber-java', version: '5.6.0'
-    testCompile group: 'io.cucumber', name: 'cucumber-junit', version: '5.6.0'
+    testImplementation group: 'io.cucumber', name: 'cucumber-java', version: '5.6.0'
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '5.6.0'
 }
 
 test {

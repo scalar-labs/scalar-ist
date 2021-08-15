@@ -5,7 +5,7 @@ Create Holder ID, private key, and certificate of the contract executor
 - Register the contract executor's certificate with Scalar DLT
 - Register the contract and function used by the contract executor in Scalar DLT.
 - Generate a digital signature of request data at the time of contract execution using the contract executor's private key
-- Send request data and digital signature to Scalar DLT and execute contract
+- Send request data and digital signature to Scalar DLT and execute a contract
 
 ## Scalar IST user story
 In IST, there are two types of business operators, system operation business operators and personal information handling business operators, and the system operating business operator has the authority to register only one business operator and to register the personal information handling business operator. A business operator handling personal information is a business operator that collects, uses, and provides personal information, creates consent documents for collecting personal information, and manages consent records.
@@ -37,7 +37,7 @@ In IST, register the business operator and user profile in the following order.
 - Register and update dataset schema
 - Register and renew benefits
 
-### Registration and update of consent document
+### Registration and update of a consent document
 
 - Register consent document
 - Revised consent document (changes that do not require re-consent)
@@ -55,7 +55,7 @@ In IST, register the business operator and user profile in the following order.
 - The user of the business obtains the consent status for the consent document of the business.
 
 ## Run a user story with a deploy tool
-The IST project that has been use was [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
+The IST project that is being used is [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
 To use IST you need to run [scalardl](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).  
 The next steps have been tested with this docker-compose from scalardl:
 ``` 
@@ -170,15 +170,15 @@ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/initia
 ### Registration of business operator handling personal information
 
 You will need to register using the `schema.cql`.
-After this you can register the company.
+After this, you can register the company.
 
 ```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_company.json
 ```
 
 ### Register the user profile information of the business operator handling personal information
- 
-You first need admin profile, and then you can register the user profile.
+
+You first need an admin profile, and then you can register the user profile.
 ```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_admin.json
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_controller.json
@@ -206,7 +206,7 @@ Update the dataset schema
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_set_schema.json
 ```
 
-Register a third party provider
+Register a third-party provider
 ``` 
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_third_party.json
 ```
@@ -236,7 +236,7 @@ Update benefits
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_benefit.json
 ```
 
-### Registration and update of consent document
+### Registration and update of a consent document
 
 Register the consent document
 ```
@@ -286,7 +286,7 @@ Renewal of consent
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_consent_status_update.json
 ```
 
-Reference of consent status by data subject
+Reference of consent status by a data subject
 ```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_data_subject.json
 ```
@@ -295,3 +295,4 @@ Reference of the status of consent by the business user
 ```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_controller.json
 ```
+

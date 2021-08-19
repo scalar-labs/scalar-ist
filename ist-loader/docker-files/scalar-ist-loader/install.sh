@@ -1,72 +1,36 @@
 STATUS=0
-register_cert(){
-  echo registering certificate...
-  while IFS= read line;
-    do
-      OUTPUT=$($line --properties $CLIENT_PROPERTIES_PATH | sed -n '2 p')
+RESPONSE_RANGE="tail -n4 | head -3"
+PROPERTIES="--properties $CLIENT_PROPERTIES_PATH"
 
-      echo $line
-
-      if  [[ $OUTPUT == *"OK"* ]];
-      then
-          echo "$OUTPUT" certificate has been registered
-      elif [[ $OUTPUT == *"CERTIFICATE_ALREADY_REGISTERED"* ]];
-      then
-        echo "$OUTPUT" the certificate has already been registered and is being skipped
-      else
-        echo "$OUTPUT" certificate registeration failed
-                STATUS=1
-                break
-      fi
-  done < "./register-cert.txt"
+check_response(){
+if  [[ $1 == *"OK"* ]];
+  then
+    echo $2 has been registered
+  elif [[ $1 == *"ALREADY_REGISTERED"* ]];
+  then
+    echo $2 has already been registered and is being skipped
+  else
+    echo $1 $2 registeration failed
+    STATUS=1
+  fi
 }
 
-
-register_functions(){
-  if [[ $IST_INSTALL_FUNCTIONS == true ]];
-  then
-    echo registering functions...
-    while IFS= read line;
-    do
-      OUTPUT=$($line --properties $CLIENT_PROPERTIES_PATH | sed -n '2 p')
-
-      echo $line
-
-      if  [[ $OUTPUT == *"OK"* ]];
-      then
-        echo "$OUTPUT" the function has been registered or did already exist
-      else
-         echo "$OUTPUT" the function registeration failed
-                STATUS=1
-                break
-      fi
-    done < "./register-functions.txt"
-  fi
+register_cert(){
+  echo registering certificate...
+  OUTPUT=$(client/bin/register-cert $PROPERTIES | eval $RESPONSE_RANGE )
+  check_response "$OUTPUT" certificate
 }
 
 register_contracts(){
-  if [[ $IST_INSTALL_CONTRACTS == true ]];
-  then
-    echo registering contracts...
-    while IFS= read line;
-    do
-      OUTPUT=$($line --properties $CLIENT_PROPERTIES_PATH | sed -n '2 p')
+  echo registering contracts...
+  OUTPUT=$(client/bin/register-contracts --contracts-file ./contracts.toml $PROPERTIES | eval $RESPONSE_RANGE )
+  check_response "$OUTPUT" contracts
+}
 
-      echo $line
-
-      if  [[ $OUTPUT == *"OK"* ]];
-      then
-        echo "$OUTPUT" the contract has been registered
-      elif [[ $OUTPUT == *"CONTRACT_ALREADY_REGISTERED"* ]];
-      then
-        echo "$OUTPUT" the contract has already been registered and is being skipped
-      else
-        echo "$OUTPUT" the contract registeration failed
-        STATUS=1
-        break
-      fi
-    done < "./register-contracts.txt"
-  fi
+register_functions(){
+  echo registering functions...
+  OUTPUT=$(client/bin/register-functions --functions-file ./functions.toml $PROPERTIES | eval $RESPONSE_RANGE )
+  check_response "$OUTPUT" functions
 }
 
 register_cert
@@ -74,12 +38,18 @@ if [[ $STATUS == 1 ]];
 then
   exit $STATUS
 fi
-register_functions
+if [[ $IST_INSTALL_CONTRACTS == true ]];
+  then
+    register_contracts
+fi
 if [[ $STATUS == 1 ]];
 then
   exit $STATUS
 fi
-register_contracts
+if [[ $IST_INSTALL_CONTRACTS == true ]];
+  then
+    register_functions
+fi
 exit $STATUS
 
 

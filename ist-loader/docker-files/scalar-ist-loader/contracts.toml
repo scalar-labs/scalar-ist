@@ -1,0 +1,104 @@
+[[contracts]]
+contract-id = "GetAssetRecord"
+contract-binary-name = "com.scalar.ist.contract.GetAssetRecord"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class"
+[[contracts]]
+contract-id = "ValidateArgument"
+contract-binary-name = "com.scalar.ist.contract.ValidateArgument"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
+[[contracts]]
+contract-id = "ValidatePermission"
+contract-binary-name = "com.scalar.ist.contract.ValidatePermission"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
+[[contracts]]
+contract-id = "GetConsentStatus"
+contract-binary-name = "com.scalar.ist.contract.GetConsentStatus"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetConsentStatus.class"
+[[contracts]]
+contract-id = "PutAssetRecord"
+contract-binary-name = "com.scalar.ist.contract.PutAssetRecord"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class"
+[[contracts]]
+contract-id = "Initialize"
+contract-binary-name = "com.scalar.ist.contract.Initialize"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/Initialize.class"
+[[contracts]]
+contract-id = "GetUserProfile"
+contract-binary-name = "com.scalar.ist.contract.GetUserProfile"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetUserProfile.class"
+[[contracts]]
+contract-id = "RegisterCompany"
+contract-binary-name = "com.scalar.ist.contract.RegisterCompany"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/RegisterCompany.class"
+[[contracts]]
+contract-id = "RegisterConsentStatement"
+contract-binary-name = "com.scalar.ist.contract.RegisterConsentStatement"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/RegisterConsentStatement.class"
+[[contracts]]
+contract-id = "RegisterThirdParty"
+contract-binary-name = "com.scalar.ist.contract.RegisterThirdParty"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/RegisterThirdParty.class"
+[[contracts]]
+contract-id = "UpdateCompany"
+contract-binary-name = "com.scalar.ist.contract.UpdateCompany"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpdateCompany.class"
+[[contracts]]
+contract-id = "UpdateConsentStatementRevision"
+contract-binary-name = "com.scalar.ist.contract.UpdateConsentStatementRevision"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpdateConsentStatementRevision.class"
+[[contracts]]
+contract-id = "UpdateConsentStatementStatus"
+contract-binary-name = "com.scalar.ist.contract.UpdateConsentStatementStatus"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpdateConsentStatementStatus.class"
+[[contracts]]
+contract-id = "UpdateConsentStatementVersion"
+contract-binary-name = "com.scalar.ist.contract.UpdateConsentStatementVersion"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpdateConsentStatementVersion.class"
+[[contracts]]
+contract-id = "UpdateThirdParty"
+contract-binary-name = "com.scalar.ist.contract.UpdateThirdParty"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpdateThirdParty.class"
+[[contracts]]
+contract-id = "UpsertConsentStatus"
+contract-binary-name = "com.scalar.ist.contract.UpsertConsentStatus"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertConsentStatus.class"
+[[contracts]]
+contract-id = "UpsertOrganization"
+contract-binary-name = "com.scalar.ist.contract.UpsertOrganization"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertOrganization.class"
+[[contracts]]
+contract-id = "UpsertUserProfile"
+contract-binary-name = "com.scalar.ist.contract.UpsertUserProfile"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertUserProfile.class"
+[[contracts]]
+contract-id = "RegisterBenefit"
+contract-binary-name = "com.scalar.ist.contract.UpsertMaster"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class"
+[[contracts]]
+contract-id = "RegisterDataRetentionPolicy"
+contract-binary-name = "com.scalar.ist.contract.UpsertMaster"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class"
+[[contracts]]
+contract-id = "RegisterDataSetSchema"
+contract-binary-name = "com.scalar.ist.contract.UpsertMaster"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class"
+[[contracts]]
+contract-id = "RegisterPurpose"
+contract-binary-name = "com.scalar.ist.contract.UpsertMaster"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class"
+[[contracts]]
+contract-id = "UpdateDataRetentionPolicy"
+contract-binary-name = "com.scalar.ist.contract.UpsertMaster"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class"
+[[contracts]]
+contract-id = "UpdateDataSetSchema"
+contract-binary-name = "com.scalar.ist.contract.UpsertMaster"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class"
+[[contracts]]
+contract-id = "UpdatePurpose"
+contract-binary-name = "com.scalar.ist.contract.UpsertMaster"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class"
+[[contracts]]
+contract-id = "UpdateBenefit"
+contract-binary-name = "com.scalar.ist.contract.UpsertMaster"
+contract-class-file = "./contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class"

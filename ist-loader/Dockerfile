@@ -17,6 +17,6 @@ COPY docker-files/scalar-ist-loader .
 # Set default ENV values for the image
 ENV IST_INSTALL_CONTRACTS true
 ENV IST_INSTALL_FUNCTIONS true
-ENV CLIENT_PROPERTIES_PATH sample-client.properties
+ENV CLIENT_PROPERTIES_PATH client.properties.sample
 
 ENTRYPOINT ["/bin/bash", "./install.sh"]

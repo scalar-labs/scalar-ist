@@ -1,4 +1,4 @@
- #!/usr/bin/env sh
+#!/bin/bash
 STATUS=0
 RESPONSE_RANGE="tail -n4 | head -3"
 PROPERTIES="--properties $CLIENT_PROPERTIES_PATH"

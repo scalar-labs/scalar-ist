@@ -1,5 +1,4 @@
 #!/bin/bash
-STATUS=0
 RESPONSE_RANGE="tail -n4 | head -3"
 PROPERTIES="--properties $CLIENT_PROPERTIES_PATH"
 
@@ -12,7 +11,7 @@ if  [[ $1 == *"OK"* ]];
     echo $2 has already been registered and is being skipped
   else
     echo $1 $2 registeration failed
-    STATUS=1
+    exit 1
   fi
 }
 
@@ -34,23 +33,21 @@ register_functions(){
   check_response "$OUTPUT" functions
 }
 
+while ! nc -z $LEDGER_HOST 50051
+do
+  echo waiting for ledger
+  sleep 5
+done
+
 register_cert
-if [[ $STATUS == 1 ]];
-then
-  exit $STATUS
-fi
 if [[ $IST_INSTALL_CONTRACTS == true ]];
   then
     register_contracts
-fi
-if [[ $STATUS == 1 ]];
-then
-  exit $STATUS
 fi
 if [[ $IST_INSTALL_CONTRACTS == true ]];
   then
     register_functions
 fi
-exit $STATUS
+exit 0
 
 

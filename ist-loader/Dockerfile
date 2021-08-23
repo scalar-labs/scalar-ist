@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y netcat && apt-get install -y --no-insta
 
 # Copy all necessary files to the image
 COPY docker-files/scalar-ist-loader .
+ADD lib.tar.gz /client
 
 # Set default ENV values for the image
 ENV IST_INSTALL_CONTRACTS true

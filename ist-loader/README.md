@@ -28,7 +28,7 @@ scalar-ist-loader:
     environment:
       - IST_INSTALL_FUNCTIONS=false #default=true
       - IST_INSTALL_CONTRACTS=true  #default=true
-      - CLIENT_PROPERTIES_PATH=my/path #default=sample-client.properties
+      - CLIENT_PROPERTIES_PATH=my/path #default=client.properties.sample
       - LEDGER_HOST=docker-ledger-name #default=scalardl-samples-scalar-ledger-1
     networks:
       - scalar-ist-network

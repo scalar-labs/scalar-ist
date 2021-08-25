@@ -1,5 +1,18 @@
 package com.scalar.ist.function;
 
+import com.scalar.db.api.Get;
+import com.scalar.db.api.Put;
+import com.scalar.db.api.Result;
+import com.scalar.db.io.BigIntValue;
+import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
+import com.scalar.dl.ledger.database.Database;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.dl.ledger.function.Function;
+
+import javax.json.JsonObject;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ROOT_CONSENT_STATEMENT_ID;
@@ -10,18 +23,6 @@ import static com.scalar.ist.common.Constants.NAMESPACE;
 import static com.scalar.ist.common.Constants.ORGANIZATION_ID;
 import static com.scalar.ist.common.Constants.RECORD_NOT_FOUND;
 import static com.scalar.ist.common.Constants.UPDATED_AT;
-
-import com.scalar.db.api.Get;
-import com.scalar.db.api.Put;
-import com.scalar.db.api.Result;
-import com.scalar.db.io.BigIntValue;
-import com.scalar.db.io.Key;
-import com.scalar.db.io.TextValue;
-import com.scalar.dl.ledger.database.Database;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.dl.ledger.function.Function;
-import java.util.Optional;
-import javax.json.JsonObject;
 
 public class UpdateConsentStatementStatus extends Function {
 
@@ -57,13 +58,13 @@ public class UpdateConsentStatementStatus extends Function {
     getConsentStatement(database, partitionKey, clusteringKey)
         .orElseThrow(() -> new ContractContextException(RECORD_NOT_FOUND));
     Put put =
-            new Put(partitionKey, clusteringKey)
-                    .withValue(
-                            new TextValue(
-                                    CONSENT_STATEMENT_STATUS, contractArgument.getString(CONSENT_STATEMENT_STATUS)))
-                    .withValue(new BigIntValue(UPDATED_AT, updatedAt))
-                    .forNamespace(NAMESPACE)
-                    .forTable(CONSENT_STATEMENT_TABLE);
+        new Put(partitionKey, clusteringKey)
+            .withValue(
+                new TextValue(
+                    CONSENT_STATEMENT_STATUS, contractArgument.getString(CONSENT_STATEMENT_STATUS)))
+            .withValue(new BigIntValue(UPDATED_AT, updatedAt))
+            .forNamespace(NAMESPACE)
+            .forTable(CONSENT_STATEMENT_TABLE);
     database.put(put);
   }
 

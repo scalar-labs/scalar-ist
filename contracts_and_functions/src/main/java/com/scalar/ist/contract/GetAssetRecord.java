@@ -1,5 +1,20 @@
 package com.scalar.ist.contract;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.hash.HashCode;
+import com.scalar.dl.ledger.asset.Asset;
+import com.scalar.dl.ledger.contract.Contract;
+import com.scalar.dl.ledger.database.AssetFilter;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import org.hashids.Hashids;
+
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import java.nio.charset.StandardCharsets;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_NOT_FOUND;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
@@ -22,20 +37,6 @@ import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.hash.HashCode;
-import com.scalar.dl.ledger.asset.Asset;
-import com.scalar.dl.ledger.contract.Contract;
-import com.scalar.dl.ledger.database.AssetFilter;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import java.nio.charset.StandardCharsets;
-import java.util.Optional;
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import org.hashids.Hashids;
-
 public class GetAssetRecord extends Contract {
 
   @Override
@@ -48,27 +49,29 @@ public class GetAssetRecord extends Contract {
         && argument.getString(RECORD_MODE).equals(RECORD_MODE_SCAN)) {
       AssetFilter assetFilter = new AssetFilter(assetId);
       if (argument.containsKey(RECORD_START_VERSION)) {
-        assetFilter.withStartVersion(argument.getInt(RECORD_START_VERSION), true);
+        assetFilter.withStartAge(argument.getInt(RECORD_START_VERSION), true);
       }
       if (argument.containsKey(RECORD_END_VERSION)) {
-        assetFilter.withEndVersion(argument.getInt(RECORD_END_VERSION), true);
+        assetFilter.withEndAge(argument.getInt(RECORD_END_VERSION), true);
       }
       if (argument.containsKey(RECORD_LIMIT)) {
         assetFilter.withLimit(argument.getInt(RECORD_LIMIT));
       }
       if (argument.containsKey(RECORD_VERSION_ORDER)) {
-        assetFilter.withVersionOrder(
-            AssetFilter.VersionOrder.valueOf(argument.getString(RECORD_VERSION_ORDER)));
+        assetFilter.withAgeOrder(
+            AssetFilter.AgeOrder.valueOf(argument.getString(RECORD_VERSION_ORDER)));
       }
       JsonArrayBuilder recordVersions = Json.createArrayBuilder();
-      ledger.scan(assetFilter).forEach(asset -> {
-        recordVersions.add(
-            Json.createObjectBuilder()
-            .add(RECORD_VERSION, asset.age())
-            .add(RECORD_DATA, asset.data())
-            .build()
-        );
-      });
+      ledger
+          .scan(assetFilter)
+          .forEach(
+              asset -> {
+                recordVersions.add(
+                    Json.createObjectBuilder()
+                        .add(RECORD_VERSION, asset.age())
+                        .add(RECORD_DATA, asset.data())
+                        .build());
+              });
 
       return Json.createObjectBuilder().add(RECORD_VERSIONS, recordVersions.build()).build();
     }

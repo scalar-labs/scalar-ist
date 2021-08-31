@@ -42,7 +42,7 @@ register_cert
 if [[ $IST_INSTALL_CONTRACTS == true ]];then
     register_contracts
 fi
-if [[ $IST_INSTALL_CONTRACTS == true ]];then
+if [[ $IST_INSTALL_FUNCTIONS == true ]];then
     register_functions
 fi
 exit 0

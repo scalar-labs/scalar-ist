@@ -16,7 +16,7 @@ COPY docker-files/scalar-ist-loader .
 ADD client.tar .
 
 # Set default ENV values for the image
-ENV IST_INSTALL_CONTRACTS true
+ENV IST_INSTALL_CONTRACTS false
 ENV IST_INSTALL_FUNCTIONS true
 ENV CLIENT_PROPERTIES_PATH client.properties.sample
 ENV LEDGER_HOST scalardl-samples-scalar-ledger-1

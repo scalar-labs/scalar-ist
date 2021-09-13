@@ -4,7 +4,10 @@ import picocli.CommandLine;
 
 import javax.json.Json;
 import javax.json.JsonArray;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.concurrent.Callable;
 
 public class DeployTool implements Callable<Integer> {
@@ -30,7 +33,7 @@ public class DeployTool implements Callable<Integer> {
       Deploy deploy = new Deploy();
       deploy.process(array);
 
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
     return 0;

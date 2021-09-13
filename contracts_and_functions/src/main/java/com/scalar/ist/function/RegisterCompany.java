@@ -1,5 +1,19 @@
 package com.scalar.ist.function;
 
+import com.scalar.db.api.Get;
+import com.scalar.db.api.Put;
+import com.scalar.db.api.Result;
+import com.scalar.db.io.BigIntValue;
+import com.scalar.db.io.BooleanValue;
+import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
+import com.scalar.dl.ledger.database.Database;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.dl.ledger.function.Function;
+
+import javax.json.JsonObject;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.COMPANY_METADATA;
 import static com.scalar.ist.common.Constants.COMPANY_NAME;
@@ -13,19 +27,6 @@ import static com.scalar.ist.common.Constants.NAMESPACE;
 import static com.scalar.ist.common.Constants.RECORD_IS_ALREADY_REGISTERED;
 import static com.scalar.ist.common.Constants.UPDATED_AT;
 
-import com.scalar.db.api.Get;
-import com.scalar.db.api.Put;
-import com.scalar.db.api.Result;
-import com.scalar.db.io.BigIntValue;
-import com.scalar.db.io.BooleanValue;
-import com.scalar.db.io.Key;
-import com.scalar.db.io.TextValue;
-import com.scalar.dl.ledger.database.Database;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.dl.ledger.function.Function;
-import java.util.Optional;
-import javax.json.JsonObject;
-
 public class RegisterCompany extends Function {
 
   @Override
@@ -36,14 +37,15 @@ public class RegisterCompany extends Function {
       Optional<JsonObject> contractProperties) {
 
     String companyId = contractArgument.getString(COMPANY_ID);
-    if (get(database, companyId).isPresent()) {
+
+    long createdAt = contractArgument.getJsonNumber(CREATED_AT).longValue();
+    if (get(database, companyId, createdAt).isPresent()) {
       throw new ContractContextException(RECORD_IS_ALREADY_REGISTERED);
     }
 
     String companyName = contractArgument.getString(COMPANY_NAME);
     String corporateNumber = contractArgument.getString(CORPORATE_NUMBER);
     JsonObject companyInformation = contractArgument.getJsonObject(COMPANY_METADATA);
-    long createdAt = contractArgument.getJsonNumber(CREATED_AT).longValue();
 
     Key partitionKey = new Key(new TextValue(COMPANY_ID, companyId));
     Key clusteringKey = new Key(new BigIntValue(CREATED_AT, createdAt));
@@ -62,11 +64,10 @@ public class RegisterCompany extends Function {
     database.put(put);
   }
 
-  private Optional<Result> get(Database database, String companyId) {
-    Get get =
-        new Get(new Key(new TextValue(COMPANY_ID, companyId)))
-            .forNamespace(NAMESPACE)
-            .forTable(COMPANY_TABLE);
+  private Optional<Result> get(Database database, String companyId, long createdAt) {
+    Key partitionKey = new Key(new TextValue(COMPANY_ID, companyId));
+    Key clusteringKey = new Key(new BigIntValue(CREATED_AT, createdAt));
+    Get get = new Get(partitionKey, clusteringKey).forNamespace(NAMESPACE).forTable(COMPANY_TABLE);
     return database.get(get);
   }
 }

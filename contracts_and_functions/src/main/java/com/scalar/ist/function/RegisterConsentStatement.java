@@ -1,5 +1,21 @@
 package com.scalar.ist.function;
 
+import com.scalar.db.api.Put;
+import com.scalar.db.io.BigIntValue;
+import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
+import com.scalar.db.io.Value;
+import com.scalar.dl.ledger.database.Database;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.dl.ledger.function.Function;
+
+import javax.json.JsonObject;
+import javax.json.JsonValue;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.ASSET_NAME;
 import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
@@ -24,21 +40,6 @@ import static com.scalar.ist.common.Constants.CREATED_BY;
 import static com.scalar.ist.common.Constants.HOLDER_ID;
 import static com.scalar.ist.common.Constants.NAMESPACE;
 import static com.scalar.ist.common.Constants.ORGANIZATION_ID;
-
-import com.scalar.db.api.Put;
-import com.scalar.db.io.BigIntValue;
-import com.scalar.db.io.Key;
-import com.scalar.db.io.TextValue;
-import com.scalar.db.io.Value;
-import com.scalar.dl.ledger.database.Database;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.dl.ledger.function.Function;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
 
 public class RegisterConsentStatement extends Function {
   public void invoke(
@@ -97,8 +98,8 @@ public class RegisterConsentStatement extends Function {
     database.put(put);
   }
 
-  private List<Value> createValues(List<String> keys, JsonObject contractArgument) {
-    List<Value> values = new ArrayList<>();
+  private List<Value<?>> createValues(List<String> keys, JsonObject contractArgument) {
+    List<Value<?>> values = new ArrayList<>();
     for (String key : keys)
       if (contractArgument.containsKey(key)) {
         JsonValue.ValueType argumentValueType = contractArgument.get(key).getValueType();

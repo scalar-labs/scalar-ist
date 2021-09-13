@@ -6,10 +6,9 @@ import io.cucumber.java.en.When;
 
 import javax.json.Json;
 import javax.json.JsonArray;
-
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class LoadCommandFile {
 
@@ -28,11 +27,11 @@ public class LoadCommandFile {
 
     try {
       JsonArray array =
-              Json.createReader(new BufferedInputStream(new FileInputStream(commandsFile))).readArray();
+          Json.createReader(new BufferedInputStream(new FileInputStream(commandsFile))).readArray();
       Deploy deploy = new Deploy();
       deploy.process(array);
 
-    } catch (FileNotFoundException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
   }

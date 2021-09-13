@@ -1,5 +1,28 @@
 package com.scalar.ist.function;
 
+import com.scalar.db.api.Get;
+import com.scalar.db.api.Put;
+import com.scalar.db.io.BigIntValue;
+import com.scalar.db.io.BlobValue;
+import com.scalar.db.io.BooleanValue;
+import com.scalar.db.io.FloatValue;
+import com.scalar.db.io.IntValue;
+import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
+import com.scalar.db.io.Value;
+import com.scalar.dl.ledger.database.Database;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.dl.ledger.function.Function;
+import org.bouncycastle.util.encoders.Base64;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonString;
+import javax.json.JsonValue;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import static com.scalar.ist.common.Constants.ACTION;
 import static com.scalar.ist.common.Constants.CREATED_BY;
 import static com.scalar.ist.common.Constants.DB_TABLE_CLUSTERING_KEYS;
@@ -22,28 +45,6 @@ import static com.scalar.ist.common.Constants.RECORD_NOT_FOUND;
 import static com.scalar.ist.common.Constants.TABLE_SCHEMA;
 import static com.scalar.ist.common.Constants.UPDATE_ACTION;
 
-import com.scalar.db.api.Get;
-import com.scalar.db.api.Put;
-import com.scalar.db.io.BigIntValue;
-import com.scalar.db.io.BlobValue;
-import com.scalar.db.io.BooleanValue;
-import com.scalar.db.io.FloatValue;
-import com.scalar.db.io.IntValue;
-import com.scalar.db.io.Key;
-import com.scalar.db.io.TextValue;
-import com.scalar.db.io.Value;
-import com.scalar.dl.ledger.database.Database;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.dl.ledger.function.Function;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonString;
-import javax.json.JsonValue;
-import org.bouncycastle.util.encoders.Base64;
-
 public class UpsertMaster extends Function {
 
   @Override
@@ -54,12 +55,12 @@ public class UpsertMaster extends Function {
       Optional<JsonObject> contractProperties) {
     JsonObject benefitSchema = contractProperties.get().getJsonObject(TABLE_SCHEMA);
     String tableName = benefitSchema.getString(DB_TABLE_NAME);
-    List<Value> partitionKeysValues =
+    List<Value<?>> partitionKeysValues =
         toValues(
             contractProperties.get(),
             contractArgument,
             benefitSchema.getJsonArray(DB_TABLE_PARTITION_KEYS));
-    List<Value> clusteringKeysValues =
+    List<Value<?>> clusteringKeysValues =
         toValues(
             contractProperties.get(),
             contractArgument,
@@ -84,7 +85,7 @@ public class UpsertMaster extends Function {
     database.put(put);
   }
 
-  List<Value> toValues(
+  List<Value<?>> toValues(
       JsonObject contractProperties, JsonObject contractArgument, JsonArray values) {
     return values.stream()
         .map(JsonValue::asJsonObject)
@@ -135,7 +136,8 @@ public class UpsertMaster extends Function {
         .collect(Collectors.toList());
   }
 
-  Get createGet(String tableName, List<Value> partitionKeyValues, List<Value> clusteringKeyValues) {
+  Get createGet(
+      String tableName, List<Value<?>> partitionKeyValues, List<Value<?>> clusteringKeyValues) {
     Get get;
     if (clusteringKeyValues.isEmpty()) {
       get = new Get(new Key(partitionKeyValues));
@@ -146,7 +148,8 @@ public class UpsertMaster extends Function {
     return get;
   }
 
-  Put createPut(String tableName, List<Value> partitionKeyValues, List<Value> clusteringKeyValues) {
+  Put createPut(
+      String tableName, List<Value<?>> partitionKeyValues, List<Value<?>> clusteringKeyValues) {
     Put put;
     if (clusteringKeyValues.isEmpty()) {
       put = new Put(new Key(partitionKeyValues));

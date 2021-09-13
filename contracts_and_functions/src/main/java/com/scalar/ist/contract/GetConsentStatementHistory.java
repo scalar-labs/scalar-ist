@@ -1,5 +1,17 @@
 package com.scalar.ist.contract;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.scalar.dl.ledger.contract.Contract;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.ist.common.Constants;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_ID_IS_NOT_PERMITTED;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
@@ -23,18 +35,6 @@ import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMEN
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.VALIDATE_PERMISSION;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.scalar.dl.ledger.contract.Contract;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.ist.common.Constants;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-
 public class GetConsentStatementHistory extends Contract {
   private static final JsonArray ROLES =
       Json.createArrayBuilder()
@@ -49,14 +49,16 @@ public class GetConsentStatementHistory extends Contract {
 
     JsonArrayBuilder filteredList = Json.createArrayBuilder();
     invokeSubContract(
-        GET_ASSET_RECORD,
-        ledger,
-        Json.createObjectBuilder()
-            .add(ASSET_ID, argument.getString(ASSET_ID))
-            .add(RECORD_IS_HASHED, argument.getBoolean(RECORD_IS_HASHED))
-            .add(RECORD_MODE, RECORD_MODE_SCAN)
-            .build())
-        .getJsonArray(RECORD_VERSIONS).getValuesAs(JsonObject.class).stream()
+            GET_ASSET_RECORD,
+            ledger,
+            Json.createObjectBuilder()
+                .add(ASSET_ID, argument.getString(ASSET_ID))
+                .add(RECORD_IS_HASHED, argument.getBoolean(RECORD_IS_HASHED))
+                .add(RECORD_MODE, RECORD_MODE_SCAN)
+                .build())
+        .getJsonArray(RECORD_VERSIONS)
+        .getValuesAs(JsonObject.class)
+        .stream()
         .filter(c -> c.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID)))
         .map(filteredList::add);
 

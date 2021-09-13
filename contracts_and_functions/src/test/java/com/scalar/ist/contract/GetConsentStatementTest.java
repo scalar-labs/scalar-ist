@@ -1,5 +1,20 @@
 package com.scalar.ist.contract;
 
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.ist.util.Hasher;
+import com.scalar.ist.util.Util;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import java.util.Optional;
+import java.util.UUID;
+
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_NAME;
 import static com.scalar.ist.common.Constants.ASSET_VERSION;
@@ -30,20 +45,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.ist.util.Hasher;
-import com.scalar.ist.util.Util;
-import java.util.Optional;
-import java.util.UUID;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
 public class GetConsentStatementTest {
 
   private static final String SCHEMA_FILENAME = "get_consent_statement.json";
@@ -62,8 +63,7 @@ public class GetConsentStatementTest {
   private static final String MOCKED_CONSENT_STATEMENT_DATA_RETENTION_ID =
       "mocked_data_retention_id";
   private static final String MOCKED_CONSENT_STATEMENT_ID = UUID.randomUUID().toString();
-  @Mock
-  private Ledger ledger;
+  @Mock private Ledger ledger;
   private GetConsentStatement getConsentStatement;
 
   private static JsonArray createHashedIdsArray() {
@@ -93,7 +93,8 @@ public class GetConsentStatementTest {
     doReturn(consentStatement)
         .when(getConsentStatement)
         .invokeSubContract(GET_ASSET_RECORD, ledger, getAssetRecordArgument);
-    doReturn(MOCKED_ASSET_ID).when(getConsentStatement)
+    doReturn(MOCKED_ASSET_ID)
+        .when(getConsentStatement)
         .decodeHashid(arguments.getString(CONSENT_STATEMENT_ID), properties.getString(RECORD_SALT));
 
     // act
@@ -131,9 +132,9 @@ public class GetConsentStatementTest {
     // act
     // assert
     assertThatThrownBy(
-        () -> {
-          getConsentStatement.invoke(ledger, arguments, Optional.empty());
-        })
+            () -> {
+              getConsentStatement.invoke(ledger, arguments, Optional.empty());
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
     verify(ledger, never()).get(anyString());

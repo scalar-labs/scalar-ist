@@ -1,5 +1,12 @@
 package com.scalar.ist.function;
 
+import com.scalar.dl.ledger.database.Database;
+import com.scalar.dl.ledger.function.Function;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.CREATED_AT;
 import static com.scalar.ist.common.Constants.HOLDER_ID;
@@ -15,12 +22,6 @@ import static com.scalar.ist.common.Constants.ROLES;
 import static com.scalar.ist.common.Constants.ROLE_SYSADMIN;
 import static com.scalar.ist.common.Constants.ROLE_SYSOPERATOR;
 import static com.scalar.ist.common.Constants.UPSERT_USER_PROFILE;
-
-import com.scalar.dl.ledger.database.Database;
-import com.scalar.dl.ledger.function.Function;
-import java.util.Optional;
-import javax.json.Json;
-import javax.json.JsonObject;
 
 public class Initialize extends Function {
 

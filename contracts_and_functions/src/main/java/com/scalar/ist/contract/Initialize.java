@@ -1,5 +1,14 @@
 package com.scalar.ist.contract;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.scalar.dl.ledger.contract.Contract;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.ADMIN;
 import static com.scalar.ist.common.Constants.ADMINISTRATOR_ORGANIZATION;
 import static com.scalar.ist.common.Constants.ASSET_ID;
@@ -38,14 +47,6 @@ import static com.scalar.ist.common.Constants.USER_PROFILE_ASSET_VERSION;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
-
-import com.google.common.annotations.VisibleForTesting;
-import com.scalar.dl.ledger.contract.Contract;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import java.util.Optional;
-import javax.json.Json;
-import javax.json.JsonObject;
 
 public class Initialize extends Contract {
   private static final String ASSET_NAME_USER_PROFILE = "user_profile";

@@ -1,5 +1,16 @@
 package com.scalar.ist.contract;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.hash.HashCode;
+import com.scalar.dl.ledger.contract.Contract;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import org.hashids.Hashids;
+
+import javax.json.Json;
+import javax.json.JsonObject;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_NAME;
 import static com.scalar.ist.common.Constants.ASSET_VERSION;
@@ -17,17 +28,6 @@ import static com.scalar.ist.common.Constants.REQUIRED_CONTRACT_PROPERTIES_ARE_M
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
-
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.hash.HashCode;
-import com.scalar.dl.ledger.contract.Contract;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import org.hashids.Hashids;
-
-import java.util.Optional;
-import javax.json.Json;
-import javax.json.JsonObject;
 
 public class GetConsentStatement extends Contract {
 

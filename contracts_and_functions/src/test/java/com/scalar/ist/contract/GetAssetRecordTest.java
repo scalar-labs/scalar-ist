@@ -57,7 +57,7 @@ import static org.mockito.Mockito.when;
 public class GetAssetRecordTest {
   private static final String SCHEMA_FILENAME = "get_asset_record.json";
   private static final String MOCKED_ASSET_ID =
-      "consentstatement/" + UUID.randomUUID().toString() + "/" + System.currentTimeMillis();
+      "consentstatement/" + UUID.randomUUID() + "/" + System.currentTimeMillis();
   private static final String MOCKED_SALT = "mocked_salt";
   private static final String MOCKED_SCHEMA = "mocked_schema";
   @Mock private Ledger ledger;

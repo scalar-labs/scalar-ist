@@ -1,5 +1,24 @@
 package com.scalar.ist.contract;
 
+import com.scalar.dl.ledger.crypto.CertificateEntry;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.ist.common.Constants;
+import com.scalar.ist.util.Hasher;
+import com.scalar.ist.util.Util;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonNumber;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import java.util.Optional;
+import java.util.UUID;
+
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
@@ -55,28 +74,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import com.scalar.dl.ledger.crypto.CertificateEntry;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.ist.common.Constants;
-import com.scalar.ist.util.Hasher;
-import com.scalar.ist.util.Util;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonNumber;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonValue;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 public class UpdateConsentStatementStatusTest {
   private static final String SCHEMA_FILENAME = "update_consent_document_status.json";
@@ -320,7 +317,8 @@ public class UpdateConsentStatementStatusTest {
         .build();
   }
 
-  private JsonObject preparePutAssetRecordArgument(JsonObject argument, JsonObject consentStatement) {
+  private JsonObject preparePutAssetRecordArgument(
+      JsonObject argument, JsonObject consentStatement) {
     String consentStatementId = argument.getString(CONSENT_STATEMENT_ID);
     JsonNumber createdAt = argument.getJsonNumber(UPDATED_AT);
 

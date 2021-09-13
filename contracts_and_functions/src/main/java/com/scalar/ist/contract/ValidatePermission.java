@@ -1,17 +1,18 @@
 package com.scalar.ist.contract;
 
+import com.scalar.dl.ledger.contract.Contract;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+
+import javax.json.JsonObject;
+import java.util.Optional;
+
 import static com.scalar.ist.common.Constants.DISALLOWED_CONTRACT_EXECUTION_ORDER;
 import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_ARGUMENT;
 import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_REQUIRED;
 import static com.scalar.ist.common.Constants.PERMISSION_DENIED;
 import static com.scalar.ist.common.Constants.ROLES_REQUIRED;
 import static com.scalar.ist.common.Constants.USER_PROFILE_ROLES;
-
-import com.scalar.dl.ledger.contract.Contract;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import java.util.Optional;
-import javax.json.JsonObject;
 
 public class ValidatePermission extends Contract {
 

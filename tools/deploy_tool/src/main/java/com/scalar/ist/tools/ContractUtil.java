@@ -54,7 +54,7 @@ public class ContractUtil {
 
   private ContractExecutionResult printContractExecutionResult(ContractExecutionResult result) {
     if (result.getResult().isPresent()) {
-      System.out.println("ContractExecutionResult:" + result.getResult().get().toString());
+      System.out.println("ContractExecutionResult:" + result.getResult().get());
     }
     return result;
   }

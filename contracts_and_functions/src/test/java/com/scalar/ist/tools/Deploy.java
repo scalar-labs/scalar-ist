@@ -304,8 +304,7 @@ public class Deploy {
     switch (val1.getValueType()) {
       case STRING:
         if (!val1.toString().equals(val2.toString())) {
-          throw new RuntimeException(
-              "Json value is not matched. " + val1.toString() + ":" + val2.toString());
+          throw new RuntimeException("Json value is not matched. " + val1 + ":" + val2);
         }
         break;
 
@@ -333,10 +332,8 @@ public class Deploy {
       String className = json.getJsonObject(ASSERT_THROWS).getString(CLASS);
       String message = json.getJsonObject(ASSERT_THROWS).getString(MESSAGE, "");
 
-      if (e.getClass().getName().equals(className)
-          && (message.length() > 0 && e.getMessage().equals(message))) {
-        return true;
-      }
+      return e.getClass().getName().equals(className)
+          && (message.length() > 0 && e.getMessage().equals(message));
     }
     return false;
   }

@@ -1,5 +1,20 @@
 package com.scalar.ist.contract;
 
+import com.scalar.dl.ledger.crypto.CertificateEntry.Key;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.ist.util.Util;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import javax.json.Json;
+import javax.json.JsonNumber;
+import javax.json.JsonObject;
+import java.util.Optional;
+import java.util.UUID;
+
 import static com.scalar.ist.common.Constants.ADMIN;
 import static com.scalar.ist.common.Constants.ADMINISTRATOR_ORGANIZATION;
 import static com.scalar.ist.common.Constants.ASSET_ID;
@@ -47,20 +62,6 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import com.scalar.dl.ledger.crypto.CertificateEntry.Key;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.ist.util.Util;
-import java.util.Optional;
-import java.util.UUID;
-import javax.json.Json;
-import javax.json.JsonNumber;
-import javax.json.JsonObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 public class InitializeTest {
   private static final String MOCKED_COMPANY_ASSET_NAME = "company";

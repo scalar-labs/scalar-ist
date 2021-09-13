@@ -1,20 +1,5 @@
 package com.scalar.ist.contract;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.hash.HashCode;
-import com.scalar.dl.ledger.asset.Asset;
-import com.scalar.dl.ledger.contract.Contract;
-import com.scalar.dl.ledger.database.AssetFilter;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import org.hashids.Hashids;
-
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
-import java.nio.charset.StandardCharsets;
-import java.util.Optional;
-
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_NOT_FOUND;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
@@ -36,6 +21,20 @@ import static com.scalar.ist.common.Constants.SALT_IS_MISSING;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.hash.HashCode;
+import com.scalar.dl.ledger.asset.Asset;
+import com.scalar.dl.ledger.contract.Contract;
+import com.scalar.dl.ledger.database.AssetFilter;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import java.nio.charset.StandardCharsets;
+import java.util.Optional;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import org.hashids.Hashids;
 
 public class GetAssetRecord extends Contract {
 

@@ -1,18 +1,5 @@
 package com.scalar.ist.contract;
 
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import java.util.Optional;
-import java.util.UUID;
-
 import static com.scalar.ist.common.Constants.DISALLOWED_CONTRACT_EXECUTION_ORDER;
 import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_ARGUMENT;
 import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_REQUIRED;
@@ -27,6 +14,18 @@ import static com.scalar.ist.common.Constants.USER_PROFILE_ROLES;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
+
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import java.util.Optional;
+import java.util.UUID;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class ValidatePermissionTest {
   private static final String MOCKED_ORGANIZATION_ID = UUID.randomUUID().toString();

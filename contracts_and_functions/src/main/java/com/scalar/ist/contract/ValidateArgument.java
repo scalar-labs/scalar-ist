@@ -1,22 +1,21 @@
 package com.scalar.ist.contract;
 
-import com.scalar.dl.ledger.contract.Contract;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import org.everit.json.schema.Schema;
-import org.everit.json.schema.ValidationException;
-import org.everit.json.schema.loader.SchemaLoader;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import javax.json.JsonObject;
-import java.util.Optional;
-
 import static com.scalar.ist.common.Constants.DISALLOWED_CONTRACT_EXECUTION_ORDER;
 import static com.scalar.ist.common.Constants.INVALID_CONTRACT_ARGUMENTS;
 import static com.scalar.ist.common.Constants.INVALID_CONTRACT_ARGUMENTS_SCHEMA;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
+
+import com.scalar.dl.ledger.contract.Contract;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import java.util.Optional;
+import javax.json.JsonObject;
+import org.everit.json.schema.Schema;
+import org.everit.json.schema.ValidationException;
+import org.everit.json.schema.loader.SchemaLoader;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * Schema validator for contract arguments. This contract validates javax.JsonObject using a given

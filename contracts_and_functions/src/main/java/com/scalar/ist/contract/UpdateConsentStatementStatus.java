@@ -1,18 +1,5 @@
 package com.scalar.ist.contract;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.scalar.dl.ledger.contract.Contract;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.ist.common.Constants;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonNumber;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import java.util.Optional;
-
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_DRAFT;
@@ -48,6 +35,18 @@ import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.VALIDATE_PERMISSION;
+
+import com.google.common.annotations.VisibleForTesting;
+import com.scalar.dl.ledger.contract.Contract;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.ist.common.Constants;
+import java.util.Optional;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonNumber;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 public class UpdateConsentStatementStatus extends Contract {
   private static final JsonArray ROLES = Json.createArrayBuilder().add(ROLE_CONTROLLER).build();

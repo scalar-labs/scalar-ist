@@ -1,10 +1,10 @@
 package com.scalar.ist.util;
 
-import javax.json.Json;
-import javax.json.JsonObject;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+import javax.json.Json;
+import javax.json.JsonObject;
 
 public class Util {
 

@@ -1,25 +1,5 @@
 package com.scalar.ist.contract;
 
-import com.scalar.dl.ledger.asset.Asset;
-import com.scalar.dl.ledger.database.AssetFilter;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.ist.util.Hasher;
-import com.scalar.ist.util.Util;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_NOT_FOUND;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
@@ -53,6 +33,25 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.scalar.dl.ledger.asset.Asset;
+import com.scalar.dl.ledger.database.AssetFilter;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.ist.util.Hasher;
+import com.scalar.ist.util.Util;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class GetAssetRecordTest {
   private static final String SCHEMA_FILENAME = "get_asset_record.json";

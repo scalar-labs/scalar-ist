@@ -1,14 +1,13 @@
 package com.scalar.ist.tools;
 
-import picocli.CommandLine;
-
-import javax.json.Json;
-import javax.json.JsonArray;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.concurrent.Callable;
+import javax.json.Json;
+import javax.json.JsonArray;
+import picocli.CommandLine;
 
 public class DeployTool implements Callable<Integer> {
 

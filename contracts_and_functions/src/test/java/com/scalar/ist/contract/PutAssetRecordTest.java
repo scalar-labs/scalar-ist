@@ -1,22 +1,5 @@
 package com.scalar.ist.contract;
 
-import com.scalar.dl.ledger.asset.Asset;
-import com.scalar.dl.ledger.crypto.CertificateEntry.Key;
-import com.scalar.dl.ledger.database.Ledger;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.ist.util.Hasher;
-import com.scalar.ist.util.Util;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import java.util.Optional;
-import java.util.UUID;
-
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_IS_ALREADY_REGISTERED;
 import static com.scalar.ist.common.Constants.ASSET_NOT_FOUND;
@@ -49,6 +32,22 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.scalar.dl.ledger.asset.Asset;
+import com.scalar.dl.ledger.crypto.CertificateEntry.Key;
+import com.scalar.dl.ledger.database.Ledger;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.ist.util.Hasher;
+import com.scalar.ist.util.Util;
+import java.util.Optional;
+import java.util.UUID;
+import javax.json.Json;
+import javax.json.JsonObject;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 public class PutAssetRecordTest {
   private static final String SCHEMA_FILENAME = "put_asset_record.json";

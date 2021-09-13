@@ -3,12 +3,11 @@ package com.scalar.ist.e2e;
 import com.scalar.ist.tools.Deploy;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import javax.json.Json;
-import javax.json.JsonArray;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import javax.json.Json;
+import javax.json.JsonArray;
 
 public class LoadCommandFile {
 

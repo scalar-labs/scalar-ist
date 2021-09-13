@@ -1,19 +1,5 @@
 package com.scalar.ist.tools;
 
-import com.scalar.dl.client.config.ClientConfig;
-import com.scalar.dl.ledger.model.ContractExecutionResult;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonString;
-import javax.json.JsonValue;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Optional;
-import java.util.Properties;
-
 import static com.scalar.ist.tools.Constants.ACTION;
 import static com.scalar.ist.tools.Constants.BINARY_NAME;
 import static com.scalar.ist.tools.Constants.CLIENT_PROPERTIES;
@@ -33,6 +19,19 @@ import static com.scalar.ist.tools.Constants.TYPE;
 import static com.scalar.ist.tools.Constants.TYPE_FILE;
 import static com.scalar.ist.tools.Constants.TYPE_STRING;
 import static com.scalar.ist.tools.Constants.VALUE;
+
+import com.scalar.dl.client.config.ClientConfig;
+import com.scalar.dl.ledger.model.ContractExecutionResult;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Optional;
+import java.util.Properties;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 
 public class Deploy {
   private ContractUtil util;

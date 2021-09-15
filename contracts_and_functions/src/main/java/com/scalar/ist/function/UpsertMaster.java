@@ -1,28 +1,5 @@
 package com.scalar.ist.function;
 
-import com.scalar.db.api.Get;
-import com.scalar.db.api.Put;
-import com.scalar.db.io.BigIntValue;
-import com.scalar.db.io.BlobValue;
-import com.scalar.db.io.BooleanValue;
-import com.scalar.db.io.FloatValue;
-import com.scalar.db.io.IntValue;
-import com.scalar.db.io.Key;
-import com.scalar.db.io.TextValue;
-import com.scalar.db.io.Value;
-import com.scalar.dl.ledger.database.Database;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.dl.ledger.function.Function;
-import org.bouncycastle.util.encoders.Base64;
-
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonString;
-import javax.json.JsonValue;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import static com.scalar.ist.common.Constants.ACTION;
 import static com.scalar.ist.common.Constants.CREATED_BY;
 import static com.scalar.ist.common.Constants.DB_TABLE_CLUSTERING_KEYS;
@@ -44,6 +21,28 @@ import static com.scalar.ist.common.Constants.RECORD_IS_ALREADY_REGISTERED;
 import static com.scalar.ist.common.Constants.RECORD_NOT_FOUND;
 import static com.scalar.ist.common.Constants.TABLE_SCHEMA;
 import static com.scalar.ist.common.Constants.UPDATE_ACTION;
+
+import com.scalar.db.api.Get;
+import com.scalar.db.api.Put;
+import com.scalar.db.io.BigIntValue;
+import com.scalar.db.io.BlobValue;
+import com.scalar.db.io.BooleanValue;
+import com.scalar.db.io.FloatValue;
+import com.scalar.db.io.IntValue;
+import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
+import com.scalar.db.io.Value;
+import com.scalar.dl.ledger.database.Database;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.dl.ledger.function.Function;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonString;
+import javax.json.JsonValue;
+import org.bouncycastle.util.encoders.Base64;
 
 public class UpsertMaster extends Function {
 

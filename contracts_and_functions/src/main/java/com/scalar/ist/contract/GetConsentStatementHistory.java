@@ -29,7 +29,6 @@ import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.ist.common.Constants;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
@@ -49,14 +48,16 @@ public class GetConsentStatementHistory extends Contract {
 
     JsonArrayBuilder filteredList = Json.createArrayBuilder();
     invokeSubContract(
-        GET_ASSET_RECORD,
-        ledger,
-        Json.createObjectBuilder()
-            .add(ASSET_ID, argument.getString(ASSET_ID))
-            .add(RECORD_IS_HASHED, argument.getBoolean(RECORD_IS_HASHED))
-            .add(RECORD_MODE, RECORD_MODE_SCAN)
-            .build())
-        .getJsonArray(RECORD_VERSIONS).getValuesAs(JsonObject.class).stream()
+            GET_ASSET_RECORD,
+            ledger,
+            Json.createObjectBuilder()
+                .add(ASSET_ID, argument.getString(ASSET_ID))
+                .add(RECORD_IS_HASHED, argument.getBoolean(RECORD_IS_HASHED))
+                .add(RECORD_MODE, RECORD_MODE_SCAN)
+                .build())
+        .getJsonArray(RECORD_VERSIONS)
+        .getValuesAs(JsonObject.class)
+        .stream()
         .filter(c -> c.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID)))
         .map(filteredList::add);
 

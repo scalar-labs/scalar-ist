@@ -34,7 +34,10 @@ import javax.json.JsonObject;
 public class GetMaster extends Contract {
 
   private static final JsonArray ROLES =
-      Json.createArrayBuilder().add(ROLE_ADMINISTRATOR).add(ROLE_PROCESSOR).add(ROLE_CONTROLLER)
+      Json.createArrayBuilder()
+          .add(ROLE_ADMINISTRATOR)
+          .add(ROLE_PROCESSOR)
+          .add(ROLE_CONTROLLER)
           .build();
 
   @Override
@@ -42,9 +45,7 @@ public class GetMaster extends Contract {
     validate(ledger, argument, properties);
 
     JsonObject getAssetArgument =
-        Json.createObjectBuilder()
-            .add(ASSET_ID, argument.getString(ASSET_ID))
-            .build();
+        Json.createObjectBuilder().add(ASSET_ID, argument.getString(ASSET_ID)).build();
     JsonObject asset = invokeSubContract(GET_ASSET_RECORD, ledger, getAssetArgument);
 
     if (!asset.getString(COMPANY_ID).equals(properties.get().getString(COMPANY_ID))) {
@@ -89,9 +90,7 @@ public class GetMaster extends Contract {
 
   private void validateUserPermissions(Ledger ledger, JsonObject properties) {
     JsonObject userProfileArgument =
-        Json.createObjectBuilder()
-            .add(COMPANY_ID, properties.getString(COMPANY_ID))
-            .build();
+        Json.createObjectBuilder().add(COMPANY_ID, properties.getString(COMPANY_ID)).build();
     JsonObject userProfile = invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
 
     JsonObject validateUserPermissionsArgument =

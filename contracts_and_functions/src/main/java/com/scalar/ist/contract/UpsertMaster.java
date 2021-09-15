@@ -160,13 +160,14 @@ public class UpsertMaster extends Contract {
     invokeSubContract(VALIDATE_PERMISSION, ledger, validateUserPermissionsArgument);
   }
 
-  private void addData(String assetId, JsonObject assetSchema, JsonObject argument, JsonObjectBuilder data) {
+  private void addData(
+      String assetId, JsonObject assetSchema, JsonObject argument, JsonObjectBuilder data) {
     for (Map.Entry<String, JsonValue> argumentMetadata :
         assetSchema.getJsonObject(PROPERTIES).entrySet()) {
       JsonObject metadata = argumentMetadata.getValue().asJsonObject();
       switch (metadata.getString(ASSET_TYPE)) {
         case ASSET_STRING_TYPE:
-          if (ASSET_ID.equals(metadata.getString(ASSET_TYPE_PATTERN, ""))){
+          if (ASSET_ID.equals(metadata.getString(ASSET_TYPE_PATTERN, ""))) {
             data.add(argumentMetadata.getKey(), assetId);
             break;
           }

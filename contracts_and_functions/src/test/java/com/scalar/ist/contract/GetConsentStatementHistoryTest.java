@@ -8,8 +8,6 @@ import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
-import static com.scalar.ist.common.Constants.HOLDER_ID;
-import static com.scalar.ist.common.Constants.HOLDER_ID_IS_MISSING;
 import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
 import static com.scalar.ist.common.Constants.RECORD_MODE;
@@ -52,7 +50,7 @@ import org.mockito.MockitoAnnotations;
 public class GetConsentStatementHistoryTest {
   private static final String SCHEMA_FILENAME = "get_consent_statement_history.json";
   private static final String MOCKED_ASSET_ID =
-      "cs" + UUID.randomUUID().toString() + "-" + System.currentTimeMillis();
+      "cs" + UUID.randomUUID() + "-" + System.currentTimeMillis();
   private static final String MOCKED_SALT = "mocked_salt";
   private static final String MOCKED_SCHEMA = "mocked_schema";
   private static final String MOCKED_COMPANY_ID = "scalar-labs";
@@ -74,8 +72,7 @@ public class GetConsentStatementHistoryTest {
   }
 
   private JsonObject prepareProperties() {
-    JsonArray permittedAssetNames =
-        Json.createArrayBuilder().add("cs").build();
+    JsonArray permittedAssetNames = Json.createArrayBuilder().add("cs").build();
     return Json.createObjectBuilder()
         .add(PERMITTED_ASSET_NAMES, permittedAssetNames)
         .add(
@@ -163,19 +160,17 @@ public class GetConsentStatementHistoryTest {
   @Test
   public void invoke_PropertyWithoutSchema_ShouldThrowContractContextException() {
     // Arrange
-    JsonArray permittedAssetNames =
-        Json.createArrayBuilder().add("cs").build();
-    JsonObject properties = Json.createObjectBuilder()
-        .add(PERMITTED_ASSET_NAMES, permittedAssetNames)
-        .build();
+    JsonArray permittedAssetNames = Json.createArrayBuilder().add("cs").build();
+    JsonObject properties =
+        Json.createObjectBuilder().add(PERMITTED_ASSET_NAMES, permittedAssetNames).build();
     JsonObject argument = prepareArgument();
 
     // Act
     // Assert
     assertThatThrownBy(
-        () -> {
-          getConsentStatementHistory.invoke(ledger, argument, Optional.of(properties));
-        })
+            () -> {
+              getConsentStatementHistory.invoke(ledger, argument, Optional.of(properties));
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
     verify(getConsentStatementHistory, never()).invokeSubContract(any(), any(), any());
@@ -198,9 +193,9 @@ public class GetConsentStatementHistoryTest {
     // Act
     // Assert
     assertThatThrownBy(
-        () -> {
-          getConsentStatementHistory.invoke(ledger, argument, Optional.of(properties));
-        })
+            () -> {
+              getConsentStatementHistory.invoke(ledger, argument, Optional.of(properties));
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
     verify(getConsentStatementHistory, never()).invokeSubContract(any(), any(), any());

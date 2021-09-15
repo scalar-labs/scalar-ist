@@ -6,11 +6,10 @@ import com.scalar.dl.client.config.ClientConfig;
 import com.scalar.dl.client.service.ClientModule;
 import com.scalar.dl.client.service.ClientService;
 import com.scalar.dl.ledger.model.ContractExecutionResult;
-
-import javax.json.JsonObject;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Properties;
+import javax.json.JsonObject;
 
 public class ContractUtil {
 
@@ -54,7 +53,7 @@ public class ContractUtil {
 
   private ContractExecutionResult printContractExecutionResult(ContractExecutionResult result) {
     if (result.getResult().isPresent()) {
-      System.out.println("ContractExecutionResult:" + result.getResult().get().toString());
+      System.out.println("ContractExecutionResult:" + result.getResult().get());
     }
     return result;
   }

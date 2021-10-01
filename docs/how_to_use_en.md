@@ -10,7 +10,7 @@ Create Holder ID, private key, and certificate of the contract executor
 ## Scalar IST user story
 In IST, there are two types of business operators, system operation business operators and personal information handling business operators, and the system operating business operator has the authority to register only one business operator and to register the personal information handling business operator. A business operator handling personal information is a business operator that collects, uses, and provides personal information, creates consent documents for collecting personal information, and manages consent records.
 
-In IST, register the business operator and user profile in the following order.
+In IST, register the business operator and user profile in the following order:
 
 - Register the system operator who operates the system, and register the user profiles of the system administrator and system operator who belong to the system operator.
 - Registration of personal information handling business operator using the system, registration of personal information handling business operator administrator, information manager, information processor user profile

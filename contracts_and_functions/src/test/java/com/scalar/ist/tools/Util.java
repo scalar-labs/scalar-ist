@@ -1,11 +1,11 @@
 package com.scalar.ist.tools;
 
-import javax.json.Json;
-import javax.json.JsonObject;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Random;
+import javax.json.Json;
+import javax.json.JsonObject;
 
 public class Util {
 

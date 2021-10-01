@@ -62,8 +62,7 @@ public class GetConsentStatementTest {
   private static final String MOCKED_CONSENT_STATEMENT_DATA_RETENTION_ID =
       "mocked_data_retention_id";
   private static final String MOCKED_CONSENT_STATEMENT_ID = UUID.randomUUID().toString();
-  @Mock
-  private Ledger ledger;
+  @Mock private Ledger ledger;
   private GetConsentStatement getConsentStatement;
 
   private static JsonArray createHashedIdsArray() {
@@ -93,7 +92,8 @@ public class GetConsentStatementTest {
     doReturn(consentStatement)
         .when(getConsentStatement)
         .invokeSubContract(GET_ASSET_RECORD, ledger, getAssetRecordArgument);
-    doReturn(MOCKED_ASSET_ID).when(getConsentStatement)
+    doReturn(MOCKED_ASSET_ID)
+        .when(getConsentStatement)
         .decodeHashid(arguments.getString(CONSENT_STATEMENT_ID), properties.getString(RECORD_SALT));
 
     // act
@@ -131,9 +131,9 @@ public class GetConsentStatementTest {
     // act
     // assert
     assertThatThrownBy(
-        () -> {
-          getConsentStatement.invoke(ledger, arguments, Optional.empty());
-        })
+            () -> {
+              getConsentStatement.invoke(ledger, arguments, Optional.empty());
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
     verify(ledger, never()).get(anyString());

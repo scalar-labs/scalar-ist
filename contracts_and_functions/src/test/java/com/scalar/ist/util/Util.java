@@ -14,8 +14,8 @@ public class Util {
 
   public static JsonObject readJsonObject(Path relativePath) {
     return Json.createReader(
-        Objects.requireNonNull(
-            Util.class.getClassLoader().getResourceAsStream(relativePath.toString())))
+            Objects.requireNonNull(
+                Util.class.getClassLoader().getResourceAsStream(relativePath.toString())))
         .readObject();
   }
 

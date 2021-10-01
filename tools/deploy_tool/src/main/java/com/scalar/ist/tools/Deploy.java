@@ -1,45 +1,67 @@
 package com.scalar.ist.tools;
 
+import static com.scalar.ist.tools.Constants.ACTION;
+import static com.scalar.ist.tools.Constants.BINARY_NAME;
+import static com.scalar.ist.tools.Constants.CLIENT_PROPERTIES;
+import static com.scalar.ist.tools.Constants.CONTRACT_ARGUMENT;
+import static com.scalar.ist.tools.Constants.EXECUTE_CONTRACT;
+import static com.scalar.ist.tools.Constants.FUNCTIONS;
+import static com.scalar.ist.tools.Constants.ID;
+import static com.scalar.ist.tools.Constants.NOW;
+import static com.scalar.ist.tools.Constants.OPTIONAL;
+import static com.scalar.ist.tools.Constants.PATH;
+import static com.scalar.ist.tools.Constants.PROPERTIES;
+import static com.scalar.ist.tools.Constants.REGISTER_CERT;
+import static com.scalar.ist.tools.Constants.REGISTER_CONTRACT;
+import static com.scalar.ist.tools.Constants.REGISTER_FUNCTIONS;
+import static com.scalar.ist.tools.Constants.SET_HOLDER;
+import static com.scalar.ist.tools.Constants.TYPE;
+import static com.scalar.ist.tools.Constants.TYPE_FILE;
+import static com.scalar.ist.tools.Constants.TYPE_STRING;
+import static com.scalar.ist.tools.Constants.VALUE;
+
 import com.scalar.dl.client.config.ClientConfig;
 import com.scalar.dl.ledger.model.ContractExecutionResult;
-
-import javax.json.*;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Optional;
 import java.util.Properties;
-
-import static com.scalar.ist.tools.Constants.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 
 public class Deploy {
   private ContractUtil util;
   private Properties clientProperties;
 
-  public void process(JsonArray array) {
-
+  public void process(JsonArray array) throws IOException {
     util = new ContractUtil();
-    array.forEach(
-        jsonValue -> {
-          JsonObject json = (JsonObject) jsonValue;
-          switch (json.getString(ACTION)) {
-            case SET_HOLDER:
-              setHolder(json);
-              return;
-            case REGISTER_CERT:
-              registerCert();
-              return;
-            case REGISTER_FUNCTIONS:
-              registerFunctions(json);
-              return;
-            case REGISTER_CONTRACT:
-              registerContract(json);
-              return;
-            case EXECUTE_CONTRACT:
-              executeContract(json);
-          }
-        });
+    for (JsonValue jsonValue : array) {
+      JsonObject json = (JsonObject) jsonValue;
+      switch (json.getString(ACTION)) {
+        case SET_HOLDER:
+          setHolder(json);
+          break;
+        case REGISTER_CERT:
+          registerCert();
+          break;
+        case REGISTER_FUNCTIONS:
+          registerFunctions(json);
+          break;
+        case REGISTER_CONTRACT:
+          registerContract(json);
+          break;
+        case EXECUTE_CONTRACT:
+          executeContract(json);
+          break;
+      }
+    }
   }
 
-  private void setHolder(JsonObject json) {
+  private void setHolder(JsonObject json) throws IOException {
     System.out.println(Json.createObjectBuilder().add(ACTION, SET_HOLDER).build());
 
     clientProperties = new Properties();
@@ -122,7 +144,7 @@ public class Deploy {
             json.getString(ID), contractArgument, Optional.of(Json.createObjectBuilder().build()));
 
     if (result.getResult().isPresent()) {
-      System.out.println(result.getResult().get().toString());
+      System.out.println(result.getResult().get());
     }
   }
 

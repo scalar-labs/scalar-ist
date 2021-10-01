@@ -47,16 +47,16 @@ public class GetMasterTest {
   private static final String SCHEMA_FILENAME = "get_master.json";
   private static final String MOCKED_COMPANY_ID = "scalar-labs.com";
   private static final String MOCKED_ASSET_ID = "pp";
-  private static final JsonArray MOCKED_PERMITTED_ASSET_NAMES = Json.createArrayBuilder()
-      .add(MOCKED_ASSET_ID)
-      .build();
+  private static final JsonArray MOCKED_PERMITTED_ASSET_NAMES =
+      Json.createArrayBuilder().add(MOCKED_ASSET_ID).build();
   private static final JsonArray mockedRolesArray =
-      Json.createArrayBuilder().add(ROLE_ADMINISTRATOR).add(ROLE_PROCESSOR).add(ROLE_CONTROLLER)
+      Json.createArrayBuilder()
+          .add(ROLE_ADMINISTRATOR)
+          .add(ROLE_PROCESSOR)
+          .add(ROLE_CONTROLLER)
           .build();
-  @Mock
-  private Ledger ledger;
-  @Mock
-  private GetMaster getMaster;
+  @Mock private Ledger ledger;
+  @Mock private GetMaster getMaster;
 
   @BeforeEach
   public void setUp() {
@@ -90,15 +90,14 @@ public class GetMasterTest {
 
     // act
     JsonObject asset = getMaster.invoke(ledger, argument, Optional.of(properties));
-    JsonObject mockedAssetData = Json.createObjectBuilder().add(COMPANY_ID, MOCKED_COMPANY_ID)
-        .build();
+    JsonObject mockedAssetData =
+        Json.createObjectBuilder().add(COMPANY_ID, MOCKED_COMPANY_ID).build();
 
     // assert
     assertThat(asset).isEqualTo(mockedAssetData);
     verify(getMaster).invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
     verify(getMaster, times(4)).invokeSubContract(any(), any(), any());
   }
-
 
   @Test
   public void invoke_PropertyMissing_ShouldThrowContractContextException() {
@@ -108,9 +107,9 @@ public class GetMasterTest {
     // act
     // assert
     assertThatThrownBy(
-        () -> {
-          getMaster.invoke(ledger, argument, Optional.empty());
-        })
+            () -> {
+              getMaster.invoke(ledger, argument, Optional.empty());
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
     verify(ledger, never()).get(anyString());
@@ -120,15 +119,14 @@ public class GetMasterTest {
   public void invoke_PropertyMissingPermittedNames_ShouldThrowContractContextException() {
     // arrange
     JsonObject argument = prepareArguments();
-    JsonObject propertiesMissingPermittedNames = Json.createObjectBuilder()
-        .build();
+    JsonObject propertiesMissingPermittedNames = Json.createObjectBuilder().build();
 
     // act
     // assert
     assertThatThrownBy(
-        () -> {
-          getMaster.invoke(ledger, argument, Optional.of(propertiesMissingPermittedNames));
-        })
+            () -> {
+              getMaster.invoke(ledger, argument, Optional.of(propertiesMissingPermittedNames));
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(PERMITTED_ASSET_NAMES_IS_MISSING);
     verify(ledger, never()).get(anyString());
@@ -138,15 +136,15 @@ public class GetMasterTest {
   public void invoke_PropertyWithoutSchema_ShouldThrowContractContextException() {
     // Arrange
     JsonObject argument = prepareArguments();
-    JsonObject properties = Json.createObjectBuilder()
-        .add(PERMITTED_ASSET_NAMES, MOCKED_PERMITTED_ASSET_NAMES).build();
+    JsonObject properties =
+        Json.createObjectBuilder().add(PERMITTED_ASSET_NAMES, MOCKED_PERMITTED_ASSET_NAMES).build();
 
     // Act
     // Assert
     assertThatThrownBy(
-        () -> {
-          getMaster.invoke(ledger, argument, Optional.of(properties));
-        })
+            () -> {
+              getMaster.invoke(ledger, argument, Optional.of(properties));
+            })
         .isExactlyInstanceOf(ContractContextException.class)
         .hasMessage(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
     verify(getMaster, never()).invokeSubContract(any(), any(), any());
@@ -158,15 +156,11 @@ public class GetMasterTest {
 
   private JsonObject prepareUserProfile(String role) {
     JsonArray roles = Json.createArrayBuilder().add(role).build();
-    return Json.createObjectBuilder()
-        .add(ROLES, roles)
-        .build();
+    return Json.createObjectBuilder().add(ROLES, roles).build();
   }
 
   private JsonObject prepareUserProfileArgument() {
-    return Json.createObjectBuilder()
-        .add(COMPANY_ID, MOCKED_COMPANY_ID)
-        .build();
+    return Json.createObjectBuilder().add(COMPANY_ID, MOCKED_COMPANY_ID).build();
   }
 
   private JsonObject preparePermissionValidationArgument(JsonObject userProfile) {
@@ -193,9 +187,7 @@ public class GetMasterTest {
   }
 
   private JsonObject prepareAssetRecord() {
-    return Json.createObjectBuilder()
-        .add(COMPANY_ID, MOCKED_COMPANY_ID)
-        .build();
+    return Json.createObjectBuilder().add(COMPANY_ID, MOCKED_COMPANY_ID).build();
   }
 
   private JsonObject prepareValidationArgument(JsonObject argument, JsonObject properties) {

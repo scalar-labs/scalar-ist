@@ -38,8 +38,9 @@ do
   sleep 5
 done
 
-register_cert
+
 if [[ $IST_INSTALL_CONTRACTS == true ]];then
+    register_cert
     register_contracts
 fi
 if [[ $IST_INSTALL_FUNCTIONS == true ]];then

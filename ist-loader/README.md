@@ -5,7 +5,7 @@ This docker images loads the necessary functions and/or contracts to use IST wit
 ## Build
 
 The IST loader image can be build via docker
-``` 
+```
 docker build --tag scalar-ist-loader .
 ```
 
@@ -21,10 +21,10 @@ scalar-ist-loader:
     depends_on:
       - cassandra
       - scalar-ledger
-#    volumes:
-#      - ./client.properties:/client.properties
-#      - ./initializer.pem:/initializer.pem
-#      - ./initializer-key.pem:/initializer-key.pem
+    volumes:
+      - ./client.properties:/client.properties
+      - ./initializer.pem:/initializer.pem
+      - ./initializer-key.pem:/initializer-key.pem
     environment:
       - IST_INSTALL_FUNCTIONS=false #default=true
       - IST_INSTALL_CONTRACTS=true  #default=true
@@ -45,5 +45,3 @@ scalar-ist-loader:
 #### Client properties and certificates
 
 The client properties and certificates can be specified and overridden via docker volumes.
-
-

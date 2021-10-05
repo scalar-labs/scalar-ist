@@ -8,10 +8,27 @@
   "properties": {
     "asset_id": {
       "type": "string",
-      "pattern": "^[a-zA-Z0-9-/_.]+$"
+      "pattern": "^[a-zA-Z0-9-/_]+$"
     },
     "is_hashed": {
       "type": "boolean"
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["get", "scan"]
+    },
+    "start_version": {
+      "type": "integer"
+    },
+    "end_version": {
+      "type": "integer"
+    },
+    "with_limit": {
+      "type": "integer"
+    },
+    "version_order": {
+      "type": "string",
+      "enum": ["asc", "desc"]
     }
   }
 }

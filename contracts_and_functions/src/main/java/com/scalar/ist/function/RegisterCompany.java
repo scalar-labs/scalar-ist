@@ -36,14 +36,15 @@ public class RegisterCompany extends Function {
       Optional<JsonObject> contractProperties) {
 
     String companyId = contractArgument.getString(COMPANY_ID);
-    if (get(database, companyId).isPresent()) {
+
+    long createdAt = contractArgument.getJsonNumber(CREATED_AT).longValue();
+    if (get(database, companyId, createdAt).isPresent()) {
       throw new ContractContextException(RECORD_IS_ALREADY_REGISTERED);
     }
 
     String companyName = contractArgument.getString(COMPANY_NAME);
     String corporateNumber = contractArgument.getString(CORPORATE_NUMBER);
     JsonObject companyInformation = contractArgument.getJsonObject(COMPANY_METADATA);
-    long createdAt = contractArgument.getJsonNumber(CREATED_AT).longValue();
 
     Key partitionKey = new Key(new TextValue(COMPANY_ID, companyId));
     Key clusteringKey = new Key(new BigIntValue(CREATED_AT, createdAt));
@@ -62,11 +63,10 @@ public class RegisterCompany extends Function {
     database.put(put);
   }
 
-  private Optional<Result> get(Database database, String companyId) {
-    Get get =
-        new Get(new Key(new TextValue(COMPANY_ID, companyId)))
-            .forNamespace(NAMESPACE)
-            .forTable(COMPANY_TABLE);
+  private Optional<Result> get(Database database, String companyId, long createdAt) {
+    Key partitionKey = new Key(new TextValue(COMPANY_ID, companyId));
+    Key clusteringKey = new Key(new BigIntValue(CREATED_AT, createdAt));
+    Get get = new Get(partitionKey, clusteringKey).forNamespace(NAMESPACE).forTable(COMPANY_TABLE);
     return database.get(get);
   }
 }

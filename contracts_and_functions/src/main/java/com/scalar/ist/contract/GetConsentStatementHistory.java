@@ -3,13 +3,15 @@ package com.scalar.ist.contract;
 import static com.scalar.ist.common.Constants.ASSET_ID;
 import static com.scalar.ist.common.Constants.ASSET_ID_IS_NOT_PERMITTED;
 import static com.scalar.ist.common.Constants.COMPANY_ID;
-import static com.scalar.ist.common.Constants.COMPANY_ID_DOES_NOT_MATCH_WITH_ASSET_COMPANY_ID;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
 import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES;
-import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES_IS_MISSING;
+import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
+import static com.scalar.ist.common.Constants.RECORD_MODE;
+import static com.scalar.ist.common.Constants.RECORD_MODE_SCAN;
+import static com.scalar.ist.common.Constants.RECORD_VERSIONS;
 import static com.scalar.ist.common.Constants.REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING;
 import static com.scalar.ist.common.Constants.ROLES_REQUIRED;
 import static com.scalar.ist.common.Constants.ROLE_ADMINISTRATOR;
@@ -29,10 +31,10 @@ import com.scalar.ist.common.Constants;
 import java.util.Optional;
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
-public class GetMaster extends Contract {
-
+public class GetConsentStatementHistory extends Contract {
   private static final JsonArray ROLES =
       Json.createArrayBuilder()
           .add(ROLE_ADMINISTRATOR)
@@ -44,41 +46,44 @@ public class GetMaster extends Contract {
   public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validate(ledger, argument, properties);
 
-    JsonObject getAssetArgument =
-        Json.createObjectBuilder().add(ASSET_ID, argument.getString(ASSET_ID)).build();
-    JsonObject asset = invokeSubContract(GET_ASSET_RECORD, ledger, getAssetArgument);
+    JsonArrayBuilder filteredList = Json.createArrayBuilder();
+    invokeSubContract(
+            GET_ASSET_RECORD,
+            ledger,
+            Json.createObjectBuilder()
+                .add(ASSET_ID, argument.getString(ASSET_ID))
+                .add(RECORD_IS_HASHED, argument.getBoolean(RECORD_IS_HASHED))
+                .add(RECORD_MODE, RECORD_MODE_SCAN)
+                .build())
+        .getJsonArray(RECORD_VERSIONS)
+        .getValuesAs(JsonObject.class)
+        .stream()
+        .filter(c -> c.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID)))
+        .map(filteredList::add);
 
-    if (!asset.getString(COMPANY_ID).equals(properties.get().getString(COMPANY_ID))) {
-      throw new ContractContextException(COMPANY_ID_DOES_NOT_MATCH_WITH_ASSET_COMPANY_ID);
-    }
-    return asset;
+    return Json.createObjectBuilder().add(RECORD_VERSIONS, filteredList.build()).build();
   }
 
-  private void validate(Ledger ledger, JsonObject arguments, Optional<JsonObject> properties) {
+  private void validate(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validateProperties(properties);
-    validateArguments(ledger, arguments, properties.get());
-    validateUserPermissions(ledger, properties.get());
+    validateArguments(ledger, argument, properties.get());
+    validateUserPermissions(ledger, argument);
   }
 
-  private void validateProperties(Optional<JsonObject> propertiesOpt) {
-    if (!propertiesOpt.isPresent()) {
+  private void validateProperties(Optional<JsonObject> properties) {
+    if (!properties.isPresent()) {
       throw new ContractContextException(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
     }
-    if (!propertiesOpt.get().containsKey(PERMITTED_ASSET_NAMES)) {
-      throw new ContractContextException(PERMITTED_ASSET_NAMES_IS_MISSING);
-    }
-    if (!propertiesOpt.get().containsKey(CONTRACT_ARGUMENT_SCHEMA)) {
+    if (!properties.get().containsKey(CONTRACT_ARGUMENT_SCHEMA)) {
       throw new ContractContextException(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
+    }
+    if (!properties.get().containsKey(PERMITTED_ASSET_NAMES)) {
+      throw new ContractContextException(REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING);
     }
   }
 
   private void validateArguments(Ledger ledger, JsonObject arguments, JsonObject properties) {
     JsonObject schema = properties.getJsonObject(CONTRACT_ARGUMENT_SCHEMA);
-    JsonArray permittedAssetNames = properties.getJsonArray(PERMITTED_ASSET_NAMES);
-    String assetName = arguments.getString(ASSET_ID).substring(0, 2);
-    if (!permittedAssetNames.contains(Json.createValue(assetName))) {
-      throw new ContractContextException(ASSET_ID_IS_NOT_PERMITTED);
-    }
     JsonObject validateArgumentJson =
         Json.createObjectBuilder()
             .add(VALIDATE_ARGUMENT_CONTRACT_ARGUMENT, arguments)
@@ -86,11 +91,18 @@ public class GetMaster extends Contract {
             .build();
 
     invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentJson);
+
+    JsonArray permittedAssetNames = properties.getJsonArray(PERMITTED_ASSET_NAMES);
+    String assetName = arguments.getString(ASSET_ID).substring(0, 2);
+
+    if (!permittedAssetNames.contains(Json.createValue(assetName))) {
+      throw new ContractContextException(ASSET_ID_IS_NOT_PERMITTED);
+    }
   }
 
-  private void validateUserPermissions(Ledger ledger, JsonObject properties) {
+  private void validateUserPermissions(Ledger ledger, JsonObject arguments) {
     JsonObject userProfileArgument =
-        Json.createObjectBuilder().add(COMPANY_ID, properties.getString(COMPANY_ID)).build();
+        Json.createObjectBuilder().add(COMPANY_ID, arguments.getString(COMPANY_ID)).build();
     JsonObject userProfile = invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
 
     JsonObject validateUserPermissionsArgument =
@@ -103,7 +115,7 @@ public class GetMaster extends Contract {
   }
 
   @VisibleForTesting
-  JsonObject invokeSubContract(String contractId, Ledger ledger, JsonObject arguments) {
-    return invoke(contractId, ledger, arguments);
+  JsonObject invokeSubContract(String contractId, Ledger ledger, JsonObject argument) {
+    return invoke(contractId, ledger, argument);
   }
 }

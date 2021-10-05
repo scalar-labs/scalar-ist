@@ -56,7 +56,7 @@ public class UpsertConsentStatus extends Function {
 
     Optional<Result> optConsent = get(database, partitionKey, clusteringKey);
 
-    List<Value> values = createValues(params, contractArgument);
+    List<Value<?>> values = createValues(params, contractArgument);
     values.add(new TextValue(CONSENT_ID, consentId));
     if (!optConsent.isPresent()) {
       values.add(
@@ -76,8 +76,8 @@ public class UpsertConsentStatus extends Function {
     return database.get(get);
   }
 
-  private List<Value> createValues(List<String> keys, JsonObject contractArgument) {
-    List<Value> values = new ArrayList<>();
+  private List<Value<?>> createValues(List<String> keys, JsonObject contractArgument) {
+    List<Value<?>> values = new ArrayList<>();
     for (String key : keys)
       if (contractArgument.containsKey(key)) {
         JsonValue.ValueType argumentValueType = contractArgument.get(key).getValueType();

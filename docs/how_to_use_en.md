@@ -57,79 +57,7 @@ In IST, register the business operator and user profile in the following order:
 ## Run a user story with a deploy tool
 The IST project that is being used is [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
 To use IST you need to run [scalardl](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).  
-The next steps have been tested with this docker-compose from scalardl:
-``` 
-version: "3.5"
-services:
-  cassandra:
-    image: cassandra:3.11
-    container_name: "scalardl-samples-cassandra-1"
-    volumes:
-      - cassandra-data:/var/lib/cassandra
-    ports:
-    #   - "7199:7199" # JMX
-    #   - "7000:7000" # cluster communication
-    #   - "7001:7001" # cluster communication (SSL)
-       - "9042:9042" # native protocol clients
-    #   - "9160:9160" # thrift clients
-    environment:
-      - CASSANDRA_DC=dc1
-      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
-    networks:
-      - scalar-network
-  scalardl-ledger-schema-loader-cassandra:
-    image: ghcr.io/scalar-labs/scalardl-schema-loader:1.2.0
-    command:
-      - "--cassandra"
-      - "-h"
-      - "cassandra"
-      - "-R"
-      - "1"
-    networks:
-      - scalar-network
-    restart: on-failure
-  scalar-ledger:
-    image: ghcr.io/scalar-labs/scalar-ledger:2.0.7
-    container_name: "scalardl-samples-scalar-ledger-1"
-    volumes:
-      - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
-    depends_on:
-      - cassandra
-    environment:
-      - SCALAR_DB_CONTACT_POINTS=cassandra
-      - SCALAR_DB_STORAGE=cassandra
-      - SCALAR_DL_LEDGER_PROOF_ENABLED=true
-      - SCALAR_DL_LEDGER_PROOF_PRIVATE_KEY_PATH=/scalar/ledger-key.pem
-    networks:
-      - scalar-network
-    # Overriding the CMD instruction in the scalar-ledger Dockerfile to add the -wait option.
-    command: |
-      dockerize -template ledger.properties.tmpl:ledger.properties
-      -template log4j.properties.tmpl:log4j.properties
-      -wait tcp://cassandra:9042 -timeout 60s
-      ./bin/scalar-ledger --config ledger.properties
-  ledger-envoy:
-    image: envoyproxy/envoy:v1.12.7
-    container_name: "scalardl-samples-ledger-envoy-1"
-    ports:
-      - "9901:9901"
-      - "50051:50051"
-      - "50052:50052"
-    volumes:
-      - ./envoy.yaml:/etc/envoy/envoy.yaml
-    depends_on:
-      - scalar-ledger
-    command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
-    networks:
-      - scalar-network
-
-volumes:
-  cassandra-data:
-networks:
-  scalar-network:
-    name: scalar-network
-```
-
+The next steps have been tested with this docker-compose from scalardl. [here](https://github.com/scalar-labs/scalar-ist-samples/blob/main/docker-compose.yml).  
 
 ### Build deploy tool
 ```
@@ -147,7 +75,7 @@ cd ../tools/deploy_tool
 For now `./gradlew installDist` do not set function and contract path properly.  
 So you will need to move the directories in the ist folder.
 
-``` 
+```
 mv ../../contracts_and_functions/build/classes/java/main/com/scalar/ist/common build/classes/java/main/com/scalar/ist
 mv ../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract build/classes/java/main/com/scalar/ist
 mv ../../contracts_and_functions/build/classes/java/main/com/scalar/ist/function build/classes/java/main/com/scalar/ist
@@ -187,12 +115,12 @@ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert
 ### Register the master information of the consent document
 
 Register the purpose of use
-``` 
+```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_purpose.json
 ```
 
 Update the purpose of use  
-``` 
+```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_purpose.json
 ```
 
@@ -202,37 +130,37 @@ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/regist
 ```
 
 Update the dataset schema
-``` 
+```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_set_schema.json
 ```
 
 Register a third-party provider
-``` 
+```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_third_party.json
 ```
 
 Update third party providers
-``` 
+```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_third_party.json
 ```
 
 Register suspension of use and data deletion deadline
-``` 
+```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_data_retention_policy.json
 ```
 
 Suspension of use, update data deletion deadline
-``` 
+```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_retention_policy.json
 ```
 
 Register benefits
-``` 
+```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_benefit.json
 ```
 
 Update benefits
-``` 
+```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_benefit.json
 ```
 
@@ -253,7 +181,7 @@ Revise the consent document (changes that require re-consent)
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_version.json
 ```
 
-Change the status of the consent document 
+Change the status of the consent document
 ```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_status.json
 ```
@@ -291,8 +219,7 @@ Reference of consent status by a data subject
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_data_subject.json
 ```
 
-Reference of the status of consent by the business user 
+Reference of the status of consent by the business user
 ```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_controller.json
 ```
-

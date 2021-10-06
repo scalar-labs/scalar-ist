@@ -18,6 +18,8 @@ Both `CLIENT_PROPERTIES_PATH` and `LEDGER_HOST` are required environment variabl
 set. Do not forget to also add the key files via docker volumes. The files should be mounted to the
 path that is mentioned in the `client.properties` file.
 
+`IST_INSTALL_FUNCTIONS` (default true) and `IST_INSTALL_CONTRACTS` (default false) are optional.
+
 client.properties file example:
 
 ```
@@ -34,7 +36,7 @@ Docker-compose.yml file example:
 ```
 scalar-ist-loader:
     container_name: scalar-ist-loader
-    image: ghcr.io/scalar-labs/scalar-ist-loader:1.0.0
+    image: ghcr.io/scalar-labs/scalar-ist-loader:2.0.0
     depends_on:
       - cassandra
       - scalar-ledger
@@ -43,10 +45,10 @@ scalar-ist-loader:
       - ./initializer.pem:/initializer.pem
       - ./initializer-key.pem:/initializer-key.pem
     environment:
-      - IST_INSTALL_FUNCTIONS=false #default=true
-      - IST_INSTALL_CONTRACTS=true  #default=true
-      - CLIENT_PROPERTIES_PATH=my/path # no default value and mandatory
-      - LEDGER_HOST=docker-ledger-name # no default value and mandatory
+      - IST_INSTALL_FUNCTIONS=false 
+      - IST_INSTALL_CONTRACTS=true
+      - CLIENT_PROPERTIES_PATH=/client.properties
+      - LEDGER_HOST=docker-ledger-name
     networks:
       - scalar-ist-network
     restart: on-failure

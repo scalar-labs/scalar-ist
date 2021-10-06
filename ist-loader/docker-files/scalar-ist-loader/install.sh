@@ -33,10 +33,10 @@ register_functions(){
 check_env(){
   echo checking if all env variables are setted ...
   if [[ -z "${LEDGER_HOST}" ]]; then
-    echo LEDGER_HOST variable is not setted
+    echo the required LEDGER_HOST variable is missing
   fi
   if [[ -z "${CLIENT_PROPERTIES_PATH}" ]]; then
-    echo CLIENT_PROPERTIES_PATH variable is not setted
+    echo the required CLIENT_PROPERTIES_PATH variable is missing
   fi
 }
 

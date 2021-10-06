@@ -21,11 +21,11 @@ path that is mentioned in the `client.properties` file.
 client.properties file example:
 
 ```
-scalar.dl.client.server.host=scalardl-samples-scalar-ledger-1
+scalar.dl.client.server.host=scalardl-scalar-ledger-1
 scalar.dl.client.cert_holder_id=Initializer
 scalar.dl.client.cert_version=1
-scalar.dl.client.cert_path=./certs/sample-initializer.pem
-scalar.dl.client.private_key_path=./certs/sample-initializer-key.pem
+scalar.dl.client.cert_path=./certs/initializer.pem
+scalar.dl.client.private_key_path=./certs/initializer-key.pem
 scalar.dl.client.server.port=50051
 ```
 

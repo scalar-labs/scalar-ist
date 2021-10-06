@@ -34,11 +34,11 @@ check_env(){
   echo checking if all env variables are setted ...
   if [[ -z "${LEDGER_HOST}" ]]; then
     $ENV_STATUS=1
-    echo LEDGER_HOST variable is not setted
+    echo the required LEDGER_HOST variable is missing
   fi
   if [[ -z "${CLIENT_PROPERTIES_PATH}" ]]; then
     $ENV_STATUS=1
-    echo CLIENT_PROPERTIES_PATH variable is not setted
+    echo the required CLIENT_PROPERTIES_PATH variable is missing
   fi
 }
 ENV_STATUS=0

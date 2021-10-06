@@ -13,6 +13,16 @@ docker build --tag scalar-ist-loader .
 
 Once the image is created you can start it directly via `docker run` or `docker-compose`.
 
+An example of client.properties file is
+```
+scalar.dl.client.server.host=scalardl-samples-scalar-ledger-1
+scalar.dl.client.cert_holder_id=Initializer
+scalar.dl.client.cert_version=1
+scalar.dl.client.cert_path=./certs/sample-initializer.pem
+scalar.dl.client.private_key_path=./certs/sample-initializer-key.pem
+scalar.dl.client.server.port=50051
+```
+
 An example usage for docker-compose is
 ```
 scalar-ist-loader:
@@ -28,12 +38,14 @@ scalar-ist-loader:
     environment:
       - IST_INSTALL_FUNCTIONS=false #default=true
       - IST_INSTALL_CONTRACTS=true  #default=true
-      - CLIENT_PROPERTIES_PATH=my/path #default=client.properties.sample
-      - LEDGER_HOST=docker-ledger-name #default=scalardl-samples-scalar-ledger-1
+      - CLIENT_PROPERTIES_PATH=my/path # no default value and mandatory
+      - LEDGER_HOST=docker-ledger-name # no default value and mandatory
     networks:
       - scalar-ist-network
     restart: on-failure
 ```
+
+Note: As you can see the volumes path is the same for initializer.pem and for client.properties file.
 
 ### Configuration
 

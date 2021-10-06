@@ -1,6 +1,4 @@
 #!/bin/bash
-PROPERTIES="--properties $CLIENT_PROPERTIES_PATH"
-
 check_response(){
 if  [[ $1 == *"OK"* ]];
   then
@@ -32,13 +30,23 @@ register_functions(){
   check_response "$OUTPUT" functions
 }
 
+check_env(){
+  echo checking if all env variables are setted ...
+  if [[ -z "${LEDGER_HOST}" ]]; then
+    echo LEDGER_HOST variable is not setted
+  fi
+  if [[ -z "${CLIENT_PROPERTIES_PATH}" ]]; then
+    echo CLIENT_PROPERTIES_PATH variable is not setted
+  fi
+}
+
+check_env
+PROPERTIES="--properties $CLIENT_PROPERTIES_PATH"
 while ! nc -z $LEDGER_HOST 50051
 do
   echo waiting for ledger
   sleep 5
 done
-
-
 if [[ $IST_INSTALL_CONTRACTS == true ]];then
     register_cert
     register_contracts

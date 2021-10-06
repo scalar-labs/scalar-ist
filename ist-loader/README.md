@@ -4,7 +4,7 @@ This docker images loads the necessary functions and/or contracts to use IST wit
 
 ## Build
 
-The IST loader image can be build via docker
+The Scalar IST Loader image can be build via docker
 
 ```
 docker build --tag ghcr.io/scalar-labs/scalar-ist-loader:2.0.0 .

@@ -13,41 +13,41 @@ if  [[ $1 == *"OK"* ]];
 }
 
 register_cert(){
-  echo registering certificate...
+  echo registering certificate ...
   OUTPUT=$(client/bin/register-cert $PROPERTIES)
   check_response "$OUTPUT" certificate
 }
 
 register_contracts(){
-  echo registering contracts...
+  echo registering contracts ...
   OUTPUT=$(client/bin/register-contracts --contracts-file ./contracts.toml $PROPERTIES)
   check_response "$OUTPUT" contracts
 }
 
 register_functions(){
-  echo registering functions...
+  echo registering functions ...
   OUTPUT=$(client/bin/register-functions --functions-file ./functions.toml $PROPERTIES)
   check_response "$OUTPUT" functions
 }
 
 check_env(){
-  echo checking if all env variables are setted ...
+  echo checking if all env variables are set ...
   if [[ -z "${LEDGER_HOST}" ]]; then
-    $ENV_STATUS=1
+    ENV_STATUS=1
     echo the required LEDGER_HOST variable is missing
   fi
   if [[ -z "${CLIENT_PROPERTIES_PATH}" ]]; then
-    $ENV_STATUS=1
+    ENV_STATUS=1
     echo the required CLIENT_PROPERTIES_PATH variable is missing
   fi
 }
 ENV_STATUS=0
 check_env
-if [[ $ENV_STATUS==0 ]]; then
+if [[ $ENV_STATUS == 0 ]]; then
   PROPERTIES="--properties $CLIENT_PROPERTIES_PATH"
   while ! nc -z $LEDGER_HOST 50051
   do
-    echo waiting for ledger
+    echo waiting for ledger to be available ...
     sleep 5
   done
   if [[ $IST_INSTALL_CONTRACTS == true ]];then

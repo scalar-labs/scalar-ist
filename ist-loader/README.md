@@ -34,12 +34,11 @@ scalar-ist-loader:
       - LEDGER_HOST=scalardl-scalar-ledger-1
     networks:
       - scalar-ist-network
+    restart: on-failure
 ```
 
-Notes:
+Note:
 
-- restart: on-failure is not necessary to add. The `scalar-ist-loader` checks and waits for the
-  Scalar Ledger to be up and running before starting the installation.
 - The client properties and certificates can be specified and overridden via docker volumes.
 
 ## Configuration

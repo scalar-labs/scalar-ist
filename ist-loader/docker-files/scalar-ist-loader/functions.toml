@@ -1,0 +1,56 @@
+[[functions]]
+function-id ="Initialize"
+function-binary-name ="com.scalar.ist.function.Initialize"
+function-class-file ="./functions/Initialize.class"
+[[functions]]
+function-id ="RegisterCompany"
+function-binary-name ="com.scalar.ist.function.RegisterCompany"
+function-class-file ="./functions/RegisterCompany.class"
+[[functions]]
+function-id ="RegisterOrganization"
+function-binary-name ="com.scalar.ist.function.RegisterOrganization"
+function-class-file ="./functions/RegisterOrganization.class"
+[[functions]]
+function-id ="UpdateCompany"
+function-binary-name ="com.scalar.ist.function.UpdateCompany"
+function-class-file ="./functions/UpdateCompany.class"
+[[functions]]
+function-id ="UpsertOrganization"
+function-binary-name ="com.scalar.ist.function.UpsertOrganization"
+function-class-file ="./functions/UpsertOrganization.class"
+[[functions]]
+function-id ="UpsertUserProfile"
+function-binary-name ="com.scalar.ist.function.UpsertUserProfile"
+function-class-file ="./functions/UpsertUserProfile.class"
+[[functions]]
+function-id ="RegisterThirdParty"
+function-binary-name ="com.scalar.ist.function.RegisterThirdParty"
+function-class-file ="./functions/RegisterThirdParty.class"
+[[functions]]
+function-id ="UpdateThirdParty"
+function-binary-name ="com.scalar.ist.function.UpdateThirdParty"
+function-class-file ="./functions/UpdateThirdParty.class"
+[[functions]]
+function-id ="RegisterConsentStatement"
+function-binary-name ="com.scalar.ist.function.RegisterConsentStatement"
+function-class-file ="./functions/RegisterConsentStatement.class"
+[[functions]]
+function-id ="UpdateConsentStatementVersion"
+function-binary-name ="com.scalar.ist.function.UpdateConsentStatementVersion"
+function-class-file ="./functions/UpdateConsentStatementVersion.class"
+[[functions]]
+function-id ="UpdateConsentStatementRevision"
+function-binary-name ="com.scalar.ist.function.UpdateConsentStatementRevision"
+function-class-file ="./functions/UpdateConsentStatementRevision.class"
+[[functions]]
+function-id ="UpsertConsentStatementStatus"
+function-binary-name ="com.scalar.ist.function.UpdateConsentStatementStatus"
+function-class-file ="./functions/UpdateConsentStatementStatus.class"
+[[functions]]
+function-id ="UpsertMaster"
+function-binary-name ="com.scalar.ist.function.UpsertMaster"
+function-class-file ="./functions/UpsertMaster.class"
+[[functions]]
+function-id ="UpsertConsentStatus"
+function-binary-name ="com.scalar.ist.function.UpsertConsentStatus"
+function-class-file ="./functions/UpsertConsentStatus.class"

@@ -57,13 +57,13 @@ public class UpdateConsentStatementStatus extends Function {
     getConsentStatement(database, partitionKey, clusteringKey)
         .orElseThrow(() -> new ContractContextException(RECORD_NOT_FOUND));
     Put put =
-            new Put(partitionKey, clusteringKey)
-                    .withValue(
-                            new TextValue(
-                                    CONSENT_STATEMENT_STATUS, contractArgument.getString(CONSENT_STATEMENT_STATUS)))
-                    .withValue(new BigIntValue(UPDATED_AT, updatedAt))
-                    .forNamespace(NAMESPACE)
-                    .forTable(CONSENT_STATEMENT_TABLE);
+        new Put(partitionKey, clusteringKey)
+            .withValue(
+                new TextValue(
+                    CONSENT_STATEMENT_STATUS, contractArgument.getString(CONSENT_STATEMENT_STATUS)))
+            .withValue(new BigIntValue(UPDATED_AT, updatedAt))
+            .forNamespace(NAMESPACE)
+            .forTable(CONSENT_STATEMENT_TABLE);
     database.put(put);
   }
 

@@ -5,8 +5,18 @@ import static com.scalar.ist.common.Constants.ASSET_NOT_FOUND;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.DISALLOWED_CONTRACT_EXECUTION_ORDER;
+import static com.scalar.ist.common.Constants.RECORD_DATA;
+import static com.scalar.ist.common.Constants.RECORD_END_VERSION;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
+import static com.scalar.ist.common.Constants.RECORD_LIMIT;
+import static com.scalar.ist.common.Constants.RECORD_MODE;
+import static com.scalar.ist.common.Constants.RECORD_MODE_GET;
+import static com.scalar.ist.common.Constants.RECORD_MODE_SCAN;
 import static com.scalar.ist.common.Constants.RECORD_SALT;
+import static com.scalar.ist.common.Constants.RECORD_START_VERSION;
+import static com.scalar.ist.common.Constants.RECORD_VERSION;
+import static com.scalar.ist.common.Constants.RECORD_VERSIONS;
+import static com.scalar.ist.common.Constants.RECORD_VERSION_ORDER;
 import static com.scalar.ist.common.Constants.REQUIRED_CONTRACT_PROPERTIES_ARE_MISSING;
 import static com.scalar.ist.common.Constants.SALT_IS_MISSING;
 import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
@@ -25,14 +35,19 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.scalar.dl.ledger.asset.Asset;
+import com.scalar.dl.ledger.database.AssetFilter;
 import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.ist.util.Hasher;
 import com.scalar.ist.util.Util;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -41,7 +56,7 @@ import org.mockito.MockitoAnnotations;
 public class GetAssetRecordTest {
   private static final String SCHEMA_FILENAME = "get_asset_record.json";
   private static final String MOCKED_ASSET_ID =
-      "consentstatement/" + UUID.randomUUID().toString() + "/" + System.currentTimeMillis();
+      "consentstatement/" + UUID.randomUUID() + "/" + System.currentTimeMillis();
   private static final String MOCKED_SALT = "mocked_salt";
   private static final String MOCKED_SCHEMA = "mocked_schema";
   @Mock private Ledger ledger;
@@ -53,11 +68,38 @@ public class GetAssetRecordTest {
     getAssetRecord = spy(new GetAssetRecord());
   }
 
-  private JsonObject prepareArguments() {
-    return Json.createObjectBuilder()
-        .add(ASSET_ID, MOCKED_ASSET_ID)
-        .add(RECORD_IS_HASHED, false)
-        .build();
+  private JsonObject prepareArguments(String mode) {
+    JsonObjectBuilder arguments =
+        Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).add(RECORD_IS_HASHED, false);
+
+    if (mode.equals(RECORD_MODE_SCAN)) {
+      arguments
+          .add(RECORD_MODE, RECORD_MODE_SCAN)
+          .add(RECORD_START_VERSION, 2)
+          .add(RECORD_END_VERSION, 5)
+          .add(RECORD_LIMIT, 2)
+          .add(RECORD_VERSION_ORDER, "ASC");
+    }
+
+    return arguments.build();
+  }
+
+  private AssetFilter prepareAssetFilter(String hashedAssetId, JsonObject argument) {
+    AssetFilter assetFilter = new AssetFilter(hashedAssetId);
+    if (argument.containsKey(RECORD_START_VERSION)) {
+      assetFilter.withStartAge(argument.getInt(RECORD_START_VERSION), true);
+    }
+    if (argument.containsKey(RECORD_END_VERSION)) {
+      assetFilter.withEndAge(argument.getInt(RECORD_END_VERSION), true);
+    }
+    if (argument.containsKey(RECORD_LIMIT)) {
+      assetFilter.withLimit(argument.getInt(RECORD_LIMIT));
+    }
+    if (argument.containsKey(RECORD_VERSION_ORDER)) {
+      assetFilter.withAgeOrder(
+          AssetFilter.AgeOrder.valueOf(argument.getString(RECORD_VERSION_ORDER)));
+    }
+    return assetFilter;
   }
 
   private JsonObject prepareProperties() {
@@ -71,10 +113,72 @@ public class GetAssetRecordTest {
         .build();
   }
 
+  private JsonObject prepareMockedAssetList() {
+    JsonObject mockedAssetJsonObject =
+        Json.createObjectBuilder()
+            .add(RECORD_VERSION, 0)
+            .add(RECORD_DATA, Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build())
+            .build();
+    JsonObject mockedAssetJsonObject2 =
+        Json.createObjectBuilder()
+            .add(RECORD_VERSION, 1)
+            .add(RECORD_DATA, Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build())
+            .build();
+    JsonObject mockedAssetJsonObject3 =
+        Json.createObjectBuilder()
+            .add(RECORD_VERSION, 2)
+            .add(RECORD_DATA, Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build())
+            .build();
+    return Json.createObjectBuilder()
+        .add(
+            RECORD_VERSIONS,
+            Json.createArrayBuilder()
+                .add(mockedAssetJsonObject)
+                .add(mockedAssetJsonObject2)
+                .add(mockedAssetJsonObject3)
+                .build())
+        .build();
+  }
+
+  @Test
+  public void invoke_ScanMode_ProperArgumentsGiven_ShouldRetrieveAssetDataListFromLedger() {
+    // arrange
+    JsonObject argument = prepareArguments(RECORD_MODE_SCAN);
+    JsonObject properties = prepareProperties();
+    String hashedId = Hasher.hash(properties.getString(RECORD_SALT), argument.getString(ASSET_ID));
+    Asset asset = mock(Asset.class);
+    Asset asset2 = mock(Asset.class);
+    Asset asset3 = mock(Asset.class);
+    JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
+    JsonObject mockedAssetData = Json.createObjectBuilder().add(ASSET_ID, MOCKED_ASSET_ID).build();
+    doReturn(null)
+        .when(getAssetRecord)
+        .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
+    AssetFilter mockedAssetFilter = prepareAssetFilter(hashedId, argument);
+    List<Asset> mockedList = new ArrayList<>(Arrays.asList(asset, asset2, asset3));
+    when(ledger.scan(mockedAssetFilter)).thenReturn(mockedList);
+    when(asset.data()).thenReturn(mockedAssetData);
+    when(asset2.data()).thenReturn(mockedAssetData);
+    when(asset3.data()).thenReturn(mockedAssetData);
+    when(asset.age()).thenReturn(0);
+    when(asset2.age()).thenReturn(1);
+    when(asset3.age()).thenReturn(2);
+    when(getAssetRecord.isRoot()).thenReturn(false);
+
+    // act
+    JsonObject assetData = getAssetRecord.invoke(ledger, argument, Optional.of(properties));
+    JsonObject mockedAssetList = prepareMockedAssetList();
+
+    // assert
+    assertThat(assetData).isEqualTo(mockedAssetList);
+    verify(getAssetRecord).invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
+    verify(getAssetRecord).invokeSubContract(any(), any(), any());
+  }
+
   @Test
   public void invoke_ProperArgumentGivenAndAssetExists_ShouldRetrieveAssetDataFromLedger() {
     // arrange
-    JsonObject argument = prepareArguments();
+    JsonObject argument = prepareArguments(RECORD_MODE_GET);
     JsonObject properties = prepareProperties();
     String hashedId = Hasher.hash(properties.getString(RECORD_SALT), argument.getString(ASSET_ID));
     Asset asset = mock(Asset.class);
@@ -100,7 +204,7 @@ public class GetAssetRecordTest {
   @Test
   public void invoke_WithRootUser_ShouldThrowContractContextException() {
     // arrange
-    JsonObject argument = prepareArguments();
+    JsonObject argument = prepareArguments(RECORD_MODE_GET);
     JsonObject properties = prepareProperties();
     when(getAssetRecord.isRoot()).thenReturn(true);
 
@@ -117,7 +221,7 @@ public class GetAssetRecordTest {
   @Test
   public void invoke_ProperArgumentGivenAndAssetNotExisting_ShouldThrowContractContextException() {
     // arrange
-    JsonObject argument = prepareArguments();
+    JsonObject argument = prepareArguments(RECORD_MODE_GET);
     JsonObject properties = prepareProperties();
     String hashedId = Hasher.hash(properties.getString(RECORD_SALT), argument.getString(ASSET_ID));
     when(ledger.get(hashedId)).thenReturn(Optional.empty());
@@ -140,7 +244,7 @@ public class GetAssetRecordTest {
   @Test
   public void invoke_SaltPropertyMissing_ShouldThrowContractContextException() {
     // arrange
-    JsonObject argument = prepareArguments();
+    JsonObject argument = prepareArguments(RECORD_MODE_GET);
     JsonObject properties =
         Json.createObjectBuilder().add(CONTRACT_ARGUMENT_SCHEMA, MOCKED_SCHEMA).build();
 
@@ -158,7 +262,7 @@ public class GetAssetRecordTest {
   @Test
   public void invoke_ContractArgumentSchemaMissing_ShouldThrowContractContextException() {
     // arrange
-    JsonObject argument = prepareArguments();
+    JsonObject argument = prepareArguments(RECORD_MODE_GET);
     JsonObject properties = Json.createObjectBuilder().add(RECORD_SALT, MOCKED_SALT).build();
 
     // act
@@ -175,7 +279,7 @@ public class GetAssetRecordTest {
   @Test
   public void invoke_AllPropertiesMissing_ShouldThrowContractContextException() {
     // arrange
-    JsonObject argument = prepareArguments();
+    JsonObject argument = prepareArguments(RECORD_MODE_GET);
 
     // act
     // assert

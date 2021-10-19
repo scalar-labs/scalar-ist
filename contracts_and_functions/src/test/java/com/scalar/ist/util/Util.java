@@ -7,6 +7,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 
 public class Util {
+
   public static String readJsonSchemaFromResources(String fileName) {
     return readJson(Paths.get("arguments", "schema", fileName));
   }
@@ -31,10 +32,10 @@ public class Util {
   }
 
   public static JsonObject readArgumentsSampleFromResources(String filename) {
-    return readJsonObject(Paths.get("arguments", "sample", filename));
+    return readJsonObject(Paths.get("argument", filename));
   }
 
   public static JsonObject readAssetSampleFromResources(String filename) {
-    return readJsonObject(Paths.get("asset", "sample", filename));
+    return readJsonObject(Paths.get("asset", filename));
   }
 }

@@ -62,9 +62,6 @@ import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.ist.common.Constants;
 import com.scalar.ist.util.Hasher;
 import com.scalar.ist.util.Util;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import javax.json.Json;
@@ -72,7 +69,6 @@ import javax.json.JsonArray;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
-import javax.json.JsonValue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -320,7 +316,8 @@ public class UpdateConsentStatementStatusTest {
         .build();
   }
 
-  private JsonObject preparePutAssetRecordArgument(JsonObject argument, JsonObject consentStatement) {
+  private JsonObject preparePutAssetRecordArgument(
+      JsonObject argument, JsonObject consentStatement) {
     String consentStatementId = argument.getString(CONSENT_STATEMENT_ID);
     JsonNumber createdAt = argument.getJsonNumber(UPDATED_AT);
 

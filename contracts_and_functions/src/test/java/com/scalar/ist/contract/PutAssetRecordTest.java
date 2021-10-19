@@ -52,7 +52,7 @@ import org.mockito.MockitoAnnotations;
 public class PutAssetRecordTest {
   private static final String SCHEMA_FILENAME = "put_asset_record.json";
   private static final String MOCKED_ASSET_ID =
-      "consentstatement/" + UUID.randomUUID().toString() + "/" + System.currentTimeMillis();
+      "consentstatement/" + UUID.randomUUID() + "/" + System.currentTimeMillis();
   private static final String MOCKED_HOLDER_ID = "mockedHolderId";
   private static final String MOCKED_SALT = "64ju78r4er23";
   @Mock private Ledger ledger;

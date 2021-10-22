@@ -23,11 +23,10 @@ import com.google.common.hash.HashCode;
 import com.scalar.dl.ledger.contract.Contract;
 import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
-import org.hashids.Hashids;
-
 import java.util.Optional;
 import javax.json.Json;
 import javax.json.JsonObject;
+import org.hashids.Hashids;
 
 public class GetConsentStatement extends Contract {
 

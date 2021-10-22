@@ -1,5 +1,49 @@
 package com.scalar.ist.tools;
 
+import static com.scalar.ist.tools.Constants.ACTION;
+import static com.scalar.ist.tools.Constants.AGE;
+import static com.scalar.ist.tools.Constants.ASSERT_THAT;
+import static com.scalar.ist.tools.Constants.ASSERT_THROWS;
+import static com.scalar.ist.tools.Constants.ASSET_ID;
+import static com.scalar.ist.tools.Constants.BIGINT;
+import static com.scalar.ist.tools.Constants.BINARY_NAME;
+import static com.scalar.ist.tools.Constants.BOOLEAN;
+import static com.scalar.ist.tools.Constants.CHECK_ASSET;
+import static com.scalar.ist.tools.Constants.CHECK_RECORD;
+import static com.scalar.ist.tools.Constants.CLASS;
+import static com.scalar.ist.tools.Constants.CLIENT_PROPERTIES;
+import static com.scalar.ist.tools.Constants.CLUSTERING_KEYS;
+import static com.scalar.ist.tools.Constants.CONTRACT_ARGUMENT;
+import static com.scalar.ist.tools.Constants.CONTRACT_ID;
+import static com.scalar.ist.tools.Constants.CONTRACT_PROPERTIES;
+import static com.scalar.ist.tools.Constants.EXECUTE_CONTRACT;
+import static com.scalar.ist.tools.Constants.EXPECT;
+import static com.scalar.ist.tools.Constants.FLOAT;
+import static com.scalar.ist.tools.Constants.FUNCTIONS;
+import static com.scalar.ist.tools.Constants.ID;
+import static com.scalar.ist.tools.Constants.INT;
+import static com.scalar.ist.tools.Constants.MESSAGE;
+import static com.scalar.ist.tools.Constants.NAME;
+import static com.scalar.ist.tools.Constants.NAMESPACE;
+import static com.scalar.ist.tools.Constants.NOW;
+import static com.scalar.ist.tools.Constants.OPTIONAL;
+import static com.scalar.ist.tools.Constants.OUTPUT;
+import static com.scalar.ist.tools.Constants.PARTITION_KEYS;
+import static com.scalar.ist.tools.Constants.PATH;
+import static com.scalar.ist.tools.Constants.PROPERTIES;
+import static com.scalar.ist.tools.Constants.REGISTER_CERT;
+import static com.scalar.ist.tools.Constants.REGISTER_CONTRACT;
+import static com.scalar.ist.tools.Constants.REGISTER_FUNCTIONS;
+import static com.scalar.ist.tools.Constants.SET_DATABASE_CONFIG;
+import static com.scalar.ist.tools.Constants.SET_HOLDER;
+import static com.scalar.ist.tools.Constants.TABLE;
+import static com.scalar.ist.tools.Constants.TEXT;
+import static com.scalar.ist.tools.Constants.TYPE;
+import static com.scalar.ist.tools.Constants.TYPE_FILE;
+import static com.scalar.ist.tools.Constants.TYPE_STRING;
+import static com.scalar.ist.tools.Constants.VALUE;
+import static com.scalar.ist.tools.Constants._FUNCTIONS_;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.scalar.db.api.Get;
@@ -8,67 +52,79 @@ import com.scalar.db.api.Scan;
 import com.scalar.db.api.Scanner;
 import com.scalar.db.config.DatabaseConfig;
 import com.scalar.db.exception.storage.ExecutionException;
-import com.scalar.db.io.*;
+import com.scalar.db.io.BigIntValue;
+import com.scalar.db.io.BooleanValue;
+import com.scalar.db.io.FloatValue;
+import com.scalar.db.io.IntValue;
+import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
+import com.scalar.db.io.Value;
 import com.scalar.db.service.StorageModule;
 import com.scalar.db.service.StorageService;
 import com.scalar.dl.client.config.ClientConfig;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.dl.ledger.model.ContractExecutionResult;
-
-import javax.json.*;
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Properties;
 import java.util.stream.Collectors;
-
-import static com.scalar.ist.tools.Constants.*;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonNumber;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.json.JsonString;
+import javax.json.JsonValue;
 
 public class Deploy {
   private ContractUtil util;
   private Properties clientProps;
   private StorageService storageService;
 
-  public void process(JsonArray array) {
+  public void process(JsonArray array) throws IOException {
 
     util = new ContractUtil();
-    array.forEach(
-        jsonValue -> {
-          JsonObject json = (JsonObject) jsonValue;
-          JsonObjectBuilder builder =
-              Json.createObjectBuilder().add(ACTION, json.getString(ACTION));
+    for (JsonValue value : array) {
+      JsonObject json = (JsonObject) value;
+      JsonObjectBuilder builder = Json.createObjectBuilder().add(ACTION, json.getString(ACTION));
 
-          try {
-            switch (json.getString(ACTION)) {
-              case SET_HOLDER:
-                setContractProperties(json, builder);
-                break;
-              case REGISTER_CERT:
-                util.registerCertificate();
-                break;
-              case REGISTER_FUNCTIONS:
-                registerFunctions(json);
-                break;
-              case REGISTER_CONTRACT:
-                registerContract(json, builder);
-                break;
-              case EXECUTE_CONTRACT:
-                executeContract(json, builder);
-                break;
-              case SET_DATABASE_CONFIG:
-                setDatabaseConfig(json);
-                break;
-              case CHECK_ASSET:
-                checkAsset(json, builder);
-                break;
-              case CHECK_RECORD:
-                checkRecord(json, builder);
-                break;
-              default:
-                builder.add("command error", "specified invalid action");
-            }
-          } finally {
-            System.out.println(builder.build());
-          }
-        });
+      try {
+        switch (json.getString(ACTION)) {
+          case SET_HOLDER:
+            setContractProperties(json, builder);
+            break;
+          case REGISTER_CERT:
+            util.registerCertificate();
+            break;
+          case REGISTER_FUNCTIONS:
+            registerFunctions(json);
+            break;
+          case REGISTER_CONTRACT:
+            registerContract(json, builder);
+            break;
+          case EXECUTE_CONTRACT:
+            executeContract(json, builder);
+            break;
+          case SET_DATABASE_CONFIG:
+            setDatabaseConfig(json);
+            break;
+          case CHECK_ASSET:
+            checkAsset(json, builder);
+            break;
+          case CHECK_RECORD:
+            checkRecord(json, builder);
+            break;
+          default:
+            builder.add("command error", "specified invalid action");
+        }
+      } finally {
+        System.out.println(builder.build());
+      }
+    }
   }
 
   private void registerFunctions(JsonObject json) {
@@ -247,8 +303,7 @@ public class Deploy {
     switch (val1.getValueType()) {
       case STRING:
         if (!val1.toString().equals(val2.toString())) {
-          throw new RuntimeException(
-              "Json value is not matched. " + val1.toString() + ":" + val2.toString());
+          throw new RuntimeException("Json value is not matched. " + val1 + ":" + val2);
         }
         break;
 
@@ -276,10 +331,8 @@ public class Deploy {
       String className = json.getJsonObject(ASSERT_THROWS).getString(CLASS);
       String message = json.getJsonObject(ASSERT_THROWS).getString(MESSAGE, "");
 
-      if (e.getClass().getName().equals(className)
-          && (message.length() > 0 && e.getMessage().equals(message))) {
-        return true;
-      }
+      return e.getClass().getName().equals(className)
+          && (message.length() > 0 && e.getMessage().equals(message));
     }
     return false;
   }
@@ -361,7 +414,8 @@ public class Deploy {
     return builder.build();
   }
 
-  private void setContractProperties(JsonObject json, JsonObjectBuilder builder) {
+  private void setContractProperties(JsonObject json, JsonObjectBuilder builder)
+      throws IOException {
     clientProps = new Properties();
     JsonObject jsonObject = json.getJsonObject(CLIENT_PROPERTIES);
     clientProps.setProperty(
@@ -411,8 +465,8 @@ public class Deploy {
 
   private Result readRecord(JsonObject json) throws ExecutionException {
 
-    List<Value> partitionKeysValues = toValues(json.getJsonArray(PARTITION_KEYS));
-    List<Value> clusteringKeysValues = toValues(json.getJsonArray(CLUSTERING_KEYS));
+    List<Value<?>> partitionKeysValues = toValues(json.getJsonArray(PARTITION_KEYS));
+    List<Value<?>> clusteringKeysValues = toValues(json.getJsonArray(CLUSTERING_KEYS));
 
     Get get;
     if (clusteringKeysValues.isEmpty()) {
@@ -434,7 +488,7 @@ public class Deploy {
     return null;
   }
 
-  List<Value> toValues(JsonArray values) {
+  List<Value<?>> toValues(JsonArray values) {
 
     return values.stream()
         .map(JsonValue::asJsonObject)

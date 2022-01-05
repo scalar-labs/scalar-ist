@@ -8,8 +8,6 @@ on:
 jobs:
   build-and-push-docker-image:
     runs-on: ubuntu-latest
-    env: 
-      workingDirectory: ./ist-loader
 
     steps:
       - name: Set version

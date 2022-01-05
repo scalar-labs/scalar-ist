@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build -t ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }} .
+        run: docker build -t ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }} ./ist-loader
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1

@@ -1,6 +1,9 @@
 name: Release
 
-on: [push]
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
 
 jobs:
   build-and-push-docker-image:
@@ -26,4 +29,4 @@ jobs:
           password: ${{ secrets.CR_PAT }}
 
       - name: Push Docker image
-        run: docker push ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }}
+        run: docker push ghcr.io/scalar-labs/scalardl-schema-loader:${{ steps.version.outputs.version }}

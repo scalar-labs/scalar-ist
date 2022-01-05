@@ -3,10 +3,21 @@ name: Release
 on: [push]
 
 jobs:
-  release:
+  build-and-push-docker-image:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set version
+        id: version
+        run: |
+          VERSION=$(echo ${{ github.ref }} | sed -e "s#refs/tags/v##g")
+          echo ::set-output name=version::${VERSION}
+      - name: Check out codes
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }} .
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -14,9 +25,5 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Create containers
-        run: gradle docker
-
-      - name: Push containers
-        run: |
-          docker push ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }}
+      - name: Push Docker image
+        run: docker push ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }}

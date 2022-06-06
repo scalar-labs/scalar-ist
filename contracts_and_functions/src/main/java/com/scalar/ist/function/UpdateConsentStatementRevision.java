@@ -104,8 +104,8 @@ public class UpdateConsentStatementRevision extends Function {
     database.put(put);
   }
 
-  private List<Value> createValues(List<String> keys, JsonObject contractArgument) {
-    List<Value> values = new ArrayList<>();
+  private List<Value<?>> createValues(List<String> keys, JsonObject contractArgument) {
+    List<Value<?>> values = new ArrayList<>();
     for (String key : keys)
       if (contractArgument.containsKey(key)) {
         JsonValue.ValueType argumentValueType = contractArgument.get(key).getValueType();

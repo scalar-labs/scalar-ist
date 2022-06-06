@@ -177,7 +177,7 @@ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/regist
 ```
 
 ### Register the user profile information of the business operator handling personal information
- 
+
 You first need admin profile, and then you can register the user profile.
 ```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_admin.json
@@ -191,7 +191,7 @@ Register the purpose of use
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_purpose.json
 ```
 
-Update the purpose of use  
+Update the purpose of use
 ``` 
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_purpose.json
 ```
@@ -253,7 +253,7 @@ Revise the consent document (changes that require re-consent)
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_version.json
 ```
 
-Change the status of the consent document 
+Change the status of the consent document
 ```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_status.json
 ```
@@ -291,7 +291,7 @@ Reference of consent status by data subject
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_data_subject.json
 ```
 
-Reference of the status of consent by the business user 
+Reference of the status of consent by the business user
 ```
 build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_controller.json
 ```

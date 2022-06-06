@@ -1,18 +1,5 @@
 package com.scalar.ist.function;
 
-import com.scalar.db.api.Get;
-import com.scalar.db.api.Put;
-import com.scalar.db.io.BigIntValue;
-import com.scalar.db.io.BooleanValue;
-import com.scalar.db.io.Key;
-import com.scalar.db.io.TextValue;
-import com.scalar.dl.ledger.database.Database;
-import com.scalar.dl.ledger.exception.ContractContextException;
-import com.scalar.dl.ledger.function.Function;
-
-import javax.json.JsonObject;
-import java.util.Optional;
-
 import static com.scalar.ist.common.Constants.COMPANY_ID;
 import static com.scalar.ist.common.Constants.COMPANY_METADATA;
 import static com.scalar.ist.common.Constants.COMPANY_NAME;
@@ -25,6 +12,18 @@ import static com.scalar.ist.common.Constants.IS_ACTIVE;
 import static com.scalar.ist.common.Constants.NAMESPACE;
 import static com.scalar.ist.common.Constants.RECORD_NOT_FOUND;
 import static com.scalar.ist.common.Constants.UPDATED_AT;
+
+import com.scalar.db.api.Get;
+import com.scalar.db.api.Put;
+import com.scalar.db.io.BigIntValue;
+import com.scalar.db.io.BooleanValue;
+import com.scalar.db.io.Key;
+import com.scalar.db.io.TextValue;
+import com.scalar.dl.ledger.database.Database;
+import com.scalar.dl.ledger.exception.ContractContextException;
+import com.scalar.dl.ledger.function.Function;
+import java.util.Optional;
+import javax.json.JsonObject;
 
 public class UpdateCompany extends Function {
 

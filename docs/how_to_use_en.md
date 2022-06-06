@@ -1,7 +1,7 @@
 # Scalar IST execution procedure
 To run Scalar IST, you need to do the following:
 
-Create Holder ID, private key, and certificate of the contract executor
+Create a Holder ID, private key, and certificate for the contract executor
 - Register the contract executor's certificate with Scalar DLT
 - Register the contract and function used by the contract executor in Scalar DLT.
 - Generate a digital signature of request data at the time of contract execution using the contract executor's private key
@@ -10,7 +10,7 @@ Create Holder ID, private key, and certificate of the contract executor
 ## Scalar IST user story
 In IST, there are two types of business operators, system operation business operators and personal information handling business operators, and the system operating business operator has the authority to register only one business operator and to register the personal information handling business operator. A business operator handling personal information is a business operator that collects, uses, and provides personal information, creates consent documents for collecting personal information, and manages consent records.
 
-In IST, register the business operator and user profile in the following order.
+In IST, register the business operator and user profile in the following order:
 
 - Register the system operator who operates the system, and register the user profiles of the system administrator and system operator who belong to the system operator.
 - Registration of personal information handling business operator using the system, registration of personal information handling business operator administrator, information manager, information processor user profile
@@ -55,9 +55,9 @@ In IST, register the business operator and user profile in the following order.
 - The user of the business obtains the consent status for the consent document of the business.
 
 ## Run a user story with a deploy tool
-The IST project that has been use was [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
+Based on the followingIST project [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
 To use IST you need to run [scalardl](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).  
-The next steps have been tested with this docker-compose from scalardl:
+The next steps have been tested with this docker-compose.yml from scalardl:
 ``` 
 version: "3.5"
 services:

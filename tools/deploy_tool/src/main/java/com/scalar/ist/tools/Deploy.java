@@ -76,8 +76,6 @@ public class Deploy {
         ClientConfig.SERVER_PRIVILEGED_PORT,
         jsonObject.getString(ClientConfig.SERVER_PRIVILEGED_PORT, ""));
     clientProperties.setProperty(
-        ClientConfig.CLIENT_MODE, jsonObject.getString(ClientConfig.CLIENT_MODE, ""));
-    clientProperties.setProperty(
         ClientConfig.CERT_HOLDER_ID, jsonObject.getString(ClientConfig.CERT_HOLDER_ID, ""));
     clientProperties.setProperty(
         ClientConfig.PRIVATE_KEY_PATH, jsonObject.getString(ClientConfig.PRIVATE_KEY_PATH, ""));

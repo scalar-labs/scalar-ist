@@ -89,6 +89,15 @@ public class Deploy {
         ClientConfig.CERT_VERSION, jsonObject.getString(ClientConfig.CERT_VERSION, ""));
     clientProperties.setProperty(
         ClientConfig.TLS_ENABLED, jsonObject.getString(ClientConfig.TLS_ENABLED, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_ENABLED, jsonObject.getString(ClientConfig.AUDITOR_ENABLED, "false"));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_HOST, jsonObject.getString(ClientConfig.AUDITOR_HOST, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_PORT, jsonObject.getString(ClientConfig.AUDITOR_PORT, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_PRIVILEGED_PORT,
+        jsonObject.getString(ClientConfig.AUDITOR_PRIVILEGED_PORT, ""));
     util.setup(clientProperties);
   }
 

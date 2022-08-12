@@ -98,6 +98,21 @@ public class Deploy {
     clientProperties.setProperty(
         ClientConfig.AUDITOR_PRIVILEGED_PORT,
         jsonObject.getString(ClientConfig.AUDITOR_PRIVILEGED_PORT, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_AUTHORIZATION_CREDENTIAL,
+        jsonObject.getString(ClientConfig.AUDITOR_AUTHORIZATION_CREDENTIAL, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_LINEARIZABLE_VALIDATION_CONTRACT_ID,
+        jsonObject.getString(ClientConfig.AUDITOR_LINEARIZABLE_VALIDATION_CONTRACT_ID, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_TLS_ENABLED,
+        jsonObject.getString(ClientConfig.AUDITOR_TLS_ENABLED, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_TLS_CA_ROOT_CERT_PATH,
+        jsonObject.getString(ClientConfig.AUDITOR_TLS_CA_ROOT_CERT_PATH, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_TLS_CA_ROOT_CERT_PEM,
+        jsonObject.getString(ClientConfig.AUDITOR_TLS_CA_ROOT_CERT_PEM, ""));
     util.setup(clientProperties);
   }
 

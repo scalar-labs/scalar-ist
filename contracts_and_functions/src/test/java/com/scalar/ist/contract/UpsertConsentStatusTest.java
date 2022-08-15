@@ -59,7 +59,7 @@ public class UpsertConsentStatusTest {
   private static final String MOCKED_ASSET_NAME = "consent";
   private static final String MOCKED_ASSET_VERSION = "01";
   @Mock private Ledger ledger;
-  @Mock private CertificateEntry.Key certificateKey;
+  private CertificateEntry.Key certificateKey = new CertificateEntry.Key(MOCKED_HOLDER_ID, 1);
   private UpsertConsentStatus upsertConsentStatus;
 
   @BeforeEach
@@ -77,7 +77,6 @@ public class UpsertConsentStatusTest {
     JsonObject putRecordArgument = preparePutRecordArgument(argument, properties);
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(upsertConsentStatus.getCertificateKey()).thenReturn(certificateKey);
-    when(upsertConsentStatus.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(upsertConsentStatus)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);

@@ -81,7 +81,7 @@ public class RegisterThirdPartyTest {
           .add(UUID.randomUUID().toString())
           .build();
   @Mock Ledger ledger;
-  @Mock CertificateEntry.Key key;
+  CertificateEntry.Key key = new CertificateEntry.Key(MOCKED_HOLDER_ID, 1);
   private RegisterThirdParty registerThirdParty;
 
   @BeforeEach
@@ -102,7 +102,6 @@ public class RegisterThirdPartyTest {
     JsonObject putRecordArgument = preparePutRecordArgument(argument, properties);
     JsonObject validationArgument = prepareValidationArgument(argument, properties);
     when(registerThirdParty.getCertificateKey()).thenReturn(key);
-    when(key.getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
         .when(registerThirdParty)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
@@ -146,7 +145,6 @@ public class RegisterThirdPartyTest {
     JsonObject validationArgument =
         prepareValidationArgument(argument, propertiesWithWrongHolderId);
     when(registerThirdParty.getCertificateKey()).thenReturn(key);
-    when(registerThirdParty.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(registerThirdParty)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validationArgument);

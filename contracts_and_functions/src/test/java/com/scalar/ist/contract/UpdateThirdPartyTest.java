@@ -80,7 +80,7 @@ public class UpdateThirdPartyTest {
   private static final JsonNumber MOCKED_CREATED_AT = Json.createValue(Long.MAX_VALUE);
   private static final JsonNumber MOCKED_UPDATED_AT = Json.createValue(2);
   @Mock private Ledger ledger;
-  @Mock private CertificateEntry.Key certificateKey;
+  private CertificateEntry.Key certificateKey = new CertificateEntry.Key(MOCKED_HOLDER_ID, 1);
   private UpdateThirdParty updateThirdParty;
 
   @BeforeEach
@@ -102,7 +102,6 @@ public class UpdateThirdPartyTest {
     JsonObject validatePermissionArgument = prepareValidatePermissionArgument();
     JsonObject putRecordArgument = preparePutRecordArgument(argument, properties, thirdPartyAsset);
     when(updateThirdParty.getCertificateKey()).thenReturn(certificateKey);
-    when(updateThirdParty.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
         .when(updateThirdParty)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
@@ -197,7 +196,6 @@ public class UpdateThirdPartyTest {
     JsonObject properties = prepareProperties(UUID.randomUUID().toString());
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(updateThirdParty.getCertificateKey()).thenReturn(certificateKey);
-    when(updateThirdParty.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(updateThirdParty)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);

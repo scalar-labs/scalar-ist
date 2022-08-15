@@ -97,7 +97,7 @@ public class UpdateConsentStatementVersionTest {
   private final String mockedDataRetentionPolicyIds =
       "0e49ccac276736e59cc5ac3439891a2297a3ce06e8f78589aff1e17171dfbeda";
   @Mock private Ledger ledger;
-  @Mock private Key certificateKey;
+  private Key certificateKey = new Key(MOCKED_HOLDER_ID, 1);
   private UpdateConsentStatementVersion updateConsentStatementVersion;
 
   @BeforeEach
@@ -120,8 +120,6 @@ public class UpdateConsentStatementVersionTest {
     JsonObject putRecordArgument = preparePutAssetRecordArgument(properties, argument);
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(updateConsentStatementVersion.getCertificateKey()).thenReturn(certificateKey);
-    when(updateConsentStatementVersion.getCertificateKey().getHolderId())
-        .thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
         .when(updateConsentStatementVersion)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
@@ -216,8 +214,6 @@ public class UpdateConsentStatementVersionTest {
     JsonObject validateArgumentArgument =
         prepareValidationArgument(argument, propertiesWithWrongHolderId);
     when(updateConsentStatementVersion.getCertificateKey()).thenReturn(certificateKey);
-    when(updateConsentStatementVersion.getCertificateKey().getHolderId())
-        .thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(updateConsentStatementVersion)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);

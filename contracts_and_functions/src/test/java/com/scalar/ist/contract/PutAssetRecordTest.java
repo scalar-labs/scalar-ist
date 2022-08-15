@@ -56,7 +56,7 @@ public class PutAssetRecordTest {
   private static final String MOCKED_HOLDER_ID = "mockedHolderId";
   private static final String MOCKED_SALT = "64ju78r4er23";
   @Mock private Ledger ledger;
-  @Mock private Key mockedKey;
+  private Key mockedKey = new Key(MOCKED_HOLDER_ID, 1);
   private PutAssetRecord putAssetRecord;
 
   @BeforeEach
@@ -64,7 +64,6 @@ public class PutAssetRecordTest {
     MockitoAnnotations.initMocks(this);
     putAssetRecord = spy(new PutAssetRecord());
     when(putAssetRecord.getCertificateKey()).thenReturn(mockedKey);
-    when(mockedKey.getHolderId()).thenReturn(MOCKED_HOLDER_ID);
   }
 
   @Test

@@ -91,7 +91,7 @@ public class UpdateCompanyTest {
           .add(MOCKED_ORGANIZATION_ID)
           .build();
   @Mock private Ledger ledger;
-  @Mock private CertificateEntry.Key certificateKey;
+  private CertificateEntry.Key certificateKey = new CertificateEntry.Key(MOCKED_HOLDER_ID, 1);
   private UpdateCompany updateCompany;
 
   @BeforeEach
@@ -128,7 +128,6 @@ public class UpdateCompanyTest {
     JsonObject getRecordArgument = prepareGetRecordArgument(contractArgument, properties);
     JsonObject validateArgumentArgument = prepareValidationArgument(contractArgument, properties);
     when(updateCompany.getCertificateKey()).thenReturn(certificateKey);
-    when(updateCompany.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
         .when(updateCompany)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
@@ -247,7 +246,6 @@ public class UpdateCompanyTest {
         .when(updateCompany)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
     when(updateCompany.getCertificateKey()).thenReturn(certificateKey);
-    when(updateCompany.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
 
     // Act
     // Assert
@@ -276,7 +274,6 @@ public class UpdateCompanyTest {
     JsonObject getRecordArgument = prepareGetRecordArgument(argument, properties);
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(updateCompany.getCertificateKey()).thenReturn(certificateKey);
-    when(updateCompany.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
         .when(updateCompany)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);

@@ -1,10 +1,8 @@
 package com.scalar.ist.tools;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.scalar.dl.client.config.ClientConfig;
-import com.scalar.dl.client.service.ClientModule;
 import com.scalar.dl.client.service.ClientService;
+import com.scalar.dl.client.service.ClientServiceFactory;
 import com.scalar.dl.ledger.model.ContractExecutionResult;
 import java.io.IOException;
 import java.util.Optional;
@@ -22,8 +20,8 @@ public class ContractUtil {
 
   public void setup(Properties properties) throws IOException {
     ClientConfig config = new ClientConfig(properties);
-    Injector injector = Guice.createInjector(new ClientModule(config));
-    clientService = injector.getInstance(ClientService.class);
+    ClientServiceFactory factory = new ClientServiceFactory();
+    clientService = factory.create(config);
   }
 
   public void registerCertificate() {

@@ -76,8 +76,6 @@ public class Deploy {
         ClientConfig.SERVER_PRIVILEGED_PORT,
         jsonObject.getString(ClientConfig.SERVER_PRIVILEGED_PORT, ""));
     clientProperties.setProperty(
-        ClientConfig.CLIENT_MODE, jsonObject.getString(ClientConfig.CLIENT_MODE, ""));
-    clientProperties.setProperty(
         ClientConfig.CERT_HOLDER_ID, jsonObject.getString(ClientConfig.CERT_HOLDER_ID, ""));
     clientProperties.setProperty(
         ClientConfig.PRIVATE_KEY_PATH, jsonObject.getString(ClientConfig.PRIVATE_KEY_PATH, ""));
@@ -91,6 +89,30 @@ public class Deploy {
         ClientConfig.CERT_VERSION, jsonObject.getString(ClientConfig.CERT_VERSION, ""));
     clientProperties.setProperty(
         ClientConfig.TLS_ENABLED, jsonObject.getString(ClientConfig.TLS_ENABLED, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_ENABLED, jsonObject.getString(ClientConfig.AUDITOR_ENABLED, "false"));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_HOST, jsonObject.getString(ClientConfig.AUDITOR_HOST, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_PORT, jsonObject.getString(ClientConfig.AUDITOR_PORT, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_PRIVILEGED_PORT,
+        jsonObject.getString(ClientConfig.AUDITOR_PRIVILEGED_PORT, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_AUTHORIZATION_CREDENTIAL,
+        jsonObject.getString(ClientConfig.AUDITOR_AUTHORIZATION_CREDENTIAL, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_LINEARIZABLE_VALIDATION_CONTRACT_ID,
+        jsonObject.getString(ClientConfig.AUDITOR_LINEARIZABLE_VALIDATION_CONTRACT_ID, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_TLS_ENABLED,
+        jsonObject.getString(ClientConfig.AUDITOR_TLS_ENABLED, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_TLS_CA_ROOT_CERT_PATH,
+        jsonObject.getString(ClientConfig.AUDITOR_TLS_CA_ROOT_CERT_PATH, ""));
+    clientProperties.setProperty(
+        ClientConfig.AUDITOR_TLS_CA_ROOT_CERT_PEM,
+        jsonObject.getString(ClientConfig.AUDITOR_TLS_CA_ROOT_CERT_PEM, ""));
     util.setup(clientProperties);
   }
 

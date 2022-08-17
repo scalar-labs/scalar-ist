@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '3.5.0'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '3.5.2'
     implementation group: 'com.scalar-labs', name: 'scalardb', version: '3.6.0'
     implementation group:'com.github.everit-org.json-schema', name: 'org.everit.json.schema', version: '1.12.1'
     implementation group: 'org.hashids', name: 'hashids', version: '1.0.3'

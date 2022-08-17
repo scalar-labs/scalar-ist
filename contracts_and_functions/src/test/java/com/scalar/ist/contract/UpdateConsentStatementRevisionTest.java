@@ -102,7 +102,7 @@ public class UpdateConsentStatementRevisionTest {
   private final JsonArray thirdPartyIds = createIDArray();
 
   @Mock private Ledger ledger;
-  private CertificateEntry.Key certificateKey = new CertificateEntry.Key(MOCKED_HOLDER_ID, 1);
+  @Mock private CertificateEntry.Key certificateKey;
   private UpdateConsentStatementRevision updateConsentStatementRevision;
 
   @BeforeEach
@@ -125,6 +125,8 @@ public class UpdateConsentStatementRevisionTest {
     JsonObject putRecordArgument = preparePutAssetRecordArgument(argument);
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(updateConsentStatementRevision.getCertificateKey()).thenReturn(certificateKey);
+    when(updateConsentStatementRevision.getCertificateKey().getHolderId())
+        .thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(updateConsentStatementRevision)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
@@ -177,6 +179,8 @@ public class UpdateConsentStatementRevisionTest {
     JsonObject validateArgumentArgument =
         prepareValidationArgument(argument, propertiesWithWrongHolderId);
     when(updateConsentStatementRevision.getCertificateKey()).thenReturn(certificateKey);
+    when(updateConsentStatementRevision.getCertificateKey().getHolderId())
+        .thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(updateConsentStatementRevision)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);

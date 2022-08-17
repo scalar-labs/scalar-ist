@@ -80,6 +80,7 @@ public class InitializeTest {
   private static final String MOCKED_SYSOPERATOR = UUID.randomUUID().toString();
   private static final JsonNumber MOCKED_CREATED_AT = Json.createValue(Long.MAX_VALUE);
   @Mock private Ledger ledger;
+  @Mock private Key certificateKey;
   private Initialize initialize;
 
   private static JsonObject prepareCompanyInformation() {
@@ -109,7 +110,8 @@ public class InitializeTest {
         preparePutUserProfileArgument(
             argument, properties, ROLE_SYSOPERATOR, argument.getString(HOLDER_ID_SYSOPERATOR));
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
-    when(initialize.getCertificateKey()).thenReturn(new Key(INITIALIZER_ACCOUNT_NAME, 1));
+    when(initialize.getCertificateKey()).thenReturn(certificateKey);
+    when(initialize.getCertificateKey().getHolderId()).thenReturn(INITIALIZER_ACCOUNT_NAME);
     doReturn(null)
         .when(initialize)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
@@ -140,7 +142,8 @@ public class InitializeTest {
   public void invoke_WithoutProperty_ShouldThrowContractContextException() {
     // Arrange
     JsonObject argument = prepareArgument();
-    when(initialize.getCertificateKey()).thenReturn(new Key(MOCKED_HOLDER_ID, 1));
+    when(initialize.getCertificateKey()).thenReturn(certificateKey);
+    when(initialize.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
 
     // Act
     // Assert
@@ -171,7 +174,8 @@ public class InitializeTest {
             .build();
     JsonObject validateArgumentArgument =
         prepareValidationArgument(argument, propertiesWithWrongHolderId);
-    when(initialize.getCertificateKey()).thenReturn(new Key(MOCKED_HOLDER_ID, 1));
+    when(initialize.getCertificateKey()).thenReturn(certificateKey);
+    when(initialize.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(initialize)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);

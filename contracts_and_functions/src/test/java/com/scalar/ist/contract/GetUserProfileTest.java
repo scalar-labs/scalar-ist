@@ -56,7 +56,7 @@ public class GetUserProfileTest {
           .add(UUID.randomUUID().toString())
           .build();
   @Mock private Ledger ledger;
-  private CertificateEntry.Key certificateKey = new CertificateEntry.Key(MOCKED_HOLDER_ID, 1);
+  @Mock private CertificateEntry.Key certificateKey;
   private GetUserProfile getUserProfile;
 
   @BeforeEach
@@ -73,6 +73,7 @@ public class GetUserProfileTest {
     JsonObject getAssetRecordArgument = prepareAssetRecordArgument();
     JsonObject assetRecord = prepareAssetRecord();
     when(getUserProfile.getCertificateKey()).thenReturn(certificateKey);
+    when(getUserProfile.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     doReturn(null)
         .when(getUserProfile)
@@ -106,6 +107,7 @@ public class GetUserProfileTest {
         Json.createObjectBuilder().add(ROLES, mockedArrayAdminRoles).build();
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(getUserProfile.getCertificateKey()).thenReturn(certificateKey);
+    when(getUserProfile.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(getUserProfile)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);

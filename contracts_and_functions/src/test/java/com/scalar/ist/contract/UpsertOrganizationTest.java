@@ -80,7 +80,7 @@ public class UpsertOrganizationTest {
   private static final JsonNumber MOCKED_CREATED_AT = Json.createValue(Long.MAX_VALUE);
   private static final JsonNumber MOCKED_UPDATED_AT = Json.createValue(2);
   @Mock private Ledger ledger;
-  private CertificateEntry.Key certificateKey = new CertificateEntry.Key(MOCKED_HOLDER_ID, 1);
+  @Mock private CertificateEntry.Key certificateKey;
   private UpsertOrganization upsertOrganization;
 
   @BeforeEach
@@ -102,6 +102,7 @@ public class UpsertOrganizationTest {
     JsonObject validateRolesArgument = prepareValidateRolesArgument();
     JsonObject putRecordArgument = preparePutRecordArgument(argument, properties, company);
     when(upsertOrganization.getCertificateKey()).thenReturn(certificateKey);
+    when(upsertOrganization.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
         .when(upsertOrganization)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
@@ -216,6 +217,7 @@ public class UpsertOrganizationTest {
     JsonObject validateRolesArgument = prepareValidateRolesArgument();
     JsonObject putRecordArgument = preparePutRecordArgument(argument, properties, company);
     when(upsertOrganization.getCertificateKey()).thenReturn(certificateKey);
+    when(upsertOrganization.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
         .when(upsertOrganization)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
@@ -265,6 +267,7 @@ public class UpsertOrganizationTest {
             .build();
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(upsertOrganization.getCertificateKey()).thenReturn(certificateKey);
+    when(upsertOrganization.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(upsertOrganization)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
@@ -296,6 +299,7 @@ public class UpsertOrganizationTest {
                     .build())
             .build();
     when(upsertOrganization.getCertificateKey()).thenReturn(certificateKey);
+    when(upsertOrganization.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
 
     // Act
     // Assert

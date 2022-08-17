@@ -71,7 +71,7 @@ public class UpsertMasterTest {
           .add(MOCKED_ORGANIZATION_ID)
           .build();
   @Mock private Ledger ledger;
-  private Key certificateKey = new Key(MOCKED_HOLDER_ID, 1);
+  @Mock private Key certificateKey;
   private UpsertMaster upsertMaster;
 
   @BeforeEach
@@ -92,6 +92,7 @@ public class UpsertMasterTest {
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     JsonObject putAssetRecordArgument = preparePutRecordArgument(argument, properties, false);
     when(upsertMaster.getCertificateKey()).thenReturn(certificateKey);
+    when(upsertMaster.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(upsertMaster)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
@@ -130,6 +131,7 @@ public class UpsertMasterTest {
     JsonObject getAssetRecordArgument = prepareGetAssetRecordArgument();
     JsonObject putAssetRecordArgument = preparePutRecordArgument(argument, properties, true);
     when(upsertMaster.getCertificateKey()).thenReturn(certificateKey);
+    when(upsertMaster.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(upsertMaster)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);

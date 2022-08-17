@@ -126,7 +126,7 @@ public class UpdateConsentStatementStatusTest {
   private final JsonArray mockedOptionalPurposes =
       Json.createArrayBuilder().add(mockedPurposes).build();
   @Mock private Ledger ledger;
-  private CertificateEntry.Key certificateKey = new CertificateEntry.Key(MOCKED_HOLDER_ID, 1);
+  @Mock private CertificateEntry.Key certificateKey;
   private UpdateConsentStatementStatus updateConsentStatementStatus;
 
   @BeforeEach
@@ -149,6 +149,8 @@ public class UpdateConsentStatementStatusTest {
     JsonObject putRecordArgument = preparePutAssetRecordArgument(argument, consentStatement);
     JsonObject validateArgumentArgument = prepareValidationArgument(argument, properties);
     when(updateConsentStatementStatus.getCertificateKey()).thenReturn(certificateKey);
+    when(updateConsentStatementStatus.getCertificateKey().getHolderId())
+        .thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(updateConsentStatementStatus)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
@@ -201,6 +203,8 @@ public class UpdateConsentStatementStatusTest {
     JsonObject validateArgumentArgument =
         prepareValidationArgument(argument, propertiesWithWrongHolderId);
     when(updateConsentStatementStatus.getCertificateKey()).thenReturn(certificateKey);
+    when(updateConsentStatementStatus.getCertificateKey().getHolderId())
+        .thenReturn(MOCKED_HOLDER_ID);
     doReturn(null)
         .when(updateConsentStatementStatus)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);

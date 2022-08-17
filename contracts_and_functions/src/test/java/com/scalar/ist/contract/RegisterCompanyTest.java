@@ -86,7 +86,7 @@ public class RegisterCompanyTest {
           .add(MOCKED_ORGANIZATION_ID)
           .build();
   @Mock private Ledger ledger;
-  private CertificateEntry.Key certificateKey = new CertificateEntry.Key(MOCKED_HOLDER_ID, 1);
+  @Mock private CertificateEntry.Key certificateKey;
   private RegisterCompany registerCompany;
 
   private static JsonObject prepareCompanyInformation() {
@@ -117,6 +117,7 @@ public class RegisterCompanyTest {
         .when(registerCompany)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
     when(registerCompany.getCertificateKey()).thenReturn(certificateKey);
+    when(registerCompany.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
         .when(registerCompany)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
@@ -221,6 +222,7 @@ public class RegisterCompanyTest {
         .when(registerCompany)
         .invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentArgument);
     when(registerCompany.getCertificateKey()).thenReturn(certificateKey);
+    when(registerCompany.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     doReturn(userProfile)
         .when(registerCompany)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
@@ -259,6 +261,7 @@ public class RegisterCompanyTest {
             .add(ASSET_NAME, MOCKED_ASSET_NAME)
             .build();
     when(registerCompany.getCertificateKey()).thenReturn(certificateKey);
+    when(registerCompany.getCertificateKey().getHolderId()).thenReturn(MOCKED_HOLDER_ID);
     JsonObject validateArgumentArgument =
         prepareValidationArgument(argument, propertiesWithWrongHolderId);
     doReturn(null)

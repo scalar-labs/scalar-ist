@@ -15,11 +15,9 @@ jobs:
         run: |
           VERSION=$(echo ${{ github.ref }} | sed -e "s#refs/tags/v##g")
           echo ::set-output name=version::${VERSION}
+
       - name: Check out codes
         uses: actions/checkout@v2
-
-      - name: Build Docker image
-        run: docker build -t ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }} ./ist-loader
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
@@ -27,6 +25,9 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
+
+      - name: Build Docker image
+        run: docker build -t ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }} ./ist-loader
 
       - name: Push Docker image
         run: docker push ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }}

@@ -87,6 +87,7 @@
       "data_set_name": "TEXT",
       "description": "TEXT",
       "data_location": "TEXT",
+      "category_of_data": "TEXT",
       "data_type": "TEXT",
       "classification": "TEXT",
       "data_set_schema": "TEXT",

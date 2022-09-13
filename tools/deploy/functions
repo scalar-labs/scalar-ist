@@ -15,7 +15,7 @@ cd "`dirname \"$PRG\"`"/../../ >/dev/null
 ROOTDIR="`pwd -P`"
 cd "$CURRENT_DIR" >/dev/null
 
-source "${CURRENT_DIR}/common"
+source "${CURRENT_DIR}/common.sh"
 
 run register_certificate "${CURRENT_DIR}/fixture/conf/initializer.properties"
 

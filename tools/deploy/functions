@@ -17,8 +17,6 @@ cd "$CURRENT_DIR" >/dev/null
 
 source "${CURRENT_DIR}/common.sh"
 
-run register_certificate "${CURRENT_DIR}/fixture/conf/initializer.properties"
-
 run register_function "${CURRENT_DIR}/fixture/conf/initializer.properties" \
   "Initialize" \
   "com.scalar.ist.function.Initialize" \

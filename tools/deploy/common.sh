@@ -6,6 +6,7 @@ REGISTER_FUNCTION_BIN="$ROOTDIR/scalar/client/build/install/client/bin/register-
 REGISTER_CONTRACT_BIN="$ROOTDIR/scalar/client/build/install/client/bin/register-contract"
 EXECUTE_CONTRACT_BIN="$ROOTDIR/scalar/client/build/install/client/bin/execute-contract"
 LIST_CONTRACT_BIN="$ROOTDIR/scalar/client/build/install/client/bin/list-contracts"
+TEST_STATUS=0
 
 # funtions
 run() {
@@ -16,6 +17,7 @@ run() {
   if [ "$return" == '0' ]; then
     echo -e "\033[0;32mSUCCESSFUL\033[0m\n\n"
   else
+    TEST_STATUS=1
     echo -e "\033[0;31mFAILED\033[0m\n\n"
   fi
   return $return

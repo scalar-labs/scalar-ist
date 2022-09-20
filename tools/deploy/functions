@@ -73,7 +73,7 @@ run register_function "${CURRENT_DIR}/fixture/conf/initializer.properties" \
   "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/function/UpdateConsentStatementRevision.class"
 
 run register_function "${CURRENT_DIR}/fixture/conf/initializer.properties" \
-  "UpdateConsentStatementStatus" \
+  "UpsertConsentStatementStatus" \
   "com.scalar.ist.function.UpdateConsentStatementStatus" \
   "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/function/UpdateConsentStatementStatus.class"
 
@@ -86,3 +86,5 @@ run register_function "${CURRENT_DIR}/fixture/conf/initializer.properties" \
   "UpsertConsentStatus" \
   "com.scalar.ist.function.UpsertConsentStatus" \
   "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/function/UpsertConsentStatus.class"
+
+exit ${TEST_STATUS}

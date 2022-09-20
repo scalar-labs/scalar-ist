@@ -41,3 +41,5 @@ run register_contract "${CURRENT_DIR}/fixture/conf/initializer.properties" \
 run execute_contract "${CURRENT_DIR}/fixture/conf/initializer.properties" \
   "Initialize" \
   "INITIALIZE_ARG"
+
+exit ${TEST_STATUS}

@@ -1,0 +1,90 @@
+name: CI for e2e
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  scalar-ist-e2e-test:
+    runs-on: ubuntu-latest
+    env:
+      SCALARDL_VERSION: 3.5
+      CONTRACTS_AND_FUNCTIONS_DIR: ${{ github.workspace }}/contracts_and_functions
+      DEPLOY_TOOL_DIR: ${{ github.workspace }}/tools/deploy
+      SCALAR_IST_SCHEMA: ${{ github.workspace }}/scripts/schema.cql
+      EXPOSE_CASSANDRA_PORT: ${{ github.workspace }}/.github/expose-cassandra-port.yml
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v2
+
+      - name: Clone Scalar repository
+        uses: actions/checkout@v2
+        with:
+          repository: scalar-labs/scalar
+          ref: ${{ env.SCALARDL_VERSION }}
+          path: scalar
+          token: ${{ secrets.CR_PAT }}
+
+      - name: Clone Scalardl-samples repository
+        uses: actions/checkout@v2
+        with:
+          repository: scalar-labs/scalardl-samples
+          ref: ${{ env.SCALARDL_VERSION }}
+          path: scalardl-samples
+          token: ${{ secrets.CR_PAT }}
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: ${{ runner.os }}-gradle-
+
+      - name: Build Scalar IST Contracts and Functions
+        run: |
+          cd ${{ env.CONTRACTS_AND_FUNCTIONS_DIR }}
+          ./gradlew build
+
+      - name: Build Scalar DL Client
+        run: |
+          cd scalar
+          ./gradlew :client:installDist
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+
+      - name: Start Scalar DL environment
+        run: |
+          cd scalardl-samples
+          docker-compose -f docker-compose.yml -f ${{ env.EXPOSE_CASSANDRA_PORT }} up -d cassandra
+          echo -n "Wait for C* "
+          until docker exec scalardl-samples-cassandra-1 cqlsh 2> /dev/null ; do
+            sleep 0.5
+            echo -n "#"
+          done
+          echo ""
+          docker cp ${SCALAR_IST_SCHEMA} scalardl-samples-cassandra-1:ist_schema.cql
+          docker exec scalardl-samples-cassandra-1 cqlsh -f ist_schema.cql
+          docker-compose -f docker-compose.yml -f ${{ env.EXPOSE_CASSANDRA_PORT }} up scalardl-ledger-schema-loader-cassandra
+          docker-compose -f docker-compose.yml -f ${{ env.EXPOSE_CASSANDRA_PORT }} up -d scalar-ledger ledger-envoy
+          sleep 10
+
+      - name: Register shared functions
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./functions
+
+      - name: Register system operator
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./initialize

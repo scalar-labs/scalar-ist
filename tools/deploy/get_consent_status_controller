@@ -1,0 +1,48 @@
+#!/bin/bash
+
+PRG="$0"
+while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+        PRG="$link"
+    else
+        PRG=`dirname "$PRG"`"/$link"
+    fi
+done
+CURRENT_DIR="`pwd`"
+cd "`dirname \"$PRG\"`"/../../ >/dev/null
+ROOTDIR="`pwd -P`"
+cd "$CURRENT_DIR" >/dev/null
+
+source "${CURRENT_DIR}/common.sh"
+source "${CURRENT_DIR}/fixture/argument/get_consent_status_controller"
+source "${CURRENT_DIR}/fixture/schema/argument/get_consent_status_controller"
+
+run register_certificate "${CURRENT_DIR}/fixture/conf/controller.properties"
+
+run register_contract_properties "${CURRENT_DIR}/fixture/conf/controller.properties" \
+  "GetAssetRecord" \
+  "com.scalar.ist.contract.GetAssetRecord" \
+  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class" \
+  "GET_ASSET_RECORD_PROP"
+
+run register_contract "${CURRENT_DIR}/fixture/conf/controller.properties" \
+  "ValidateArgument" \
+  "com.scalar.ist.contract.ValidateArgument" \
+  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
+
+run register_contract "${CURRENT_DIR}/fixture/conf/controller.properties" \
+  "ValidatePermission" \
+  "com.scalar.ist.contract.ValidatePermission" \
+  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
+
+run register_contract_properties "${CURRENT_DIR}/fixture/conf/controller.properties" \
+  "GetConsentStatus" \
+  "com.scalar.ist.contract.GetConsentStatus" \
+  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetConsentStatus.class" \
+  "GET_CONSENT_STATUS_PROP"
+
+run execute_contract "${CURRENT_DIR}/fixture/conf/controller.properties" \
+  "GetConsentStatus" \
+  "GET_CONSENT_STATUS_ARG"

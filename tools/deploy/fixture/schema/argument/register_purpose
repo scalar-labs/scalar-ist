@@ -1,0 +1,208 @@
+GET_USER_PROFILE_PROP='{
+	"contract_argument_schema": {
+		"$schema": "http://json-schema.org/draft-07/schema#",
+		"type": "object",
+		"required": ["company_id"],
+		"properties": {
+			"company_id": {
+				"type": "string",
+				"format": "hostname"
+			}
+		}
+	},
+	"asset_name": "up",
+	"asset_version": "01",
+	"holder_id": "ba857670-4fc0-410c-8c83-5dc911c6dc12"
+}'
+
+GET_ASSET_RECORD_PROP='{
+	"contract_argument_schema": {
+		"$schema": "http://json-schema.org/draft-07/schema#",
+		"type": "object",
+		"required": ["asset_id", "is_hashed"],
+		"properties": {
+			"asset_id": {
+				"type": "string",
+				"pattern": "^[a-zA-Z0-9-/_.]+$"
+			},
+			"is_hashed": {
+				"type": "boolean"
+			}
+		}
+	},
+	"salt": "salt",
+	"holder_id": "ba857670-4fc0-410c-8c83-5dc911c6dc12"
+}'
+
+PUT_ASSET_RECORD_PROP='{
+	"contract_argument_schema": {
+		"$schema": "http://json-schema.org/draft-07/schema#",
+		"type": "object",
+		"required": ["asset_id", "data", "mode", "is_hashed", "created_at"],
+		"properties": {
+			"asset_id": {
+				"type": "string",
+				"pattern": "^[a-zA-Z0-9-/_.]+$"
+			},
+			"data": {
+				"type": "object"
+			},
+			"mode": {
+				"type": "string",
+				"enum": ["insert", "update", "upsert"]
+			},
+			"is_hashed": {
+				"type": "boolean"
+			},
+			"created_at": {
+				"type": "integer",
+				"minimum": 0
+			}
+		}
+	},
+	"salt": "salt",
+	"holder_id": "ba857670-4fc0-410c-8c83-5dc911c6dc12"
+}'
+
+REGISTER_PURPOSE_PROP='{
+	"contract_argument_schema": {
+		"$schema": "http://json-schema.org/draft-07/schema#",
+		"type": "object",
+		"required": ["action", "company_id", "organization_id", "category_of_purpose", "purpose_name", "description", "legal_text", "user_friendly_text", "guidance", "note", "is_active", "created_at"],
+		"properties": {
+			"action": {
+				"type": "string",
+				"enum": ["insert"]
+			},
+			"company_id": {
+				"type": "string",
+				"format": "hostname"
+			},
+			"organization_id": {
+				"type": "string",
+				"pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
+			},
+			"category_of_purpose": {
+				"type": "string",
+				"minLength": 1
+			},
+			"purpose_name": {
+				"type": "string",
+				"minLength": 1
+			},
+			"description": {
+				"type": "string",
+				"minLength": 1
+			},
+			"legal_text": {
+				"type": "string",
+				"minLength": 1
+			},
+			"user_friendly_text": {
+				"type": "string",
+				"minLength": 1
+			},
+			"guidance": {
+				"type": "string",
+				"minLength": 1
+			},
+			"note": {
+				"type": "string",
+				"minLength": 1
+			},
+			"is_active": {
+				"type": "boolean"
+			},
+			"created_at": {
+				"type": "integer",
+				"minimum": 0
+			}
+		}
+	},
+	"asset_schema": {
+		"$schema": "http://json-schema.org/draft-07/schema#",
+		"type": "object",
+		"properties": {
+			"purpose_id": {
+				"type": "string",
+				"pattern": "asset_id"
+			},
+			"company_id": {
+				"type": "string"
+			},
+			"organization_id": {
+				"type": "string"
+			},
+			"category_of_purpose": {
+				"type": "string"
+			},
+			"purpose_name": {
+				"type": "string"
+			},
+			"description": {
+				"type": "string"
+			},
+			"legal_text": {
+				"type": "string"
+			},
+			"user_friendly_text": {
+				"type": "string"
+			},
+			"guidance": {
+				"type": "string"
+			},
+			"note": {
+				"type": "string"
+			}
+		}
+	},
+	"table_schema": {
+		"$schema": "scalar_db_table_schema.json",
+		"table_name": "purpose",
+		"partition_keys": [{
+			"name": "company_id",
+			"type": "text"
+		}],
+		"clustering_keys": [{
+			"name": "created_at",
+			"type": "bigint"
+		}, {
+			"name": "organization_id",
+			"type": "text"
+		}],
+		"columns": [{
+			"name": "category_of_purpose",
+			"type": "text"
+		}, {
+			"name": "purpose_name",
+			"type": "text"
+		}, {
+			"name": "description",
+			"type": "text"
+		}, {
+			"name": "legal_text",
+			"type": "text"
+		}, {
+			"name": "user_friendly_text",
+			"type": "text"
+		}, {
+			"name": "guidance",
+			"type": "text"
+		}, {
+			"name": "note",
+			"type": "text"
+		}, {
+			"name": "is_active",
+			"type": "boolean"
+		}, {
+			"name": "created_by",
+			"type": "text"
+		}, {
+			"name": "updated_at",
+			"type": "bigint"
+		}]
+	},
+	"asset_name": "pp",
+	"asset_version": "01",
+	"holder_id": "ba857670-4fc0-410c-8c83-5dc911c6dc12"
+}'

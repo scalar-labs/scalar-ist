@@ -76,7 +76,7 @@ Build the client
 
 You will first need to build the contract and functions
 ```
-cd contracts_and_functions
+cd ../contracts_and_functions
 ./gradlew build
 cd ../tools/deploy
 ```

@@ -1,0 +1,10 @@
+UPDATE_BENEFIT_ARG='{
+	"action": "update",
+	"company_id": "scalar-labs.com",
+	"organization_id": "9ca84f95-2e84-4707-8206-b93c9e78d7b7",
+	"description": "ut",
+	"is_active": false,
+	"created_at": 2,
+	"updated_at": 3,
+	"_functions_": ["UpsertMaster"]
+}'

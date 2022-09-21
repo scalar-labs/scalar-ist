@@ -46,3 +46,5 @@ run register_contract_properties "${CURRENT_DIR}/fixture/conf/controller.propert
 run execute_contract "${CURRENT_DIR}/fixture/conf/controller.properties" \
   "GetConsentStatus" \
   "GET_CONSENT_STATUS_ARG"
+
+exit ${TEST_STATUS}

@@ -58,3 +58,5 @@ run register_contract "${CURRENT_DIR}/fixture/conf/sys_admin.properties" \
 run execute_contract "${CURRENT_DIR}/fixture/conf/sys_admin.properties" \
   "UpsertUserProfile" \
   "UPSERT_USER_PROFILE_ADMIN_ARG"
+
+exit ${TEST_STATUS}

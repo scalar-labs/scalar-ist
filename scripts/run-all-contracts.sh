@@ -1,27 +1,27 @@
-cd ../tools/deploy_tool
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/functions.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/initialize.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_company.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_admin.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_controller.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_purpose.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_purpose.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_data_set_schema.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_set_schema.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_third_party.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_third_party.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_data_retention_policy.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_retention_policy.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_benefit.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_benefit.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_consent_statement.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_revision.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_version.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_status.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_company.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_controller_add_processor.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_organization.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_consent_status_register.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_consent_status_update.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_data_subject.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_controller.json
+cd ../tools/deploy
+./functions
+./initialize
+./register_company
+./upsert_user_profile_admin
+./upsert_user_profile_controller
+./register_purpose
+./update_purpose
+./register_data_set_schema
+./update_data_set_schema
+./register_third_party
+./update_third_party
+./register_data_retention_policy
+./update_data_retention_policy
+./register_benefit
+./update_benefit
+./register_consent_statement
+./update_consent_statement_revision
+./update_consent_statement_version
+./update_consent_statement_status
+./update_company
+./upsert_user_profile_controller_add_processor
+./upsert_organization
+./upsert_consent_status_register
+./upsert_consent_status_update
+./get_consent_status_data_subject
+./get_consent_status_controller

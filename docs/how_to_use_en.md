@@ -55,7 +55,7 @@ In IST, register the business operator and user profile in the following order:
 - The user of the business obtains the consent status for the consent document of the business.
 
 ## Run a user story with a deploy tool
-Based on the followingIST project [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
+Based on the following IST project [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
 To use IST you need to run [scalardl](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).  
 The next steps have been tested with this docker-compose.yml from scalardl:
 ``` 
@@ -131,32 +131,37 @@ networks:
 ```
 
 
-### Build deploy tool
+### Build Scalar DL Client
+
+Clone the `scalar` repo into the `scalar-ist` project.
 ```
-cd tools/deploy_tool
-./gradlew installDist
+git clone https://github.com/scalar-labs/scalar.git
+```
+
+Change branch to arbitrary version (version should be same as Ledger)
+```
+cd scalar
+git checkout refs/tags/v<version>
+```
+
+Build the client
+```
+./gradlew :client:installDist
 ```
 
 ### Register shared functions for use in IST
+
 You will first need to build the contract and functions
 ```
-cd ../../contracts_and_functions
+cd ../contracts_and_functions
 ./gradlew build
-cd ../tools/deploy_tool
-```
-For now `./gradlew installDist` do not set function and contract path properly.  
-So you will need to move the directories in the ist folder.
-
-``` 
-mv ../../contracts_and_functions/build/classes/java/main/com/scalar/ist/common build/classes/java/main/com/scalar/ist
-mv ../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract build/classes/java/main/com/scalar/ist
-mv ../../contracts_and_functions/build/classes/java/main/com/scalar/ist/function build/classes/java/main/com/scalar/ist
+cd ../tools/deploy
 ```
 
-Then run
+Then register the functions
 
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/functions.json
+./functions
 ```
 
 ## Register information of system operator and personal information handling operator
@@ -164,7 +169,7 @@ build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/functi
 ### Register system operator
 
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/initialize.json
+./initialize
 ```
 
 ### Registration of business operator handling personal information
@@ -173,125 +178,125 @@ You will need to register using the `schema.cql`.
 After this you can register the company.
 
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_company.json
+./register_company
 ```
 
 ### Register the user profile information of the business operator handling personal information
 
 You first need admin profile, and then you can register the user profile.
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_admin.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_controller.json
+./upsert_user_profile_admin
+./upsert_user_profile_controller
 ```
 
 ### Register the master information of the consent document
 
 Register the purpose of use
 ``` 
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_purpose.json
+./register_purpose
 ```
 
 Update the purpose of use
 ``` 
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_purpose.json
+./update_purpose
 ```
 
 Register the dataset schema
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_data_set_schema.json
+./register_data_set_schema
 ```
 
 Update the dataset schema
 ``` 
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_set_schema.json
+./update_data_set_schema
 ```
 
 Register a third party provider
 ``` 
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_third_party.json
+./register_third_party
 ```
 
 Update third party providers
 ``` 
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_third_party.json
+./update_third_party
 ```
 
 Register suspension of use and data deletion deadline
 ``` 
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_data_retention_policy.json
+./register_data_retention_policy
 ```
 
 Suspension of use, update data deletion deadline
 ``` 
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_retention_policy.json
+./update_data_retention_policy
 ```
 
 Register benefits
 ``` 
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_benefit.json
+./register_benefit
 ```
 
 Update benefits
 ``` 
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_benefit.json
+./update_benefit
 ```
 
 ### Registration and update of consent document
 
 Register the consent document
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_consent_statement.json
+./register_consent_statement
 ```
 
 Amend the consent document (changes that do not require re-consent)
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_revision.json
+./update_consent_statement_revision
 ```
 
 Revise the consent document (changes that require re-consent)
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_version.json
+./update_consent_statement_version
 ```
 
 Change the status of the consent document
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_status.json
+./update_consent_statement_status
 ```
 
 ### Update of business information
 Update of the organization to which the operator user belongs
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_company.json
+./update_company
 ```
 
 Update the role of the operator user
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_controller_add_processor.json
+./upsert_user_profile_controller_add_processor
 ```
 
 Addition / update of organization information
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_organization.json
+./upsert_organization
 ```
 
 ### Record of consent by the data subject
 
 Registration of consent
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_consent_status_register.json
+./upsert_consent_status_register
 ```
 
 Renewal of consent
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_consent_status_update.json
+./upsert_consent_status_update
 ```
 
 Reference of consent status by data subject
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_data_subject.json
+./get_consent_status_data_subject
 ```
 
 Reference of the status of consent by the business user
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_controller.json
+./get_consent_status_controller
 ```

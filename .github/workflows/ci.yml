@@ -29,10 +29,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run unit tests
+      - name: Gradle check
         run: |
           cd ${{ env.CONTRACTS_AND_FUNCTIONS_DIR }}
-          ./gradlew test
+          ./gradlew check
 
       - name: Build scalar-ist contracts and functions
         run: |

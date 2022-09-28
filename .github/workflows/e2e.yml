@@ -90,19 +90,19 @@ jobs:
           ./initialize
 
       - name: Register the company
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./register_company
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_company
 
       - name: Register the admin profile
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./upsert_user_profile_admin
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_user_profile_admin
 
       - name: Register the user profile
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./upsert_user_profile_controller
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_user_profile_controller
 
       - name: Register the purpose of use
         run: |
@@ -110,101 +110,101 @@ jobs:
           ./register_purpose
 
       - name: Update the purpose of use
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./update_purpose
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_purpose
 
       - name: Register the dataset schema
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./register_data_set_schema
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_data_set_schema
 
       - name: Update the dataset schema
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./update_data_set_schema
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_data_set_schema
 
       - name: Register a third party provider
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./register_third_party
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_third_party
 
       - name: Update third party providers
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./update_third_party
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_third_party
 
       - name: Register suspension of use and data deletion deadline
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./register_data_retention_policy
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_data_retention_policy
 
       - name: Suspension of use, update data deletion deadline
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./update_data_retention_policy
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_data_retention_policy
 
       - name: Register benefits
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./register_benefit
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_benefit
 
       - name: Update benefits
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./update_benefit
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_benefit
 
       - name: Register the consent document
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./register_consent_statement
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_consent_statement
 
       - name: Amend the consent document (changes that do not require re-consent)
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./update_consent_statement_revision
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_consent_statement_revision
 
       - name: Revise the consent document (changes that require re-consent)
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./update_consent_statement_version
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_consent_statement_version
 
       - name: Change the status of the consent document
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./update_consent_statement_status
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_consent_statement_status
 
       - name: Update of the organization to which the operator user belongs
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./update_company
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_company
 
       - name: Update the role of the operator user
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./upsert_user_profile_controller_add_processor
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_user_profile_controller_add_processor
 
       - name: Addition / update of organization information
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./upsert_organization
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_organization
 
       - name: Registration of consent
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./upsert_consent_status_register
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_consent_status_register
 
       - name: Renewal of consent
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./upsert_consent_status_update
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_consent_status_update
 
       - name: Reference of consent status by data subject
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./get_consent_status_data_subject
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./get_consent_status_data_subject
 
       - name: Reference of the status of consent by the business user
-          run: |
-            cd ${DEPLOY_TOOL_DIR}
-            ./get_consent_status_controller
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./get_consent_status_controller

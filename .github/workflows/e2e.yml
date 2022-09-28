@@ -75,9 +75,10 @@ jobs:
           echo ""
           docker cp ${SCALAR_IST_SCHEMA} scalardl-samples-cassandra-1:ist_schema.cql
           docker exec scalardl-samples-cassandra-1 cqlsh -f ist_schema.cql
-          docker-compose -f docker-compose.yml -f ${{ env.EXPOSE_CASSANDRA_PORT }} up scalardl-ledger-schema-loader-cassandra
-          docker-compose -f docker-compose.yml -f ${{ env.EXPOSE_CASSANDRA_PORT }} up -d scalar-ledger ledger-envoy
-          sleep 10
+          docker-compose -f docker-compose.yml -f docker-compose-auditor.yml up scalardl-ledger-schema-loader-cassandra scalardl-auditor-schema-loader-cassandra
+          docker-compose -f docker-compose.yml -f docker-compose-auditor.yml up -d scalar-ledger ledger-envoy scalar-auditor auditor-envoy
+          sleep 30
+          docker-compose -f docker-compose.yml -f docker-compose-auditor.yml up scalar-ledger-as-client scalar-audior-as-client
 
       - name: Register shared functions
         run: |

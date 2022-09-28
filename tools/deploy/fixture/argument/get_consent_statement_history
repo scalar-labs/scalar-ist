@@ -1,0 +1,5 @@
+GET_CONSENT_STATEMENT_HISTORY_ARG='{
+	"asset_id": "cs01-9ca84f95-2e84-4707-8206-b93c9e78d7b7-0",
+	"company_id": "scalar-labs.com",
+	"is_hashed": false
+}'

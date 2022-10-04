@@ -23,35 +23,41 @@ public class ContractRegistration implements Callable<Integer> {
           "A deserialization format for a contract properties. "
               + "Valid values: ${COMPLETION-CANDIDATES} (default: ${DEFAULT-VALUE})")
   private final DeserializationFormat deserializationFormat = DeserializationFormat.JSON;
+
   @CommandLine.Option(
       names = {"-h", "--help"},
       usageHelp = true,
       description = "display the help message.")
   boolean helpRequested;
+
   @CommandLine.Option(
       names = {"--properties", "--config"},
       required = true,
       paramLabel = "PROPERTIES_FILE",
       description = "A configuration file in properties format.")
   private String properties;
+
   @CommandLine.Option(
       names = {"--contract-id"},
       required = true,
       paramLabel = "CONTRACT_ID",
       description = "An ID of a contract to register.")
   private String contractId;
+
   @CommandLine.Option(
       names = {"--contract-binary-name"},
       required = true,
       paramLabel = "CONTRACT_BINARY_NAME",
       description = "A binary name of a contract to register.")
   private String contractBinaryName;
+
   @CommandLine.Option(
       names = {"--contract-class-file"},
       required = true,
       paramLabel = "CONTRACT_CLASS_FILE",
       description = "A contract class file to register.")
   private String contractClassFile;
+
   @CommandLine.Option(
       names = {"--contract-properties"},
       required = false,

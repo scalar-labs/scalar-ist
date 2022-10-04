@@ -24,35 +24,41 @@ public class ContractExecution implements Callable<Integer> {
           "A deserialization format for contract and function arguments. "
               + "Valid values: ${COMPLETION-CANDIDATES} (default: ${DEFAULT-VALUE})")
   private final DeserializationFormat deserializationFormat = DeserializationFormat.JSON;
+
   @CommandLine.Option(
       names = {"-h", "--help"},
       usageHelp = true,
       description = "display the help message.")
   boolean helpRequested;
+
   @CommandLine.Option(
       names = {"--properties", "--config"},
       required = true,
       paramLabel = "PROPERTIES_FILE",
       description = "A configuration file in properties format.")
   private String properties;
+
   @CommandLine.Option(
       names = {"--contract-id"},
       required = true,
       paramLabel = "CONTRACT_ID",
       description = "An ID of a contract to execute.")
   private String contractId;
+
   @CommandLine.Option(
       names = {"--contract-argument"},
       required = true,
       paramLabel = "CONTRACT_ARGUMENT",
       description = "An argument for a contract to execute in a serialized format.")
   private String contractArgument;
+
   @CommandLine.Option(
       names = {"--function-id"},
       required = false,
       paramLabel = "FUNCTION_ID",
       description = "An ID of a function to execute.")
   private String functionId;
+
   @CommandLine.Option(
       names = {"--function-argument"},
       required = false,

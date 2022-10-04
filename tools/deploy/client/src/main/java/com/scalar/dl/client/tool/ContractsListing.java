@@ -20,12 +20,14 @@ public class ContractsListing implements Callable<Integer> {
       usageHelp = true,
       description = "display the help message.")
   boolean helpRequested;
+
   @CommandLine.Option(
       names = {"--properties", "--config"},
       required = true,
       paramLabel = "PROPERTIES_FILE",
       description = "A configuration file in properties format.")
   private String properties;
+
   @CommandLine.Option(
       names = {"--contract-id"},
       required = false,

@@ -17,24 +17,28 @@ public class FunctionRegistration implements Callable<Integer> {
       usageHelp = true,
       description = "display the help message.")
   boolean helpRequested;
+
   @CommandLine.Option(
       names = {"--properties", "--config"},
       required = true,
       paramLabel = "PROPERTIES_FILE",
       description = "A configuration file in properties format.")
   private String properties;
+
   @CommandLine.Option(
       names = {"--function-id"},
       required = true,
       paramLabel = "FUNCTION_ID",
       description = "An ID of a function to register.")
   private String functionId;
+
   @CommandLine.Option(
       names = {"--function-binary-name"},
       required = true,
       paramLabel = "FUNCTION_BINARY_NAME",
       description = "A binary name of a function to register.")
   private String functionBinaryName;
+
   @CommandLine.Option(
       names = {"--function-class-file"},
       required = true,

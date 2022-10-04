@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # constants
-REGISTER_CERTIFICATE_BIN="$ROOTDIR/scalar/client/build/install/client/bin/register-cert"
-REGISTER_FUNCTION_BIN="$ROOTDIR/scalar/client/build/install/client/bin/register-function"
-REGISTER_CONTRACT_BIN="$ROOTDIR/scalar/client/build/install/client/bin/register-contract"
-EXECUTE_CONTRACT_BIN="$ROOTDIR/scalar/client/build/install/client/bin/execute-contract"
-LIST_CONTRACT_BIN="$ROOTDIR/scalar/client/build/install/client/bin/list-contracts"
+REGISTER_CERTIFICATE_BIN="$CURRENT_DIR/client/build/install/client/bin/register-cert"
+REGISTER_FUNCTION_BIN="$CURRENT_DIR/client/build/install/client/bin/register-function"
+REGISTER_CONTRACT_BIN="$CURRENT_DIR/client/build/install/client/bin/register-contract"
+EXECUTE_CONTRACT_BIN="$CURRENT_DIR/client/build/install/client/bin/execute-contract"
+LIST_CONTRACT_BIN="$CURRENT_DIR/client/build/install/client/bin/list-contracts"
 TEST_STATUS=0
 
 # funtions

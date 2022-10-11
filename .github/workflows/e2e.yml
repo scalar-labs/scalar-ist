@@ -9,7 +9,7 @@ jobs:
   scalar-ist-e2e-test:
     runs-on: ubuntu-latest
     env:
-      SCALARDL_VERSION: 3.5
+      SCALARDL_VERSION: 3.6.0
       CONTRACTS_AND_FUNCTIONS_DIR: ${{ github.workspace }}/contracts_and_functions
       DEPLOY_TOOL_DIR: ${{ github.workspace }}/tools/deploy
       SCALAR_IST_SCHEMA: ${{ github.workspace }}/scripts/schema.cql
@@ -18,19 +18,11 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@v2
 
-      - name: Clone Scalar repository
-        uses: actions/checkout@v2
-        with:
-          repository: scalar-labs/scalar
-          ref: ${{ env.SCALARDL_VERSION }}
-          path: scalar
-          token: ${{ secrets.CR_PAT }}
-
       - name: Clone Scalardl-samples repository
         uses: actions/checkout@v2
         with:
           repository: scalar-labs/scalardl-samples
-          ref: ${{ env.SCALARDL_VERSION }}
+          ref: v${{ env.SCALARDL_VERSION }}
           path: scalardl-samples
           token: ${{ secrets.CR_PAT }}
 
@@ -51,10 +43,11 @@ jobs:
           cd ${{ env.CONTRACTS_AND_FUNCTIONS_DIR }}
           ./gradlew build
 
-      - name: Build Scalar DL Client
+      - name: Set up Scalar DL Java Client SDK
         run: |
-          cd scalar
-          ./gradlew :client:installDist
+          wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v${{ env.SCALARDL_VERSION }}/scalardl-java-client-sdk-${{ env.SCALARDL_VERSION }}.zip
+          unzip scalardl-java-client-sdk.zip
+          mv scalardl-java-client-sdk-* scalardl-java-client-sdk
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1

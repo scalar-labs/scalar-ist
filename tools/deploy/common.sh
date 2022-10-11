@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # constants
-REGISTER_CERTIFICATE_BIN="$CURRENT_DIR/client/build/install/client/bin/register-cert"
-REGISTER_FUNCTION_BIN="$CURRENT_DIR/client/build/install/client/bin/register-function"
-REGISTER_CONTRACT_BIN="$CURRENT_DIR/client/build/install/client/bin/register-contract"
-EXECUTE_CONTRACT_BIN="$CURRENT_DIR/client/build/install/client/bin/execute-contract"
-LIST_CONTRACT_BIN="$CURRENT_DIR/client/build/install/client/bin/list-contracts"
+REGISTER_CERTIFICATE_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-cert"
+REGISTER_FUNCTION_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-function"
+REGISTER_CONTRACT_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-contract"
+EXECUTE_CONTRACT_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/execute-contract"
+LIST_CONTRACT_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/list-contracts"
 TEST_STATUS=0
 
 # funtions

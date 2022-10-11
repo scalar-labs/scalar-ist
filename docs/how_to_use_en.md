@@ -131,28 +131,21 @@ networks:
 ```
 
 
-### Build Scalar DL Client
+### Set up Scalar DL Java Client SDK
 
-Clone the `scalar` repo into the `scalar-ist` project.
+Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases) to `scalar-ist`.
+Then unzip and rename it to `scalardl-java-client-sdk`.
+```console
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_VERSION>.zip
+unzip scalardl-java-client-sdk.zip
+mv scalardl-java-client-sdk-* scalardl-java-client-sdk
 ```
-git clone https://github.com/scalar-labs/scalar.git
-```
-
-Change branch to arbitrary version (version should be same as Ledger)
-```
-cd scalar
-git checkout refs/tags/v<version>
-```
-
-Build the client
-```
-./gradlew :client:installDist
-```
+* Don't forget to update `<SCALARDL_JAVA CLIENT_VERSION>` with the specified Scalar DL version.
 
 ### Register shared functions for use in IST
 
 You will first need to build the contract and functions
-```
+```console
 cd ../contracts_and_functions
 ./gradlew build
 cd ../tools/deploy
@@ -160,7 +153,7 @@ cd ../tools/deploy
 
 Then register the functions
 
-```
+```console
 ./functions
 ```
 
@@ -168,7 +161,7 @@ Then register the functions
 
 ### Register system operator
 
-```
+```console
 ./initialize
 ```
 
@@ -177,14 +170,14 @@ Then register the functions
 You will need to register using the `schema.cql`.
 After this you can register the company.
 
-```
+```console
 ./register_company
 ```
 
 ### Register the user profile information of the business operator handling personal information
 
 You first need admin profile, and then you can register the user profile.
-```
+```console
 ./upsert_user_profile_admin
 ./upsert_user_profile_controller
 ```
@@ -192,111 +185,116 @@ You first need admin profile, and then you can register the user profile.
 ### Register the master information of the consent document
 
 Register the purpose of use
-``` 
+```console
 ./register_purpose
 ```
 
 Update the purpose of use
-``` 
+```console
 ./update_purpose
 ```
 
 Register the dataset schema
-```
+```console
 ./register_data_set_schema
 ```
 
 Update the dataset schema
-``` 
+```console
 ./update_data_set_schema
 ```
 
 Register a third party provider
-``` 
+```console 
 ./register_third_party
 ```
 
 Update third party providers
-``` 
+```console 
 ./update_third_party
 ```
 
 Register suspension of use and data deletion deadline
-``` 
+```console 
 ./register_data_retention_policy
 ```
 
 Suspension of use, update data deletion deadline
-``` 
+```console 
 ./update_data_retention_policy
 ```
 
 Register benefits
-``` 
+```console 
 ./register_benefit
 ```
 
 Update benefits
-``` 
+```console
 ./update_benefit
 ```
 
 ### Registration and update of consent document
 
 Register the consent document
-```
+```console
 ./register_consent_statement
 ```
 
 Amend the consent document (changes that do not require re-consent)
-```
+```console
 ./update_consent_statement_revision
 ```
 
 Revise the consent document (changes that require re-consent)
-```
+```console
 ./update_consent_statement_version
 ```
 
 Change the status of the consent document
-```
+```console
 ./update_consent_statement_status
+```
+
+Retrieves the history of amendments to the consent document (changes that do not require re-consent)
+```console
+./get_consent_statement_history
 ```
 
 ### Update of business information
 Update of the organization to which the operator user belongs
-```
+```console
 ./update_company
 ```
 
 Update the role of the operator user
-```
+```console
 ./upsert_user_profile_controller_add_processor
 ```
 
 Addition / update of organization information
-```
+```console
 ./upsert_organization
 ```
 
 ### Record of consent by the data subject
 
 Registration of consent
-```
+```console
 ./upsert_consent_status_register
 ```
 
 Renewal of consent
-```
+```console
 ./upsert_consent_status_update
 ```
 
 Reference of consent status by data subject
-```
+```console
 ./get_consent_status_data_subject
 ```
 
 Reference of the status of consent by the business user
-```
+```console
 ./get_consent_status_controller
 ```

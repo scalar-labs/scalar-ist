@@ -43,7 +43,7 @@ jobs:
           cd ${{ env.CONTRACTS_AND_FUNCTIONS_DIR }}
           ./gradlew build
 
-      - name: Set up Scalar DL Java Client SDK
+      - name: Download Scalar DL Java Client SDK
         run: |
           wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v${{ env.SCALARDL_VERSION }}/scalardl-java-client-sdk-${{ env.SCALARDL_VERSION }}.zip
           unzip scalardl-java-client-sdk.zip

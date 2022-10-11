@@ -209,3 +209,8 @@ jobs:
         run: |
           cd ${DEPLOY_TOOL_DIR}
           ./get_consent_status_controller
+
+      - name: Retrieves the history of amendments to the consent document
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./get_consent_statement_history

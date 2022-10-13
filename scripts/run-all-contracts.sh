@@ -18,6 +18,7 @@ cd ../tools/deploy
 ./update_consent_statement_revision
 ./update_consent_statement_version
 ./update_consent_statement_status
+./get_consent_statement_history
 ./update_company
 ./upsert_user_profile_controller_add_processor
 ./upsert_organization

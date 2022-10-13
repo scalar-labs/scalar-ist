@@ -9,6 +9,7 @@ import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSIN
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
 import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES;
+import static com.scalar.ist.common.Constants.RECORD_DATA;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
 import static com.scalar.ist.common.Constants.RECORD_MODE;
 import static com.scalar.ist.common.Constants.RECORD_MODE_SCAN;
@@ -86,8 +87,8 @@ public class GetConsentStatementHistoryTest {
   private JsonObject prepareConsentStatement(String company, String version) {
     return Json.createObjectBuilder()
         .add(CONSENT_STATEMENT_ID, MOCKED_ASSET_ID)
-        .add(COMPANY_ID, company)
         .add(CONSENT_STATEMENT_VERSION, version)
+        .add(RECORD_DATA, Json.createObjectBuilder().add(COMPANY_ID, company))
         .build();
   }
 
@@ -145,7 +146,8 @@ public class GetConsentStatementHistoryTest {
     consentStatementHistory
         .getJsonArray(RECORD_VERSIONS)
         .getValuesAs(JsonObject.class)
-        .forEach(j -> assertThat(j.getString(COMPANY_ID).equals(MOCKED_COMPANY_ID)));
+        .forEach(j -> assertThat(j.asJsonObject().getJsonObject(RECORD_DATA).getString(COMPANY_ID)
+            .equals(MOCKED_COMPANY_ID)));
     verify(getConsentStatementHistory)
         .invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
     verify(getConsentStatementHistory)

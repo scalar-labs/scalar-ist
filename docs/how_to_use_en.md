@@ -146,7 +146,7 @@ mv scalardl-java-client-sdk-* scalardl-java-client-sdk
 
 You will first need to build the contract and functions
 ```console
-cd ../contracts_and_functions
+cd contracts_and_functions
 ./gradlew build
 cd ../tools/deploy
 ```

@@ -3,6 +3,7 @@
 # constants
 REGISTER_CERTIFICATE_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-cert"
 REGISTER_FUNCTION_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-function"
+REGISTER_FUNCTIONS_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-functions"
 REGISTER_CONTRACT_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-contract"
 EXECUTE_CONTRACT_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/execute-contract"
 LIST_CONTRACT_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/list-contracts"
@@ -67,6 +68,24 @@ register_function() {
     --function-id $function_id \
     --function-binary-name $function_binary_name \
     --function-class-file $function_file
+
+  return $?
+}
+
+register_functions() {
+  local properties="$1"
+  if [ "${properties}" == '' ]; then
+    return '1'
+  fi
+
+  local functions_file="$2"
+  if [ "${functions_file}" == '' ]; then
+    return '1'
+  fi
+
+  $REGISTER_FUNCTIONS_BIN \
+    --config ${properties} \
+    --functions-file ${functions_file}
 
   return $?
 }

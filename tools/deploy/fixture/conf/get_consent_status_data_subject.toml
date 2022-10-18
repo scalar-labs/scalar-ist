@@ -1,0 +1,18 @@
+[[contracts]]
+contract-id = "GetAssetRecord"
+contract-binary-name = "com.scalar.ist.contract.GetAssetRecord"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class"
+properties = "{ \"contract_argument_schema\": { \"$schema\": \"http://json-schema.org/draft-07/schema#\", \"type\": \"object\", \"required\": [\"asset_id\", \"is_hashed\"], \"properties\": { \"asset_id\": { \"type\": \"string\", \"pattern\": \"^[a-zA-Z0-9-/_.]+$\" }, \"is_hashed\": { \"type\": \"boolean\" } } }, \"salt\": \"salt\", \"holder_id\": \"data_subject\"}"
+[[contracts]]
+contract-id = "ValidateArgument"
+contract-binary-name = "com.scalar.ist.contract.ValidateArgument"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
+[[contracts]]
+contract-id = "ValidatePermission"
+contract-binary-name = "com.scalar.ist.contract.ValidatePermission"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
+[[contracts]]
+contract-id = "GetConsentStatus"
+contract-binary-name = "com.scalar.ist.contract.GetConsentStatus"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetConsentStatus.class"
+properties = "{ \"contract_argument_schema\": { \"$schema\": \"http://json-schema.org/draft-07/schema#\", \"type\": \"object\", \"required\": [\"consent_id\", \"is_hashed_consent_id\"], \"properties\": { \"consent_id\": { \"type\": \"string\", \"pattern\": \"^[a-zA-Z0-9-/_.]+$\" }, \"is_hashed_consent_id\": { \"type\": \"boolean\" }, \"is_hashed_consent_statement_id\": { \"type\": \"boolean\" }, \"company_id\": { \"type\": \"string\", \"format\": \"hostname\" } } }, \"salt\": \"salt\"}"

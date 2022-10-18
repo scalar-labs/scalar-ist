@@ -17,26 +17,11 @@ cd "$CURRENT_DIR" >/dev/null
 
 source "${CURRENT_DIR}/common.sh"
 source "${CURRENT_DIR}/fixture/argument/initialize"
-source "${CURRENT_DIR}/fixture/schema/argument/initialize"
 
 run register_certificate "${CURRENT_DIR}/fixture/conf/initializer.properties"
 
-run register_contract "${CURRENT_DIR}/fixture/conf/initializer.properties" \
-  "PutAssetRecord" \
-  "com.scalar.ist.contract.PutAssetRecord" \
-  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class" \
-  "PUT_ASSET_RECORD_PROP"
-
-run register_contract "${CURRENT_DIR}/fixture/conf/initializer.properties" \
-  "ValidateArgument" \
-  "com.scalar.ist.contract.ValidateArgument" \
-  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
-
-run register_contract "${CURRENT_DIR}/fixture/conf/initializer.properties" \
-  "Initialize" \
-  "com.scalar.ist.contract.Initialize" \
-  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/Initialize.class" \
-  "INITIALIZE_PROP"
+run register_contracts "${CURRENT_DIR}/fixture/conf/initializer.properties" \
+  "${CURRENT_DIR}/fixture/conf/initialize.toml"
 
 run execute_contract "${CURRENT_DIR}/fixture/conf/initializer.properties" \
   "Initialize" \

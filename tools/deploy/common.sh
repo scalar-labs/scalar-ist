@@ -3,7 +3,7 @@
 # constants
 REGISTER_CERTIFICATE_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-cert"
 REGISTER_FUNCTION_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-function"
-REGISTER_CONTRACT_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-contract"
+REGISTER_CONTRACTS_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/register-contracts"
 EXECUTE_CONTRACT_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/execute-contract"
 LIST_CONTRACT_BIN="$ROOTDIR/scalardl-java-client-sdk/bin/list-contracts"
 TEST_STATUS=0
@@ -71,48 +71,21 @@ register_function() {
   return $?
 }
 
-register_contract() {
+register_contracts() {
   local properties="$1"
   if [ "${properties}" == '' ]; then
     return '1'
   fi
 
-  local contract_id="$2"
-  if [ "${contract_id}" == '' ]; then
+  local contracts_file="$2"
+  if [ "${contracts_file}" == '' ]; then
     return '1'
   fi
 
-  local contract_binary_name="$3"
-  if [ "${contract_binary_name}" == '' ]; then
-    return '1'
-  fi
-
-  local contract_file="$4"
-  if [ "${contract_file}" == '' ]; then
-    return '1'
-  fi
-
-  local contract_properties="$5"
-
-  is_available=$($LIST_CONTRACT_BIN --config "${properties}" \
-    --contract-id "${contract_id}" | jq '.output | length')
-
-  if [ $is_available == 0 ]; then
-    if [ "$contract_properties" == '' ]; then
-      $REGISTER_CONTRACT_BIN \
-        --properties "${properties}" \
-        --contract-binary-name "${contract_binary_name}" \
-        --contract-id "${contract_id}" \
-        --contract-class-file "${contract_file}"
-    else
-      $REGISTER_CONTRACT_BIN \
-        --properties "${properties}" \
-        --contract-binary-name "${contract_binary_name}" \
-        --contract-id "${contract_id}" \
-        --contract-class-file "${contract_file}" \
-        --contract-properties "${!contract_properties}"
-    fi
-  fi
+  $REGISTER_CONTRACTS_BIN \
+    --config ${properties} \
+    --contracts-file ${contracts_file} \
+    --ignore-registered
 
   return $?
 }

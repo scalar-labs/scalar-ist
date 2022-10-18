@@ -1,0 +1,28 @@
+[[contracts]]
+contract-id = "GetUserProfile"
+contract-binary-name = "com.scalar.ist.contract.GetUserProfile"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetUserProfile.class"
+properties = "{\"contract_argument_schema\": {\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"required\": [\"company_id\"],\"properties\": {\"company_id\": {\"type\": \"string\",\"format\": \"hostname\"}}},\"asset_name\": \"up\",\"asset_version\": \"01\",\"holder_id\": \"a5e9971d-32be-490d-bff4-c6d65816c1e5\"}"
+[[contracts]]
+contract-id = "GetAssetRecord"
+contract-binary-name = "com.scalar.ist.contract.GetAssetRecord"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class"
+properties = "{\"contract_argument_schema\": {\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"required\": [\"asset_id\", \"is_hashed\"],\"properties\": {\"asset_id\": {\"type\": \"string\",\"pattern\": \"^[a-zA-Z0-9-/_.]+$\"},\"is_hashed\": {\"type\": \"boolean\"}}},\"salt\": \"salt\",\"holder_id\": \"a5e9971d-32be-490d-bff4-c6d65816c1e5\"}"
+[[contracts]]
+contract-id = "PutAssetRecord"
+contract-binary-name = "com.scalar.ist.contract.PutAssetRecord"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class"
+properties = "{\"contract_argument_schema\": {\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"required\": [\"asset_id\", \"data\", \"mode\", \"is_hashed\", \"created_at\"],\"properties\": {\"asset_id\": {\"type\": \"string\",\"pattern\": \"^[a-zA-Z0-9-/_.]+$\"},\"data\": {\"type\": \"object\"},\"mode\": {\"type\": \"string\",\"enum\": [\"insert\", \"update\", \"upsert\"]},\"is_hashed\": {\"type\": \"boolean\"},\"created_at\": {\"type\": \"integer\",\"minimum\": 0}}},\"salt\": \"salt\",\"holder_id\": \"a5e9971d-32be-490d-bff4-c6d65816c1e5\"}"
+[[contracts]]
+contract-id = "ValidateArgument"
+contract-binary-name = "com.scalar.ist.contract.ValidateArgument"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
+[[contracts]]
+contract-id = "ValidatePermission"
+contract-binary-name = "com.scalar.ist.contract.ValidatePermission"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
+[[contracts]]
+contract-id = "UpdateThirdParty"
+contract-binary-name = "com.scalar.ist.contract.UpdateThirdParty"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpdateThirdParty.class"
+properties = "{\"contract_argument_schema\": {\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"required\": [\"company_id\", \"third_party_domain\", \"third_party_name\", \"third_party_metadata\", \"organizations\", \"created_at\", \"updated_at\"],\"properties\": {\"company_id\": {\"type\": \"string\",\"format\": \"hostname\"},\"third_party_domain\": {\"type\": \"string\",\"format\": \"hostname\"},\"third_party_name\": {\"type\": \"string\",\"minLength\": 1},\"corporate_number\": {\"type\": \"string\",\"pattern\": \"^[0-9]{13}$\"},\"third_party_metadata\": {\"type\": \"object\"},\"organizations\": {\"type\": \"array\"},\"created_at\": {\"type\": \"integer\",\"minimum\": 0},\"updated_at\": {\"type\": \"integer\",\"minimum\": 0}}},\"asset_name\": \"tp\",\"asset_version\": \"01\",\"holder_id\": \"a5e9971d-32be-490d-bff4-c6d65816c1e5\"}"

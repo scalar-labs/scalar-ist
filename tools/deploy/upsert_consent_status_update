@@ -17,37 +17,11 @@ cd "$CURRENT_DIR" >/dev/null
 
 source "${CURRENT_DIR}/common.sh"
 source "${CURRENT_DIR}/fixture/argument/upsert_consent_status_update"
-source "${CURRENT_DIR}/fixture/schema/argument/upsert_consent_status_update"
 
 run register_certificate "${CURRENT_DIR}/fixture/conf/data_subject.properties"
 
-run register_contract "${CURRENT_DIR}/fixture/conf/data_subject.properties" \
-  "PutAssetRecord" \
-  "com.scalar.ist.contract.PutAssetRecord" \
-  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class" \
-  "PUT_ASSET_RECORD_PROP"
-
-run register_contract "${CURRENT_DIR}/fixture/conf/data_subject.properties" \
-  "GetAssetRecord" \
-  "com.scalar.ist.contract.GetAssetRecord" \
-  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class" \
-  "GET_ASSET_RECORD_PROP"
-
-run register_contract "${CURRENT_DIR}/fixture/conf/data_subject.properties" \
-  "ValidateArgument" \
-  "com.scalar.ist.contract.ValidateArgument" \
-  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
-
-run register_contract "${CURRENT_DIR}/fixture/conf/data_subject.properties" \
-  "ValidatePermission" \
-  "com.scalar.ist.contract.ValidatePermission" \
-  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
-
-run register_contract "${CURRENT_DIR}/fixture/conf/data_subject.properties" \
-  "UpsertConsentStatus" \
-  "com.scalar.ist.contract.UpsertConsentStatus" \
-  "${ROOTDIR}/contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertConsentStatus.class" \
-  "UPSERT_CONSENT_STATUS_PROP"
+run register_contracts "${CURRENT_DIR}/fixture/conf/data_subject.properties" \
+  "${CURRENT_DIR}/fixture/conf/upsert_consent_status_update.toml"
 
 run execute_contract "${CURRENT_DIR}/fixture/conf/data_subject.properties" \
   "UpsertConsentStatus" \

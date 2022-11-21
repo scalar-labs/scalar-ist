@@ -1,0 +1,28 @@
+[[contracts]]
+contract-id = "GetUserProfile"
+contract-binary-name = "com.scalar.ist.contract.GetUserProfile"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetUserProfile.class"
+properties = "{\"contract_argument_schema\": {\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"required\": [\"company_id\"],\"properties\": {\"company_id\": {\"type\": \"string\",\"format\": \"hostname\"}}},\"asset_name\": \"up\",\"asset_version\": \"01\",\"holder_id\": \"ba857670-4fc0-410c-8c83-5dc911c6dc12\"}"
+[[contracts]]
+contract-id = "GetAssetRecord"
+contract-binary-name = "com.scalar.ist.contract.GetAssetRecord"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class"
+properties = "{\"contract_argument_schema\": {\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"required\": [\"asset_id\", \"is_hashed\"],\"properties\": {\"asset_id\": {\"type\": \"string\",\"pattern\": \"^[a-zA-Z0-9-/_.]+$\"},\"is_hashed\": {\"type\": \"boolean\"}}},\"salt\": \"salt\",\"holder_id\": \"ba857670-4fc0-410c-8c83-5dc911c6dc12\"}"
+[[contracts]]
+contract-id = "PutAssetRecord"
+contract-binary-name = "com.scalar.ist.contract.PutAssetRecord"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/PutAssetRecord.class"
+properties = "{\"contract_argument_schema\": {\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"required\": [\"asset_id\", \"data\", \"mode\", \"is_hashed\", \"created_at\"],\"properties\": {\"asset_id\": {\"type\": \"string\",\"pattern\": \"^[a-zA-Z0-9-/_.]+$\"},\"data\": {\"type\": \"object\"},\"mode\": {\"type\": \"string\",\"enum\": [\"insert\", \"update\", \"upsert\"]},\"is_hashed\": {\"type\": \"boolean\"},\"created_at\": {\"type\": \"integer\",\"minimum\": 0}}},\"salt\": \"salt\",\"holder_id\": \"ba857670-4fc0-410c-8c83-5dc911c6dc12\"}"
+[[contracts]]
+contract-id = "ValidateArgument"
+contract-binary-name = "com.scalar.ist.contract.ValidateArgument"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
+[[contracts]]
+contract-id = "ValidatePermission"
+contract-binary-name = "com.scalar.ist.contract.ValidatePermission"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
+[[contracts]]
+contract-id = "UpdatePurpose"
+contract-binary-name = "com.scalar.ist.contract.UpsertMaster"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/UpsertMaster.class"
+properties = "{\"contract_argument_schema\": {\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"required\": [\"action\", \"company_id\", \"organization_id\", \"description\", \"is_active\", \"created_at\", \"updated_at\"],\"properties\": {\"action\": {\"type\": \"string\",\"enum\": [\"update\"]},\"company_id\": {\"type\": \"string\",\"format\": \"hostname\"},\"organization_id\": {\"type\": \"string\",\"pattern\": \"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$\"},\"description\": {\"type\": \"string\",\"minLength\": 1},\"is_active\": {\"type\": \"boolean\"},\"created_at\": {\"type\": \"integer\",\"minimum\": 0},\"updated_at\": {\"type\": \"integer\",\"minimum\": 0}}},\"asset_schema\": {\"$schema\": \"http://json-schema.org/draft-07/schema#\",\"type\": \"object\",\"properties\": {\"purpose_id\": {\"type\": \"string\",\"pattern\": \"asset_id\"},\"company_id\": {\"type\": \"string\"},\"organization_id\": {\"type\": \"string\"},\"category_of_purpose\": {\"type\": \"string\"},\"purpose_name\": {\"type\": \"string\"},\"description\": {\"type\": \"string\"},\"legal_text\": {\"type\": \"string\"},\"user_friendly_text\": {\"type\": \"string\"},\"guidance\": {\"type\": \"string\"},\"note\": {\"type\": \"string\"}}},\"table_schema\": {\"$schema\": \"scalar_db_table_schema.json\",\"table_name\": \"purpose\",\"partition_keys\": [{\"name\": \"company_id\",\"type\": \"text\"}],\"clustering_keys\": [{\"name\": \"created_at\",\"type\": \"bigint\"}, {\"name\": \"organization_id\",\"type\": \"text\"}],\"columns\": [{\"name\": \"category_of_purpose\",\"type\": \"text\"}, {\"name\": \"purpose_name\",\"type\": \"text\"}, {\"name\": \"description\",\"type\": \"text\"}, {\"name\": \"legal_text\",\"type\": \"text\"}, {\"name\": \"user_friendly_text\",\"type\": \"text\"}, {\"name\": \"guidance\",\"type\": \"text\"}, {\"name\": \"note\",\"type\": \"text\"}, {\"name\": \"is_active\",\"type\": \"boolean\"}, {\"name\": \"created_by\",\"type\": \"text\"}, {\"name\": \"updated_at\",\"type\": \"bigint\"}]},\"asset_name\": \"pp\",\"asset_version\": \"01\",\"holder_id\": \"ba857670-4fc0-410c-8c83-5dc911c6dc12\"}"

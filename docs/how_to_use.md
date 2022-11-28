@@ -53,138 +53,159 @@ ISTでは、以下の順番で事業者、およびユーザープロファイ�
 
 # デプロイツールを使ったユーザーストーリーの実行
 
-## デプロイツールのビルド
+### Scalar DL Java クライアント SDK をセットアップする
+
+[リリース](https://github.com/scalar-labs/scalardl-java-client-sdk/releases) から `scalardl-java-client-sdk` zip ファイルを `scalar-ist` にダウンロードします。
+次に、解凍して名前を「scalardl-java-client-sdk」に変更します。
+
+```console
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_VERSION>.zip
+unzip scalardl-java-client-sdk.zip
+mv scalardl-java-client-sdk-* scalardl-java-client-sdk
 ```
-./gradlew installDist
-```
+* 指定した Scalar DL バージョンで `<SCALARDL_JAVA CLIENT_VERSION>` を更新することを忘れないでください。
 
 ## ISTで使用する共有のファンクションを登録
+
+最初にコントラクトと関数を構築する必要があります
+```console
+cd contracts_and_functions
+./gradlew build
+cd ../tools/deploy
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/functions.json
+
+次に関数を登録します。
+```console
+./functions
 ```
 
 # システム運用事業者、個人情報取扱事業者の情報を登録
 ## システム運用事業者を登録
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/initialize.json
+```console
+./initialize
 ```
 
 ## 個人情報取扱事業者の登録
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_company.json
+```console
+./register_company
 ```
 
 ## 個人情報取扱事業者のユーザプロファイル情報を登録
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_admin.json
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_controller.json 
+```console
+./upsert_user_profile_admin
+./upsert_user_profile_controller 
 ```
 
 # 同意文書のマスタ情報を登録
 ## 利用目的を登録する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_purpose.json
+```console
+./register_purpose
 ```
 
 ## 利用目的を更新する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_purpose.json
+```console
+./update_purpose
 ```
 
 ## データセットスキーマを登録する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_data_set_schema.json
+```console
+./register_data_set_schema
 ```
 
 ## データセットスキーマを更新する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_set_schema.json
+```console
+./update_data_set_schema
 ```
 
 ## 第三者提供先を登録する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_third_party.json
+```console
+./register_third_party
 ```
 
 ## 第三者提供先を更新する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_third_party.json
+```console
+./update_third_party
 ```
 
 ## 利用停止、データ削除期限を登録する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_data_retention_policy.json
+```console
+./register_data_retention_policy
 ```
 
 ## 利用停止、データ削除期限を更新する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_data_retention_policy.json
+```console
+./update_data_retention_policy
 ```
 
 ## 便益を登録する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_benefit.json
+```console
+./register_benefit
 ```
 
 ## 便益を更新する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_benefit.json
+```console
+./update_benefit
 ```
 
 # 同意文書の登録、更新
 ## 同意文書を登録する
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/register_consent_statement.json
+```console
+./register_consent_statement
 ```
 
 ## 同意文書を修正する（再同意が不要な変更内容）
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_revision.json
+```console
+./update_consent_statement_revision
 ```
 
 ## 同意文書を改訂する（再同意が必要な変更内容）
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_version.json
+```console
+./update_consent_statement_version
 ```
 
 ## 同意文書のステータスを変更する
+```console
+./update_consent_statement_status
 ```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_consent_statement_status.json
+
+## 同意文書に対する修正（再同意が不要な変更）の履歴を取得します。
+```console
+./get_consent_statement_history
 ```
 
 # 事業者情報の更新
 ## 事業者ユーザの所属組織の更新
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/update_company.json
+```console
+./update_company
 ```
 
 ## 事業者ユーザのロールの更新
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_user_profile_controller_add_processor.json
+```console
+./upsert_user_profile_controller_add_processor
 ```
 
 ## 組織情報の追加・更新
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_organization.json
+```console
+./upsert_organization
 ```
 
 # データ主体による同意の記録
 ## 同意の登録
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_consent_status_register.json
+```console
+./upsert_consent_status_register
 ```
 
 ## 同意の更新
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/upsert_consent_status_update.json
+```console
+./upsert_consent_status_update
 ```
 
 ## データ主体により同意の状態の参照
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_data_subject.json
+```console
+./get_consent_status_data_subject
 ```
 
 ## 事業者ユーザーによる同意の状態の参照
-```
-build/install/deploy_tool/bin/deploy_tool -f build/resources/main/command/get_consent_status_controller.json
+```console
+./get_consent_status_controller
 ```

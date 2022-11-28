@@ -53,27 +53,28 @@ ISTでは、以下の順番で事業者、およびユーザープロファイ�
 
 # デプロイツールを使ったユーザーストーリーの実行
 
-### Set up Scalar DL Java Client SDK
+### Scalar DL Java クライアント SDK をセットアップする
 
-Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases) to `scalar-ist`.
-Then unzip and rename it to `scalardl-java-client-sdk`.
+[リリース](https://github.com/scalar-labs/scalardl-java-client-sdk/releases) から `scalardl-java-client-sdk` zip ファイルを `scalar-ist` にダウンロードします。
+次に、解凍して名前を「scalardl-java-client-sdk」に変更します。
+
 ```console
 wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_VERSION>.zip
 unzip scalardl-java-client-sdk.zip
 mv scalardl-java-client-sdk-* scalardl-java-client-sdk
 ```
-* Don't forget to update `<SCALARDL_JAVA CLIENT_VERSION>` with the specified Scalar DL version.
+* 指定した Scalar DL バージョンで `<SCALARDL_JAVA CLIENT_VERSION>` を更新することを忘れないでください。
 
 ## ISTで使用する共有のファンクションを登録
 
-You will first need to build the contract and functions
+最初にコントラクトと関数を構築する必要があります
 ```console
 cd contracts_and_functions
 ./gradlew build
 cd ../tools/deploy
 ```
 
-Then register the functions
+次に関数を登録します。
 ```console
 ./functions
 ```

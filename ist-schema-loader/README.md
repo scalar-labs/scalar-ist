@@ -20,7 +20,7 @@ docker push <tag>
 ## How to use
 
 Check out the Schema tool documentation for the correct usage.
-[link](https://github.com/scalar-labs/scalardb/blob/master/tools/scalar-schema/README.md)
+[link](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md)
 
 docker-compose.yaml
 

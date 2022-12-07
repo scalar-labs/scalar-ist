@@ -59,7 +59,7 @@ ISTでは、以下の順番で事業者、およびユーザープロファイ�
 次に、解凍して名前を「scalardl-java-client-sdk」に変更します。
 
 ```console
-wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_SDK_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_VERSION>.zip
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_SDK_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_SDK_VERSION>.zip
 unzip scalardl-java-client-sdk.zip
 mv scalardl-java-client-sdk-* scalardl-java-client-sdk
 ```

@@ -136,11 +136,11 @@ networks:
 Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases) to `scalar-ist`.
 Then unzip and rename it to `scalardl-java-client-sdk`.
 ```console
-wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_VERSION>.zip
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_SDK_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_SDK_VERSION>.zip
 unzip scalardl-java-client-sdk.zip
 mv scalardl-java-client-sdk-* scalardl-java-client-sdk
 ```
-* Don't forget to update `<SCALARDL_JAVA CLIENT_VERSION>` with the specified Scalar DL version.
+* Don't forget to update `<SCALARDL_JAVA_CLIENT_SDK_VERSION>` with the specified Scalar DL version.
 
 ### Register shared functions for use in IST
 

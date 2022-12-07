@@ -59,11 +59,11 @@ ISTでは、以下の順番で事業者、およびユーザープロファイ�
 次に、解凍して名前を「scalardl-java-client-sdk」に変更します。
 
 ```console
-wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_VERSION>.zip
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_SDK_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_VERSION>.zip
 unzip scalardl-java-client-sdk.zip
 mv scalardl-java-client-sdk-* scalardl-java-client-sdk
 ```
-* 指定した Scalar DL バージョンで `<SCALARDL_JAVA CLIENT_VERSION>` を更新することを忘れないでください。
+* 指定した Scalar DL バージョンで `<SCALARDL_JAVA_CLIENT_SDK_VERSION>` を更新することを忘れないでください。
 
 ## ISTで使用する共有のファンクションを登録
 

@@ -55,15 +55,14 @@ ISTでは、以下の順番で事業者、およびユーザープロファイ�
 
 ### Scalar DL Java クライアント SDK をセットアップする
 
-[リリース](https://github.com/scalar-labs/scalardl-java-client-sdk/releases) から `scalardl-java-client-sdk` zip ファイルを `scalar-ist` にダウンロードします。
+[リリース](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.5.3) から `scalardl-java-client-sdk` zip ファイルを `scalar-ist` にダウンロードします。
 次に、解凍して名前を「scalardl-java-client-sdk」に変更します。
 
 ```console
-wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_SDK_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_SDK_VERSION>.zip
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.5.3/scalardl-java-client-sdk-3.5.3.zip
 unzip scalardl-java-client-sdk.zip
-mv scalardl-java-client-sdk-* scalardl-java-client-sdk
+mv scalardl-java-client-sdk-3.5.3 scalardl-java-client-sdk
 ```
-* 指定した Scalar DL バージョンで `<SCALARDL_JAVA_CLIENT_SDK_VERSION>` を更新することを忘れないでください。
 
 ## ISTで使用する共有のファンクションを登録
 

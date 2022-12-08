@@ -133,14 +133,13 @@ networks:
 
 ### Set up Scalar DL Java Client SDK
 
-Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases) to `scalar-ist`.
+Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.5.3) to `scalar-ist`.
 Then unzip and rename it to `scalardl-java-client-sdk`.
 ```console
-wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v<SCALARDL_JAVA_CLIENT_SDK_VERSION>/scalardl-java-client-sdk-<SCALARDL_JAVA_CLIENT_SDK_VERSION>.zip
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.5.3/scalardl-java-client-sdk-3.5.3.zip
 unzip scalardl-java-client-sdk.zip
-mv scalardl-java-client-sdk-* scalardl-java-client-sdk
+mv scalardl-java-client-sdk-3.5.3 scalardl-java-client-sdk
 ```
-* Don't forget to update `<SCALARDL_JAVA_CLIENT_SDK_VERSION>` with the specified Scalar DL version.
 
 ### Register shared functions for use in IST
 

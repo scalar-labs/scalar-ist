@@ -53,7 +53,86 @@ ISTでは、以下の順番で事業者、およびユーザープロファイ�
 
 # デプロイツールを使ったユーザーストーリーの実行
 
-### Scalar DL Java クライアント SDK をセットアップする
+Based on the following IST project [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
+To use IST you need to run [scalardl](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).  
+The next steps have been tested with this docker-compose.yml from scalardl:
+``` 
+version: "3.5"
+services:
+  cassandra:
+    image: cassandra:3.11
+    container_name: "scalardl-samples-cassandra-1"
+    volumes:
+      - cassandra-data:/var/lib/cassandra
+    ports:
+    #   - "7199:7199" # JMX
+    #   - "7000:7000" # cluster communication
+    #   - "7001:7001" # cluster communication (SSL)
+       - "9042:9042" # native protocol clients
+    #   - "9160:9160" # thrift clients
+    environment:
+      - CASSANDRA_DC=dc1
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+    networks:
+      - scalar-network
+  scalardl-ledger-schema-loader-cassandra:
+    image: ghcr.io/scalar-labs/scalardl-schema-loader:1.2.0
+    command:
+      - "--cassandra"
+      - "-h"
+      - "cassandra"
+      - "-R"
+      - "1"
+    networks:
+      - scalar-network
+    restart: on-failure
+  scalar-ledger:
+    image: ghcr.io/scalar-labs/scalar-ledger:2.0.7
+    container_name: "scalardl-samples-scalar-ledger-1"
+    volumes:
+      - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
+    depends_on:
+      - cassandra
+    environment:
+      - SCALAR_DB_CONTACT_POINTS=cassandra
+      - SCALAR_DB_STORAGE=cassandra
+      - SCALAR_DL_LEDGER_PROOF_ENABLED=true
+      - SCALAR_DL_LEDGER_PROOF_PRIVATE_KEY_PATH=/scalar/ledger-key.pem
+    networks:
+      - scalar-network
+    # Overriding the CMD instruction in the scalar-ledger Dockerfile to add the -wait option.
+    command: |
+      dockerize -template ledger.properties.tmpl:ledger.properties
+      -template log4j.properties.tmpl:log4j.properties
+      -wait tcp://cassandra:9042 -timeout 60s
+      ./bin/scalar-ledger --config ledger.properties
+  ledger-envoy:
+    image: envoyproxy/envoy:v1.12.7
+    container_name: "scalardl-samples-ledger-envoy-1"
+    ports:
+      - "9901:9901"
+      - "50051:50051"
+      - "50052:50052"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    depends_on:
+      - scalar-ledger
+    command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
+    networks:
+      - scalar-network
+
+volumes:
+  cassandra-data:
+networks:
+  scalar-network:
+    name: scalar-network
+```
+
+## Create Scalar IST schema
+
+Create Scalar IST schema using the [IST schema loader](../ist-schema-loader/README.md).
+
+## Scalar DL Java クライアント SDK をセットアップする
 
 [リリース](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.5.3) から `scalardl-java-client-sdk` zip ファイルを `scalar-ist` にダウンロードします。
 次に、解凍して名前を「scalardl-java-client-sdk」に変更します。

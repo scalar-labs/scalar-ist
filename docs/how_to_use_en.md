@@ -130,6 +130,9 @@ networks:
     name: scalar-network
 ```
 
+### Create Scalar IST schema
+
+Create Scalar IST schema using the [IST schema loader](../ist-schema-loader/README.md).
 
 ### Set up Scalar DL Java Client SDK
 
@@ -165,9 +168,6 @@ Then register the functions
 ```
 
 ### Registration of business operator handling personal information
-
-You will need to register using the `schema.cql`.
-After this you can register the company.
 
 ```console
 ./register_company

@@ -5,33 +5,45 @@ the schema in your database of choice.
 
 ## Deployment
 
-Build
+### Build
 
 ```
 docker build -t <tag> .
 ```
 
-Push
+Example:
+```
+docker build -t ghcr.io/scalar-labs/scalar-ist-schema-loader .
+```
+
+### Push
 
 ```
 docker push <tag>
 ```
 
+Example:
+```
+docker push ghcr.io/scalar-labs/scalar-ist-schema-loader
+```
+
 ## How to use
 
 Check out the Schema tool documentation for the correct usage.
-[link](https://github.com/scalar-labs/scalardb/blob/master/tools/scalar-schema/README.md)
+[link](https://github.com/scalar-labs/scalardb/blob/master/docs/schema-loader.md)
 
 docker-compose.yaml
 
 ```dockerfile
-ist-schema-loader:
+  ist-schema-loader:
     image: ghcr.io/scalar-labs/scalar-ist-schema-loader
+    volumes:
+      - ./scalardb.properties:/scalardb.properties
     command:
-      - "--cassandra"
-      - "-h"
-      - "cassandra"
-      - "-R"
+      - "-c"
+      - "/scalardb.properties"
+      - "--coordinator"
+      - "--replication-factor"
       - "1"
     networks:
       - scalar-network

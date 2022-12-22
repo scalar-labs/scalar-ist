@@ -9,7 +9,7 @@ jobs:
   scalar-ist-e2e-test:
     runs-on: ubuntu-latest
     env:
-      SCALARDL_VERSION: 3.6.0
+      SCALARDL_VERSION: 3.5.3
       CONTRACTS_AND_FUNCTIONS_DIR: ${{ github.workspace }}/contracts_and_functions
       DEPLOY_TOOL_DIR: ${{ github.workspace }}/tools/deploy
       SCALAR_IST_SCHEMA: ${{ github.workspace }}/scripts/schema.cql

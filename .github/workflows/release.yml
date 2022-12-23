@@ -26,8 +26,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Build Docker image
+      - name: Build Docker image for Scalar IST loader
         run: docker build -t ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }} ./ist-loader
 
-      - name: Push Docker image
+      - name: Push Docker image for Scalar IST loader
         run: docker push ghcr.io/scalar-labs/scalar-ist-loader:${{ steps.version.outputs.version }}
+
+      - name: Build Docker image for Scalar IST schema loader
+        run: docker build -t ghcr.io/scalar-labs/scalar-ist-schema-loader:${{ steps.version.outputs.version }} ./ist-schema-loader
+
+      - name: Push Docker image for Scalar IST schema loader
+        run: docker push ghcr.io/scalar-labs/scalar-ist-schema-loader:${{ steps.version.outputs.version }}

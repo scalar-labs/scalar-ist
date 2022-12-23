@@ -1,13 +1,38 @@
-# Scalar IST execution procedure
+
+# Prerequisites
+
+## ScalarDL
+Before you can use IST you first have to deploy ScalarDL.
+You can quickly start a local installation for testing purposes via the following [docker-compose.yml](https://github.com/scalar-labs/scalar-ist/blob/main/fixture/scalardl/docker-compose.yml) file.
+More information on how to get up and running with ScalarDL can be found [here](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).
+
+## Create Scalar IST schema
+
+Once ScalarDL is up and running, the [IST schema](../ist-schema-loader/schema/ist.transaction.json) needs to be installed on the running ScalarDL instance.
+
+The schema can be installed either using the [docker IST schema loader](../ist-schema-loader/README.md) or via the ScalarDL docker schema loader as described in the ScalarDL documentation.
+You can build the IST schema docker image yourself or use the pre-built image from `ghcr.io/scalar-labs/scalar-ist-schema-loader:<release-number>`.
+
+## Set up Scalar DL Java Client SDK
+
+Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.5.3) to `scalar-ist`.
+Then unzip and rename it to `scalardl-java-client-sdk`.
+```console
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.5.3/scalardl-java-client-sdk-3.5.3.zip
+unzip scalardl-java-client-sdk.zip
+mv scalardl-java-client-sdk-3.5.3 scalardl-java-client-sdk
+```
+
+# How to use Scalar IST?
 To run Scalar IST, you need to do the following:
 
 Create a Holder ID, private key, and certificate for the contract executor
 - Register the contract executor's certificate with Scalar DLT
 - Register the contract and function used by the contract executor in Scalar DLT.
 - Generate a digital signature of request data at the time of contract execution using the contract executor's private key
-- Send request data and digital signature to Scalar DLT and execute contract
+- Send request data and digital signature to Scalar DLT and execute a contract
 
-## Scalar IST user story
+## Scalar IST user stories
 In IST, there are two types of business operators, system operation business operators and personal information handling business operators, and the system operating business operator has the authority to register only one business operator and to register the personal information handling business operator. A business operator handling personal information is a business operator that collects, uses, and provides personal information, creates consent documents for collecting personal information, and manages consent records.
 
 In IST, register the business operator and user profile in the following order:
@@ -16,11 +41,9 @@ In IST, register the business operator and user profile in the following order:
 - Registration of personal information handling business operator using the system, registration of personal information handling business operator administrator, information manager, information processor user profile
 - A user of a business operator handling personal information registers master items (purpose of use, dataset schema, data retention policy, benefits, third party providers) and consent documents.
 
-## User story
-
 ### Register system operator
 - Register the operator information and organization information of the system operator
-- Register user profile information of system administrator and system operator
+- Register user profile information of the system administrator and system operator
 
 ### Register a business operator handling personal information
 - Register business information and business management organization information
@@ -34,10 +57,10 @@ In IST, register the business operator and user profile in the following order:
 - Register and update the purpose of use
 - Register and renew the expiration date
 - Register and update third-party providers that use data
-- Register and update dataset schema
+- Register and update the Dataset schema
 - Register and renew benefits
 
-### Registration and update of consent document
+### Registration and update of the consent document
 
 - Register consent document
 - Revised consent document (changes that do not require re-consent)
@@ -45,101 +68,16 @@ In IST, register the business operator and user profile in the following order:
 
 ### Update of business information
 
-- Update user's organization / role
-- Addition / update of organization information
+- Update the user's organization/role
+- Addition/update of organization information
 
 ### Record of consent by the data subject
 
-- The data subject records consent and refusal to the consent document
+- The data subject records consent and refusal of the consent document
 - Data subject gets its consent status
 - The user of the business obtains the consent status for the consent document of the business.
 
-## Run a user story with a deploy tool
-Based on the following IST project [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
-To use IST you need to run [scalardl](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).  
-The next steps have been tested with this docker-compose.yml from scalardl:
-``` 
-version: "3.5"
-services:
-  cassandra:
-    image: cassandra:3.11
-    container_name: "scalardl-samples-cassandra-1"
-    volumes:
-      - cassandra-data:/var/lib/cassandra
-    ports:
-    #   - "7199:7199" # JMX
-    #   - "7000:7000" # cluster communication
-    #   - "7001:7001" # cluster communication (SSL)
-       - "9042:9042" # native protocol clients
-    #   - "9160:9160" # thrift clients
-    environment:
-      - CASSANDRA_DC=dc1
-      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
-    networks:
-      - scalar-network
-  scalardl-ledger-schema-loader-cassandra:
-    image: ghcr.io/scalar-labs/scalardl-schema-loader:1.2.0
-    command:
-      - "--cassandra"
-      - "-h"
-      - "cassandra"
-      - "-R"
-      - "1"
-    networks:
-      - scalar-network
-    restart: on-failure
-  scalar-ledger:
-    image: ghcr.io/scalar-labs/scalar-ledger:2.0.7
-    container_name: "scalardl-samples-scalar-ledger-1"
-    volumes:
-      - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
-    depends_on:
-      - cassandra
-    environment:
-      - SCALAR_DB_CONTACT_POINTS=cassandra
-      - SCALAR_DB_STORAGE=cassandra
-      - SCALAR_DL_LEDGER_PROOF_ENABLED=true
-      - SCALAR_DL_LEDGER_PROOF_PRIVATE_KEY_PATH=/scalar/ledger-key.pem
-    networks:
-      - scalar-network
-    # Overriding the CMD instruction in the scalar-ledger Dockerfile to add the -wait option.
-    command: |
-      dockerize -template ledger.properties.tmpl:ledger.properties
-      -template log4j.properties.tmpl:log4j.properties
-      -wait tcp://cassandra:9042 -timeout 60s
-      ./bin/scalar-ledger --config ledger.properties
-  ledger-envoy:
-    image: envoyproxy/envoy:v1.12.7
-    container_name: "scalardl-samples-ledger-envoy-1"
-    ports:
-      - "9901:9901"
-      - "50051:50051"
-      - "50052:50052"
-    volumes:
-      - ./envoy.yaml:/etc/envoy/envoy.yaml
-    depends_on:
-      - scalar-ledger
-    command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
-    networks:
-      - scalar-network
-
-volumes:
-  cassandra-data:
-networks:
-  scalar-network:
-    name: scalar-network
-```
-
-
-### Set up Scalar DL Java Client SDK
-
-Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.5.3) to `scalar-ist`.
-Then unzip and rename it to `scalardl-java-client-sdk`.
-```console
-wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.5.3/scalardl-java-client-sdk-3.5.3.zip
-unzip scalardl-java-client-sdk.zip
-mv scalardl-java-client-sdk-3.5.3 scalardl-java-client-sdk
-```
+## How to run a user story
 
 ### Register shared functions for use in IST
 
@@ -166,16 +104,13 @@ Then register the functions
 
 ### Registration of business operator handling personal information
 
-You will need to register using the `schema.cql`.
-After this you can register the company.
-
 ```console
 ./register_company
 ```
 
 ### Register the user profile information of the business operator handling personal information
 
-You first need admin profile, and then you can register the user profile.
+You first need an admin profile, and then you can register the user profile.
 ```console
 ./upsert_user_profile_admin
 ./upsert_user_profile_controller
@@ -203,12 +138,12 @@ Update the dataset schema
 ./update_data_set_schema
 ```
 
-Register a third party provider
+Register a third-party provider
 ```console 
 ./register_third_party
 ```
 
-Update third party providers
+Update third-party providers
 ```console 
 ./update_third_party
 ```
@@ -233,7 +168,7 @@ Update benefits
 ./update_benefit
 ```
 
-### Registration and update of consent document
+### Registration and update of a consent document
 
 Register the consent document
 ```console
@@ -271,7 +206,7 @@ Update the role of the operator user
 ./upsert_user_profile_controller_add_processor
 ```
 
-Addition / update of organization information
+Addition/update of organization information
 ```console
 ./upsert_organization
 ```
@@ -288,7 +223,7 @@ Renewal of consent
 ./upsert_consent_status_update
 ```
 
-Reference of consent status by data subject
+Reference of consent status by a data subject
 ```console
 ./get_consent_status_data_subject
 ```

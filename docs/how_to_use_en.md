@@ -1,4 +1,29 @@
-# Scalar IST execution procedure
+
+# Prerequisites
+
+## ScalarDL
+Before you can use IST you first have to deploy ScalarDL.
+You can quickly start a local installation for testing purposes via the following [docker-compose.yml](https://github.com/scalar-labs/scalar-ist/blob/main/fixture/scalardl/docker-compose.yml) file.
+More information on how to get up and running with ScalarDL can be found [here](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).
+
+## Create Scalar IST schema
+
+Once ScalarDL is up and running, the [IST schema](../ist-schema-loader/schema/ist.transaction.json) needs to be installed on the running ScalarDL instance.
+
+The schema can be installed either using the [docker IST schema loader](../ist-schema-loader/README.md) or via the ScalarDL docker schema loader as described in the ScalarDL documentation.
+You can build the IST schema docker image yourself or use the pre-built image from `ghcr.io/scalar-labs/scalar-ist-schema-loader:<release-number>`.
+
+## Set up Scalar DL Java Client SDK
+
+Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.5.3) to `scalar-ist`.
+Then unzip and rename it to `scalardl-java-client-sdk`.
+```console
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.5.3/scalardl-java-client-sdk-3.5.3.zip
+unzip scalardl-java-client-sdk.zip
+mv scalardl-java-client-sdk-3.5.3 scalardl-java-client-sdk
+```
+
+# How to use Scalar IST?
 To run Scalar IST, you need to do the following:
 
 Create a Holder ID, private key, and certificate for the contract executor
@@ -7,7 +32,7 @@ Create a Holder ID, private key, and certificate for the contract executor
 - Generate a digital signature of request data at the time of contract execution using the contract executor's private key
 - Send request data and digital signature to Scalar DLT and execute a contract
 
-## Scalar IST user story
+## Scalar IST user stories
 In IST, there are two types of business operators, system operation business operators and personal information handling business operators, and the system operating business operator has the authority to register only one business operator and to register the personal information handling business operator. A business operator handling personal information is a business operator that collects, uses, and provides personal information, creates consent documents for collecting personal information, and manages consent records.
 
 In IST, register the business operator and user profile in the following order:
@@ -15,8 +40,6 @@ In IST, register the business operator and user profile in the following order:
 - Register the system operator who operates the system, and register the user profiles of the system administrator and system operator who belong to the system operator.
 - Registration of personal information handling business operator using the system, registration of personal information handling business operator administrator, information manager, information processor user profile
 - A user of a business operator handling personal information registers master items (purpose of use, dataset schema, data retention policy, benefits, third party providers) and consent documents.
-
-## User story
 
 ### Register system operator
 - Register the operator information and organization information of the system operator
@@ -54,94 +77,7 @@ In IST, register the business operator and user profile in the following order:
 - Data subject gets its consent status
 - The user of the business obtains the consent status for the consent document of the business.
 
-## Run a user story with a deploy tool
-To use IST you need to run [scalardl](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).  
-The next steps have been tested with this docker-compose.yml from scalardl:
-``` 
-version: "3.5"
-services:
-  cassandra:
-    image: cassandra:3.11
-    container_name: "scalardl-samples-cassandra-1"
-    volumes:
-      - cassandra-data:/var/lib/cassandra
-    ports:
-    #   - "7199:7199" # JMX
-    #   - "7000:7000" # cluster communication
-    #   - "7001:7001" # cluster communication (SSL)
-       - "9042:9042" # native protocol clients
-    #   - "9160:9160" # thrift clients
-    environment:
-      - CASSANDRA_DC=dc1
-      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
-    networks:
-      - scalar-network
-  scalardl-ledger-schema-loader-cassandra:
-    image: ghcr.io/scalar-labs/scalardl-schema-loader:1.2.0
-    command:
-      - "--cassandra"
-      - "-h"
-      - "cassandra"
-      - "-R"
-      - "1"
-    networks:
-      - scalar-network
-    restart: on-failure
-  scalar-ledger:
-    image: ghcr.io/scalar-labs/scalar-ledger:2.0.7
-    container_name: "scalardl-samples-scalar-ledger-1"
-    volumes:
-      - ./fixture/ledger-key.pem:/scalar/ledger-key.pem
-    depends_on:
-      - cassandra
-    environment:
-      - SCALAR_DB_CONTACT_POINTS=cassandra
-      - SCALAR_DB_STORAGE=cassandra
-      - SCALAR_DL_LEDGER_PROOF_ENABLED=true
-      - SCALAR_DL_LEDGER_PROOF_PRIVATE_KEY_PATH=/scalar/ledger-key.pem
-    networks:
-      - scalar-network
-    # Overriding the CMD instruction in the scalar-ledger Dockerfile to add the -wait option.
-    command: |
-      dockerize -template ledger.properties.tmpl:ledger.properties
-      -template log4j.properties.tmpl:log4j.properties
-      -wait tcp://cassandra:9042 -timeout 60s
-      ./bin/scalar-ledger --config ledger.properties
-  ledger-envoy:
-    image: envoyproxy/envoy:v1.12.7
-    container_name: "scalardl-samples-ledger-envoy-1"
-    ports:
-      - "9901:9901"
-      - "50051:50051"
-      - "50052:50052"
-    volumes:
-      - ./envoy.yaml:/etc/envoy/envoy.yaml
-    depends_on:
-      - scalar-ledger
-    command: /usr/local/bin/envoy -c /etc/envoy/envoy.yaml
-    networks:
-      - scalar-network
-
-volumes:
-  cassandra-data:
-networks:
-  scalar-network:
-    name: scalar-network
-```
-
-### Create Scalar IST schema
-
-Create Scalar IST schema using the [IST schema loader](../ist-schema-loader/README.md).
-
-### Set up Scalar DL Java Client SDK
-
-Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.5.3) to `scalar-ist`.
-Then unzip and rename it to `scalardl-java-client-sdk`.
-```console
-wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.5.3/scalardl-java-client-sdk-3.5.3.zip
-unzip scalardl-java-client-sdk.zip
-mv scalardl-java-client-sdk-3.5.3 scalardl-java-client-sdk
-```
+## How to run a user story
 
 ### Register shared functions for use in IST
 

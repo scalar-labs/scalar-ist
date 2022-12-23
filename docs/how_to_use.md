@@ -52,8 +52,6 @@ ISTでは、以下の順番で事業者、およびユーザープロファイ�
 1. 事業者のユーザーが自事業者の同意文書に対する同意状態を取得する
 
 # デプロイツールを使ったユーザーストーリーの実行
-
-Based on the following IST project [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
 To use IST you need to run [scalardl](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).  
 The next steps have been tested with this docker-compose.yml from scalardl:
 ``` 

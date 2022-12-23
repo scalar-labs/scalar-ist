@@ -55,7 +55,6 @@ In IST, register the business operator and user profile in the following order:
 - The user of the business obtains the consent status for the consent document of the business.
 
 ## Run a user story with a deploy tool
-Based on the following IST project [scarlar-ist-internal](https://github.com/scalar-labs/scalar-ist-internal).  
 To use IST you need to run [scalardl](https://github.com/scalar-labs/scalardl/blob/master/docs/installation-with-docker.md).  
 The next steps have been tested with this docker-compose.yml from scalardl:
 ``` 

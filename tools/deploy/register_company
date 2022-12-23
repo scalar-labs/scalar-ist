@@ -1,0 +1,30 @@
+#!/bin/bash
+
+PRG="$0"
+while [ -h "$PRG" ] ; do
+    ls=`ls -ld "$PRG"`
+    link=`expr "$ls" : '.*-> \(.*\)$'`
+    if expr "$link" : '/.*' > /dev/null; then
+        PRG="$link"
+    else
+        PRG=`dirname "$PRG"`"/$link"
+    fi
+done
+CURRENT_DIR="`pwd`"
+cd "`dirname \"$PRG\"`"/../../ >/dev/null
+ROOTDIR="`pwd -P`"
+cd "$CURRENT_DIR" >/dev/null
+
+source "${CURRENT_DIR}/common.sh"
+source "${CURRENT_DIR}/fixture/argument/register_company"
+
+run register_certificate "${CURRENT_DIR}/fixture/conf/sys_admin.properties"
+
+run register_contracts "${CURRENT_DIR}/fixture/conf/sys_admin.properties" \
+  "${CURRENT_DIR}/fixture/conf/register_company.toml"
+
+run execute_contract "${CURRENT_DIR}/fixture/conf/sys_admin.properties" \
+  "RegisterCompany" \
+  "REGISTER_COMPANY_ARG"
+
+exit ${TEST_STATUS}

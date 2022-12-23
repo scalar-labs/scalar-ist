@@ -1,0 +1,23 @@
+[[contracts]]
+contract-id = "GetAssetRecord"
+contract-binary-name = "com.scalar.ist.contract.GetAssetRecord"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetAssetRecord.class"
+properties = "{ \"contract_argument_schema\": { \"$schema\": \"http://json-schema.org/draft-07/schema#\", \"type\": \"object\", \"required\": [\"asset_id\", \"is_hashed\"], \"properties\": { \"asset_id\": { \"type\": \"string\", \"pattern\": \"^[a-zA-Z0-9-/_.]+$\" }, \"is_hashed\": { \"type\": \"boolean\" } } }, \"salt\": \"salt\"}"
+[[contracts]]
+contract-id = "GetUserProfile"
+contract-binary-name = "com.scalar.ist.contract.GetUserProfile"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetUserProfile.class"
+properties = "{ \"contract_argument_schema\": { \"$schema\": \"http://json-schema.org/draft-07/schema#\", \"type\": \"object\", \"required\": [\"company_id\"], \"properties\": { \"company_id\": { \"type\": \"string\", \"format\": \"hostname\" } } }, \"asset_name\": \"cs\", \"asset_version\": \"01\"}"
+[[contracts]]
+contract-id = "ValidateArgument"
+contract-binary-name = "com.scalar.ist.contract.ValidateArgument"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidateArgument.class"
+[[contracts]]
+contract-id = "ValidatePermission"
+contract-binary-name = "com.scalar.ist.contract.ValidatePermission"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/ValidatePermission.class"
+[[contracts]]
+contract-id = "GetConsentStatementHistory"
+contract-binary-name = "com.scalar.ist.contract.GetConsentStatementHistory"
+contract-class-file = "../../contracts_and_functions/build/classes/java/main/com/scalar/ist/contract/GetConsentStatementHistory.class"
+properties = "{ \"contract_argument_schema\": { \"$schema\": \"http://json-schema.org/draft-07/schema#\", \"type\": \"object\", \"required\": [ \"asset_id\", \"company_id\", \"is_hashed\" ], \"properties\": { \"asset_id\": { \"type\": \"string\", \"pattern\": \"^[a-zA-Z0-9-/_.]+$\" }, \"company_id\": { \"type\": \"string\", \"format\": \"hostname\" }, \"is_hashed\": { \"type\": \"boolean\" } } }, \"permitted_asset_names\": [\"cs\"] }"

@@ -1,0 +1,209 @@
+name: CI for e2e
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  scalar-ist-e2e-test:
+    runs-on: ubuntu-latest
+    env:
+      SCALARDL_VERSION: 3.5.3
+      CONTRACTS_AND_FUNCTIONS_DIR: ${{ github.workspace }}/contracts_and_functions
+      DEPLOY_TOOL_DIR: ${{ github.workspace }}/tools/deploy
+      SCALAR_IST_SCHEMA: ${{ github.workspace }}/scripts/schema.cql
+      EXPOSE_CASSANDRA_PORT: ${{ github.workspace }}/.github/expose-cassandra-port.yml
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v2
+
+      - name: Clone Scalardl-samples repository
+        uses: actions/checkout@v2
+        with:
+          repository: scalar-labs/scalardl-samples
+          ref: v${{ env.SCALARDL_VERSION }}
+          path: scalardl-samples
+          token: ${{ secrets.CR_PAT }}
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: ${{ runner.os }}-gradle-
+
+      - name: Build Scalar IST Contracts and Functions
+        run: |
+          cd ${{ env.CONTRACTS_AND_FUNCTIONS_DIR }}
+          ./gradlew build
+
+      - name: Download Scalar DL Java Client SDK
+        run: |
+          wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v${{ env.SCALARDL_VERSION }}/scalardl-java-client-sdk-${{ env.SCALARDL_VERSION }}.zip
+          unzip scalardl-java-client-sdk.zip
+          mv scalardl-java-client-sdk-* scalardl-java-client-sdk
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
+
+      - name: Start Scalar DL environment
+        run: |
+          cd scalardl-samples
+          docker-compose -f docker-compose.yml -f ${{ env.EXPOSE_CASSANDRA_PORT }} up -d cassandra
+          echo -n "Wait for C* "
+          until docker exec scalardl-samples-cassandra-1 cqlsh 2> /dev/null ; do
+            sleep 0.5
+            echo -n "#"
+          done
+          echo ""
+          docker cp ${SCALAR_IST_SCHEMA} scalardl-samples-cassandra-1:ist_schema.cql
+          docker exec scalardl-samples-cassandra-1 cqlsh -f ist_schema.cql
+          docker-compose -f docker-compose.yml -f docker-compose-auditor.yml up scalardl-ledger-schema-loader-cassandra scalardl-auditor-schema-loader-cassandra
+          docker-compose -f docker-compose.yml -f docker-compose-auditor.yml up -d scalar-ledger ledger-envoy scalar-auditor auditor-envoy
+          sleep 30
+          docker-compose -f docker-compose.yml -f docker-compose-auditor.yml up scalar-ledger-as-client scalar-audior-as-client
+
+      - name: Register shared functions
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./functions
+
+      - name: Register system operator
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./initialize
+
+      - name: Register the company
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_company
+
+      - name: Register the admin profile
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_user_profile_admin
+
+      - name: Register the user profile
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_user_profile_controller
+
+      - name: Register the purpose of use
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_purpose
+
+      - name: Update the purpose of use
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_purpose
+
+      - name: Register the dataset schema
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_data_set_schema
+
+      - name: Update the dataset schema
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_data_set_schema
+
+      - name: Register a third party provider
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_third_party
+
+      - name: Update third party providers
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_third_party
+
+      - name: Register suspension of use and data deletion deadline
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_data_retention_policy
+
+      - name: Suspension of use, update data deletion deadline
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_data_retention_policy
+
+      - name: Register benefits
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_benefit
+
+      - name: Update benefits
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_benefit
+
+      - name: Register the consent document
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./register_consent_statement
+
+      - name: Amend the consent document (changes that do not require re-consent)
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_consent_statement_revision
+
+      - name: Revise the consent document (changes that require re-consent)
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_consent_statement_version
+
+      - name: Change the status of the consent document
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_consent_statement_status
+
+      - name: Update of the organization to which the operator user belongs
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./update_company
+
+      - name: Update the role of the operator user
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_user_profile_controller_add_processor
+
+      - name: Addition / update of organization information
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_organization
+
+      - name: Registration of consent
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_consent_status_register
+
+      - name: Renewal of consent
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./upsert_consent_status_update
+
+      - name: Reference of consent status by data subject
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./get_consent_status_data_subject
+
+      - name: Reference of the status of consent by the business user
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./get_consent_status_controller
+
+      - name: Retrieves the history of amendments to the consent document
+        run: |
+          cd ${DEPLOY_TOOL_DIR}
+          ./get_consent_statement_history

@@ -8,6 +8,7 @@ import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSIN
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
 import static com.scalar.ist.common.Constants.PERMITTED_ASSET_NAMES;
+import static com.scalar.ist.common.Constants.RECORD_DATA;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
 import static com.scalar.ist.common.Constants.RECORD_MODE;
 import static com.scalar.ist.common.Constants.RECORD_MODE_SCAN;
@@ -35,6 +36,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
 public class GetConsentStatementHistory extends Contract {
+
   private static final JsonArray ROLES =
       Json.createArrayBuilder()
           .add(ROLE_ADMINISTRATOR)
@@ -48,18 +50,20 @@ public class GetConsentStatementHistory extends Contract {
 
     JsonArrayBuilder filteredList = Json.createArrayBuilder();
     invokeSubContract(
-            GET_ASSET_RECORD,
-            ledger,
-            Json.createObjectBuilder()
-                .add(ASSET_ID, argument.getString(ASSET_ID))
-                .add(RECORD_IS_HASHED, argument.getBoolean(RECORD_IS_HASHED))
-                .add(RECORD_MODE, RECORD_MODE_SCAN)
-                .build())
+        GET_ASSET_RECORD,
+        ledger,
+        Json.createObjectBuilder()
+            .add(ASSET_ID, argument.getString(ASSET_ID))
+            .add(RECORD_IS_HASHED, argument.getBoolean(RECORD_IS_HASHED))
+            .add(RECORD_MODE, RECORD_MODE_SCAN)
+            .build())
         .getJsonArray(RECORD_VERSIONS)
-        .getValuesAs(JsonObject.class)
-        .stream()
-        .filter(c -> c.getString(COMPANY_ID).equals(argument.getString(COMPANY_ID)))
-        .map(filteredList::add);
+        .forEach(c -> {
+          if (c.asJsonObject().getJsonObject(RECORD_DATA).getString(COMPANY_ID)
+              .equals(argument.getString(COMPANY_ID))) {
+            filteredList.add(c);
+          }
+        });
 
     return Json.createObjectBuilder().add(RECORD_VERSIONS, filteredList.build()).build();
   }

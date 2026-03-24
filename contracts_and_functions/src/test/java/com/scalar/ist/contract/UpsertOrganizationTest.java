@@ -65,8 +65,13 @@ import javax.json.JsonValue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class UpsertOrganizationTest {
   private static final String SCHEMA_FILENAME = "upsert_organization.json";
   private static final String MOCKED_COMPANY_ID = "scalar-labs.com";
@@ -85,7 +90,6 @@ public class UpsertOrganizationTest {
 
   @BeforeEach
   private void setUp() {
-    MockitoAnnotations.initMocks(this);
     upsertOrganization = spy(new UpsertOrganization());
   }
 

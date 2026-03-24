@@ -74,8 +74,10 @@ import javax.json.JsonObjectBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class UpdateConsentStatementRevisionTest {
   private static final String SCHEMA_FILENAME = "update_consent_statement_revision.json";
   private static final String MOCKED_ORGANIZATION_ID = UUID.randomUUID().toString();
@@ -107,7 +109,6 @@ public class UpdateConsentStatementRevisionTest {
 
   @BeforeEach
   private void setUp() {
-    MockitoAnnotations.initMocks(this);
     updateConsentStatementRevision = spy(new UpdateConsentStatementRevision());
   }
 

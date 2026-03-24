@@ -47,8 +47,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.LENIENT)
 public class PutAssetRecordTest {
   private static final String SCHEMA_FILENAME = "put_asset_record.json";
   private static final String MOCKED_ASSET_ID =
@@ -61,7 +66,6 @@ public class PutAssetRecordTest {
 
   @BeforeEach
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
     putAssetRecord = spy(new PutAssetRecord());
     when(putAssetRecord.getCertificateKey()).thenReturn(mockedKey);
     when(mockedKey.getHolderId()).thenReturn(MOCKED_HOLDER_ID);

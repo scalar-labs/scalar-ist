@@ -25,8 +25,10 @@ import javax.json.JsonObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class ValidatePermissionTest {
   private static final String MOCKED_ORGANIZATION_ID = UUID.randomUUID().toString();
   private final JsonArray mockedUserProfileArrayRoles =
@@ -51,7 +53,6 @@ public class ValidatePermissionTest {
 
   @BeforeEach
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
     validatePermission = spy(new ValidatePermission());
   }
 

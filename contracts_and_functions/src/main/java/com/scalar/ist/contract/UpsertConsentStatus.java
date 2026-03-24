@@ -6,6 +6,8 @@ import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.CONSENTED_DETAIL;
 import static com.scalar.ist.common.Constants.CONSENT_STATEMENT_ID;
 import static com.scalar.ist.common.Constants.CONSENT_STATUS;
+import static com.scalar.ist.common.Constants.ASSET_NAME;
+import static com.scalar.ist.common.Constants.ASSET_VERSION;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA;
 import static com.scalar.ist.common.Constants.CONTRACT_ARGUMENT_SCHEMA_IS_MISSING;
 import static com.scalar.ist.common.Constants.CREATED_AT;
@@ -17,12 +19,7 @@ import static com.scalar.ist.common.Constants.RECORD_MODE;
 import static com.scalar.ist.common.Constants.RECORD_MODE_UPSERT;
 import static com.scalar.ist.common.Constants.REJECTED_DETAIL;
 import static com.scalar.ist.common.Constants.UPDATED_AT;
-import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
-import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
-import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.scalar.dl.ledger.contract.Contract;
 import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
-public class UpsertConsentStatus extends Contract {
+public class UpsertConsentStatus extends BaseContract {
 
   @Override
   public JsonObject invoke(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
@@ -87,29 +84,18 @@ public class UpsertConsentStatus extends Contract {
 
   private void validate(Ledger ledger, JsonObject argument, Optional<JsonObject> properties) {
     validateProperties(properties);
-    validateArgument(ledger, argument, properties.get());
+    validateArguments(ledger, argument, properties.get());
     validateConsentStatement(ledger, argument);
   }
 
-  private void validateProperties(Optional<JsonObject> properties) {
+  @Override
+  protected void validateProperties(Optional<JsonObject> properties) {
     if (!properties.isPresent() || !properties.get().containsKey(CONTRACT_ARGUMENT_SCHEMA)) {
       throw new ContractContextException(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
     }
     if (!properties.get().containsKey(ASSET_NAME)) {
       throw new ContractContextException(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
     }
-  }
-
-  private void validateArgument(Ledger ledger, JsonObject argument, JsonObject properties) {
-    JsonObject schema = properties.getJsonObject(CONTRACT_ARGUMENT_SCHEMA);
-
-    JsonObject validateArgumentJson =
-        Json.createObjectBuilder()
-            .add(VALIDATE_ARGUMENT_CONTRACT_ARGUMENT, argument)
-            .add(VALIDATE_ARGUMENT_SCHEMA, schema)
-            .build();
-
-    invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentJson);
   }
 
   private void validateConsentStatement(Ledger ledger, JsonObject arguments) {
@@ -120,10 +106,5 @@ public class UpsertConsentStatus extends Contract {
             .build();
 
     invokeSubContract(GET_ASSET_RECORD, ledger, getAssetRecordArgument);
-  }
-
-  @VisibleForTesting
-  JsonObject invokeSubContract(String contractId, Ledger ledger, JsonObject argument) {
-    return invoke(contractId, ledger, argument);
   }
 }

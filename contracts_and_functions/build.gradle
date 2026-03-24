@@ -1,8 +1,19 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
 
 sourceCompatibility = 1.8
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 8
+}
 
 configurations {
     cucumberRuntime {
@@ -16,19 +27,20 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '3.5.3'
-    implementation group: 'com.scalar-labs', name: 'scalardb', version: '3.6.0'
-    implementation group:'com.github.everit-org.json-schema', name: 'org.everit.json.schema', version: '1.12.1'
+    implementation group: 'com.scalar-labs', name: 'scalardl-java-client-sdk', version: '3.12.2'
+    implementation group: 'com.scalar-labs', name: 'scalardb', version: '3.17.1'
+    implementation group:'com.github.everit-org.json-schema', name: 'org.everit.json.schema', version: '1.14.4'
     implementation group: 'org.hashids', name: 'hashids', version: '1.0.3'
-    implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.69'
-    implementation group: 'info.picocli', name: 'picocli', version: '4.6.1'
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.3.1'
-    testRuntimeOnly group: 'org.junit.jupiter',name: 'junit-jupiter-engine',version: '5.3.1'
-    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.14.0'
-    testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.6.0'
-    testImplementation group: 'io.cucumber', name: 'cucumber-java', version: '5.6.0'
-    testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '5.6.0'
-    testImplementation group: 'com.google.inject', name: 'guice', version: '4.0'
+    implementation group: 'org.bouncycastle', name: 'bcprov-jdk18on', version: '1.80'
+    implementation group: 'info.picocli', name: 'picocli', version: '4.7.7'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.11.4'
+    testRuntimeOnly group: 'org.junit.jupiter',name: 'junit-jupiter-engine',version: '5.11.4'
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.27.3'
+    testImplementation group: 'org.mockito', name: 'mockito-core', version: '5.15.2'
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '5.15.2'
+    testImplementation group: 'io.cucumber', name: 'cucumber-java', version: '7.20.1'
+    testImplementation group: 'io.cucumber', name: 'cucumber-junit', version: '7.20.1'
+    testImplementation group: 'com.google.inject', name: 'guice', version: '5.1.0'
 }
 
 test {
@@ -871,3 +883,13 @@ task cucumber_get_consent_status_admin() {
         }
     }
 }
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+test.finalizedBy jacocoTestReport

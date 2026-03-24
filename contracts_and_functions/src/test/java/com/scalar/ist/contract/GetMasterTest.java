@@ -40,8 +40,10 @@ import javax.json.JsonObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class GetMasterTest {
 
   private static final String SCHEMA_FILENAME = "get_master.json";
@@ -60,7 +62,6 @@ public class GetMasterTest {
 
   @BeforeEach
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
     getMaster = spy(new GetMaster());
   }
 

@@ -11,20 +11,16 @@ import static com.scalar.ist.common.Constants.CREATED_AT;
 import static com.scalar.ist.common.Constants.EXECUTOR_COMPANY_ID;
 import static com.scalar.ist.common.Constants.EXECUTOR_COMPANY_ID_DOES_NOT_MATCH_WITH_USER_PROFILE_COMPANY_ID;
 import static com.scalar.ist.common.Constants.GET_ASSET_RECORD;
-import static com.scalar.ist.common.Constants.GET_USER_PROFILE;
 import static com.scalar.ist.common.Constants.HOLDER_ID;
 import static com.scalar.ist.common.Constants.HOLDER_ID_IS_MISSING;
 import static com.scalar.ist.common.Constants.ORGANIZATIONS;
 import static com.scalar.ist.common.Constants.ORGANIZATION_ID;
 import static com.scalar.ist.common.Constants.ORGANIZATION_IDS;
-import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_ARGUMENT;
-import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_REQUIRED;
 import static com.scalar.ist.common.Constants.PERMISSION_DENIED;
 import static com.scalar.ist.common.Constants.PUT_ASSET_RECORD;
 import static com.scalar.ist.common.Constants.RECORD_DATA;
 import static com.scalar.ist.common.Constants.RECORD_IS_HASHED;
 import static com.scalar.ist.common.Constants.RECORD_MODE;
-import static com.scalar.ist.common.Constants.ROLES_REQUIRED;
 import static com.scalar.ist.common.Constants.ROLE_ADMINISTRATOR;
 import static com.scalar.ist.common.Constants.ROLE_CONTROLLER;
 import static com.scalar.ist.common.Constants.ROLE_PROCESSOR;
@@ -34,13 +30,11 @@ import static com.scalar.ist.common.Constants.USER_PROFILE_ASSET_NAME;
 import static com.scalar.ist.common.Constants.USER_PROFILE_ASSET_VERSION;
 import static com.scalar.ist.common.Constants.USER_PROFILE_EXECUTOR_COMPANY_ID;
 import static com.scalar.ist.common.Constants.USER_PROFILE_ROLES;
-import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
-import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
-import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
+import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_ARGUMENT;
+import static com.scalar.ist.common.Constants.ORGANIZATION_IDS_REQUIRED;
+import static com.scalar.ist.common.Constants.ROLES_REQUIRED;
 import static com.scalar.ist.common.Constants.VALIDATE_PERMISSION;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.scalar.dl.ledger.contract.Contract;
 import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import com.scalar.ist.common.Constants;
@@ -52,7 +46,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonNumber;
 import javax.json.JsonObject;
 
-public class UpsertUserProfile extends Contract {
+public class UpsertUserProfile extends BaseContract {
   private static final JsonArray ROLES =
       Json.createArrayBuilder()
           .add(ROLE_ADMINISTRATOR)
@@ -96,11 +90,8 @@ public class UpsertUserProfile extends Contract {
   private void validate(Ledger ledger, JsonObject arguments, Optional<JsonObject> properties) {
     validateProperties(properties);
     validateArguments(ledger, arguments, properties.get());
-    JsonObject userProfileArgument =
-        Json.createObjectBuilder()
-            .add(COMPANY_ID, arguments.getString(USER_PROFILE_EXECUTOR_COMPANY_ID))
-            .build();
-    JsonObject userProfile = invokeSubContract(GET_USER_PROFILE, ledger, userProfileArgument);
+    JsonObject userProfile =
+        getUserProfile(ledger, arguments, properties.get(), USER_PROFILE_EXECUTOR_COMPANY_ID);
     String companyAssetName =
         properties.get().getString(COMPANY_ASSET_NAME)
             + properties.get().getString(COMPANY_ASSET_VERSION, "");
@@ -116,18 +107,8 @@ public class UpsertUserProfile extends Contract {
     validateUserPermissions(userProfile, companyAsset, arguments, ledger);
   }
 
-  private void validateArguments(Ledger ledger, JsonObject arguments, JsonObject properties) {
-    JsonObject schema = properties.getJsonObject(CONTRACT_ARGUMENT_SCHEMA);
-    JsonObject validateArgumentJson =
-        Json.createObjectBuilder()
-            .add(VALIDATE_ARGUMENT_CONTRACT_ARGUMENT, arguments)
-            .add(VALIDATE_ARGUMENT_SCHEMA, schema)
-            .build();
-
-    invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentJson);
-  }
-
-  private void validateProperties(Optional<JsonObject> properties) {
+  @Override
+  protected void validateProperties(Optional<JsonObject> properties) {
     if (!properties.isPresent() || !properties.get().containsKey(CONTRACT_ARGUMENT_SCHEMA)) {
       throw new ContractContextException(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
     }
@@ -202,8 +183,4 @@ public class UpsertUserProfile extends Contract {
     }
   }
 
-  @VisibleForTesting
-  JsonObject invokeSubContract(String contractId, Ledger ledger, JsonObject argument) {
-    return invoke(contractId, ledger, argument);
-  }
 }

@@ -59,8 +59,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class UpsertUserProfileTest {
   private static final String SCHEMA_FILENAME = "upsert_user_profile.json";
   private static final String MOCKED_USER_PROFILE_ASSET_NAME = "user_profile";
@@ -83,7 +85,6 @@ public class UpsertUserProfileTest {
 
   @BeforeEach
   private void setUp() {
-    MockitoAnnotations.initMocks(this);
     upsertUserProfile = spy(new UpsertUserProfile());
   }
 

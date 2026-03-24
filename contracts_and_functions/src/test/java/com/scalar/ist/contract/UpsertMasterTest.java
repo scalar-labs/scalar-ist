@@ -57,8 +57,10 @@ import javax.json.JsonObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class UpsertMasterTest {
   private static final String MOCKED_COMPANY_ID = "scalar-labs.com";
   private static final String MOCKED_ORGANIZATION_ID = "org1";
@@ -76,7 +78,6 @@ public class UpsertMasterTest {
 
   @BeforeEach
   private void setUp() {
-    MockitoAnnotations.initMocks(this);
     upsertMaster = spy(new UpsertMaster());
   }
 

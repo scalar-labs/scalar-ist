@@ -35,19 +35,14 @@ import static com.scalar.ist.common.Constants.ROLE_SYSADMIN;
 import static com.scalar.ist.common.Constants.ROLE_SYSOPERATOR;
 import static com.scalar.ist.common.Constants.USER_PROFILE_ASSET_NAME;
 import static com.scalar.ist.common.Constants.USER_PROFILE_ASSET_VERSION;
-import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT;
-import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_CONTRACT_ARGUMENT;
-import static com.scalar.ist.common.Constants.VALIDATE_ARGUMENT_SCHEMA;
 
-import com.google.common.annotations.VisibleForTesting;
-import com.scalar.dl.ledger.contract.Contract;
 import com.scalar.dl.ledger.database.Ledger;
 import com.scalar.dl.ledger.exception.ContractContextException;
 import java.util.Optional;
 import javax.json.Json;
 import javax.json.JsonObject;
 
-public class Initialize extends Contract {
+public class Initialize extends BaseContract {
   private static final String ASSET_NAME_USER_PROFILE = "user_profile";
 
   @Override
@@ -132,11 +127,12 @@ public class Initialize extends Contract {
 
   private void validate(Ledger ledger, JsonObject arguments, Optional<JsonObject> properties) {
     validateProperties(properties);
-    validateArgument(ledger, arguments, properties.get());
+    validateArguments(ledger, arguments, properties.get());
     validateHolderId(properties.get());
   }
 
-  private void validateProperties(Optional<JsonObject> properties) {
+  @Override
+  protected void validateProperties(Optional<JsonObject> properties) {
     if (!properties.isPresent() || !properties.get().containsKey(CONTRACT_ARGUMENT_SCHEMA)) {
       throw new ContractContextException(CONTRACT_ARGUMENT_SCHEMA_IS_MISSING);
     }
@@ -151,27 +147,12 @@ public class Initialize extends Contract {
     }
   }
 
-  private void validateArgument(Ledger ledger, JsonObject argument, JsonObject properties) {
-    JsonObject schema = properties.getJsonObject(CONTRACT_ARGUMENT_SCHEMA);
-    JsonObject validateArgumentJson =
-        Json.createObjectBuilder()
-            .add(VALIDATE_ARGUMENT_CONTRACT_ARGUMENT, argument)
-            .add(VALIDATE_ARGUMENT_SCHEMA, schema)
-            .build();
-
-    invokeSubContract(VALIDATE_ARGUMENT, ledger, validateArgumentJson);
-  }
-
-  private void validateHolderId(JsonObject properties) {
+  @Override
+  protected void validateHolderId(JsonObject properties) {
     String propHolderId = properties.getString(HOLDER_ID);
     if (!(propHolderId.equals(INITIALIZER_ACCOUNT_NAME)
         && getCertificateKey().getHolderId().equals(INITIALIZER_ACCOUNT_NAME))) {
       throw new ContractContextException(EXECUTION_RESTRICTED_TO_INITIALIZER_ACCOUNT);
     }
-  }
-
-  @VisibleForTesting
-  JsonObject invokeSubContract(String contractId, Ledger ledger, JsonObject arguments) {
-    return invoke(contractId, ledger, arguments);
   }
 }

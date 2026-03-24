@@ -60,8 +60,10 @@ import javax.json.JsonObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class RegisterThirdPartyTest {
   private static final String MOCKED_HOLDER_ID = UUID.randomUUID().toString();
   private static final String SCHEMA_FILENAME = "register_third_party.json";
@@ -86,7 +88,6 @@ public class RegisterThirdPartyTest {
 
   @BeforeEach
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
     registerThirdParty = spy(new RegisterThirdParty());
   }
 

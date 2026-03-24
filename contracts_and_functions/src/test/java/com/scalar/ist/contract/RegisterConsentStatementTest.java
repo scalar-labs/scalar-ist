@@ -71,8 +71,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class RegisterConsentStatementTest {
   private static final String SCHEMA_FILENAME = "register_consent_statement.json";
   private static final String MOCKED_COMPANY_ID = "scalar-labs.com";
@@ -122,7 +124,6 @@ public class RegisterConsentStatementTest {
 
   @BeforeEach
   private void setUp() {
-    MockitoAnnotations.initMocks(this);
     registerConsentStatement = spy(new RegisterConsentStatement());
   }
 

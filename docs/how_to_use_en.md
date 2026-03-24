@@ -15,12 +15,12 @@ You can build the IST schema docker image yourself or use the pre-built image fr
 
 ## Set up Scalar DL Java Client SDK
 
-Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.5.3) to `scalar-ist`.
+Download the `scalardl-java-client-sdk` zip file from the [release](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.12.2) to `scalar-ist`.
 Then unzip and rename it to `scalardl-java-client-sdk`.
 ```console
-wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.5.3/scalardl-java-client-sdk-3.5.3.zip
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.12.2/scalardl-java-client-sdk-3.12.2.zip
 unzip scalardl-java-client-sdk.zip
-mv scalardl-java-client-sdk-3.5.3 scalardl-java-client-sdk
+mv scalardl-java-client-sdk-3.12.2 scalardl-java-client-sdk
 ```
 
 # How to use Scalar IST?

@@ -46,8 +46,10 @@ import javax.json.JsonObjectBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class UpsertConsentStatusTest {
 
   private static final String SCHEMA_FILENAME = "upsert_consent_status.json";
@@ -64,7 +66,6 @@ public class UpsertConsentStatusTest {
 
   @BeforeEach
   private void setUp() {
-    MockitoAnnotations.initMocks(this);
     upsertConsentStatus = spy(new UpsertConsentStatus());
   }
 

@@ -1,8 +1,14 @@
 .idea/
 .gradle
+.gradle/
 
 .DS_Store
 .classpath
 .project
 .vscode/*
 bin/*
+
+fixture/keys/
+*.pem
+*.key
+build/

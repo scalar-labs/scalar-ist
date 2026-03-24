@@ -1,4 +1,6 @@
-FROM ghcr.io/scalar-labs/jre8:1.1.6
+FROM eclipse-temurin:17-jre
+
+RUN apt-get update && apt-get install -y netcat-openbsd && rm -rf /var/lib/apt/lists/*
 
 # Copy all necessary files to the image
 COPY docker-files/scalar-ist-loader .

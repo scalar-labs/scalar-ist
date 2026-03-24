@@ -16,13 +16,13 @@ IST スキーマ Docker イメージを自分でビルドするか、`ghcr.io/sc
 
 ## Scalar DL Java クライアント SDK をセットアップする
 
-[リリース](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.5.3) から `scalardl-java-client-sdk` zip ファイルを `scalar-ist` にダウンロードします。
+[リリース](https://github.com/scalar-labs/scalardl-java-client-sdk/releases/tag/v3.12.2) から `scalardl-java-client-sdk` zip ファイルを `scalar-ist` にダウンロードします。
 次に、解凍して名前を「scalardl-java-client-sdk」に変更します。
 
 ```console
-wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.5.3/scalardl-java-client-sdk-3.5.3.zip
+wget -O ./scalardl-java-client-sdk.zip https://github.com/scalar-labs/scalardl-java-client-sdk/releases/download/v3.12.2/scalardl-java-client-sdk-3.12.2.zip
 unzip scalardl-java-client-sdk.zip
-mv scalardl-java-client-sdk-3.5.3 scalardl-java-client-sdk
+mv scalardl-java-client-sdk-3.12.2 scalardl-java-client-sdk
 ```
 
 # Scalar ISTの実行手順
